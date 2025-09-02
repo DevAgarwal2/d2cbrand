@@ -5,8 +5,8 @@ export interface Props {
 }
 
 const { 
-	title = "Shreeyam HandiCrafts - Authentic Wooden Art & Antique Furniture",
-	description = "Discover exquisite handcrafted wooden art, vintage furniture, and elegant brass decor in Ahmedabad & Anand. Wholesale, bulk orders, and rentals available."
+	title = "Shreeyam HandiCrafts - Traditional Brass Vessels, Dhoopdani & Iron Lamps | Gujarat",
+	description = "Authentic handcrafted brass vessels, traditional dhoopdani, decorative boxes & iron lamps from Gujarat. Premium quality Indian handicrafts for home & temple. Fast delivery across India."
 } = Astro.props;
 ---
 
@@ -16,8 +16,20 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/images/logo.jpeg" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta name="keywords" content="brass vessels, dhoopdani, iron lamps, brass boxes, traditional handicrafts, Gujarat artisans, Indian brass items, temple accessories, home decor, authentic crafts, handmade brass, spiritual items, prayer accessories, traditional vessels, Indian handicrafts online" />
+		<meta name="author" content="Shreeyam HandiCrafts" />
+		<meta name="robots" content="index, follow" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_IN" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<link rel="canonical" href={Astro.url} />
 		<title>{title}</title>
 		
 		<!-- Enhanced Google Fonts for Traditional Indian Theme -->
