@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { products, categories } from '../data/products.js';
+import logo from "../assets/logo.jpeg";
+
 ---
 
 <Layout title="All Products - Shreeyam HandiCrafts">
@@ -11,7 +13,7 @@ import { products, categories } from '../data/products.js';
                 <div class="flex items-center">
                     <a href="/" class="flex items-center">
                         <div class="w-12 h-12 sm:w-16 sm:h-16 from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-lg">
-                            <img src="images/logo.jpeg" alt="Shreeyam HandiCrafts" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <img src={logo.src} alt="Shreeyam HandiCrafts" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
                            
                         </div>
                         <div>
