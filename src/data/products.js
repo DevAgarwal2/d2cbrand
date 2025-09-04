@@ -18,6 +18,7 @@ export const products = [
     ],
     description: 'Exquisitely crafted antique brass box with intricate designs. Perfect for storing jewelry and small treasures.',
     features: [
+      'Dimensions: Height: 3 inch, Diameter: 4 inch',
       'Pure brass construction',
       'Antique finish',
       'Secure locking mechanism',
@@ -45,6 +46,7 @@ export const products = [
     ],
     description: 'Traditional Gungru small brass box with authentic craftsmanship. Ideal for storing small items.',
     features: [
+      'Dimensions: Height: 1.5 inch, Diameter: 2 inch',
       'Traditional design',
       'Compact size',
       'Handcrafted details',
@@ -72,6 +74,7 @@ export const products = [
     ],
     description: 'Charming small bird-shaped brass box with intricate detailing. Perfect decorative piece for your home.',
     features: [
+      'Dimensions: Height: 2.5 inch, Diameter: 2.5 inch',
       'Bird-shaped design',
       'Intricate brass work',
       'Small storage compartment',
@@ -99,6 +102,7 @@ export const products = [
     ],
     description: 'Medium-sized bird brass box with beautiful craftsmanship. Great for storage and decoration.',
     features: [
+      'Dimensions: Height: 2.5 inch, Diameter: 3.5 inch',
       'Medium size',
       'Bird motif design',
       'Quality brass material',
@@ -126,6 +130,7 @@ export const products = [
     ],
     description: 'Large bird-shaped brass box with elaborate detailing. Perfect statement piece for your living room.',
     features: [
+      'Dimensions: Height: 4.5 inch, Diameter: 4.5 inch',
       'Large size',
       'Elaborate bird design',
       'Premium brass quality',
@@ -153,6 +158,7 @@ export const products = [
     ],
     description: 'Traditional antique chapati box with stand. Authentic piece for storing and serving Indian bread.',
     features: [
+      'Dimensions: Height: 5 inch, Diameter: 8 inch',
       'Comes with stand',
       'Antique brass finish',
       'Traditional design',
@@ -182,6 +188,7 @@ export const products = [
     ],
     description: 'Traditional small brass chari (vessel) perfect for water storage and traditional ceremonies.',
     features: [
+      'Dimensions: Height: 4.5 inch, Diameter: 3.5 inch',
       'Pure brass material',
       'Traditional vessel design',
       'Perfect for ceremonies',
@@ -209,6 +216,7 @@ export const products = [
     ],
     description: 'Large traditional brass lotta (water pot) with authentic design. Perfect for traditional households.',
     features: [
+      'Dimensions: Height: 6 inch, Diameter: 3 inch',
       'Large capacity',
       'Traditional lotta design',
       'Premium brass quality',
@@ -236,6 +244,7 @@ export const products = [
     ],
     description: 'Traditional brass kettle with elegant design. Perfect for tea preparation and serving.',
     features: [
+      'Dimensions: Height: 7 inch, Diameter: 5 inch',
       'Traditional kettle design',
       'Heat-resistant handle',
       'Medium capacity',
@@ -263,6 +272,7 @@ export const products = [
     ],
     description: 'Traditional brass tiffin with multiple compartments. Perfect for carrying and storing food.',
     features: [
+      'Dimensions: Height: 5.5 inch, Diameter: 5 inch',
       'Multiple compartments',
       'Secure locking system',
       'Food-safe brass',
@@ -290,6 +300,7 @@ export const products = [
     ],
     description: 'Antique brass banni with traditional craftsmanship. Beautiful vessel for ceremonial and decorative use.',
     features: [
+      'Dimensions: Height: 5 inch, Diameter: 4 inch',
       'Antique brass finish',
       'Traditional craftsmanship',
       'Ceremonial vessel',
@@ -319,6 +330,7 @@ export const products = [
     ],
     description: 'Beautiful peacock-shaped dhoopdani for incense burning. Adds elegance to your prayer room.',
     features: [
+      'Dimensions: Height: 6 inch, Diameter: 4.5 inch',
       'Peacock design',
       'Intricate brass work',
       'Perfect for incense',
@@ -346,6 +358,7 @@ export const products = [
     ],
     description: 'Compact brass dhoopdani perfect for small spaces. Ideal for daily prayer and meditation.',
     features: [
+      'Dimensions: Height: 2 inch, Diameter: 3.5 inch, Length: 7 inch',
       'Compact design',
       'Perfect for small spaces',
       'Traditional brass work',
@@ -373,6 +386,7 @@ export const products = [
     ],
     description: 'Brass dhoopdani with convenient handle for easy carrying. Perfect for ceremonies and daily prayers.',
     features: [
+      'Dimensions: Height: 5.5 inch, Diameter: 5 inch',
       'Convenient handle',
       'Easy to carry',
       'Traditional design',
@@ -402,6 +416,7 @@ export const products = [
     ],
     description: 'Elegant iron table lamp with traditional design. Perfect for adding warm lighting to your space.',
     features: [
+      'Dimensions: Height: 10.5 inch, Diameter: 6 inch',
       'Iron construction',
       'Traditional design',
       'Perfect table size',
@@ -429,6 +444,7 @@ export const products = [
     ],
     description: 'Traditional handi-style iron lamp with authentic design. Creates beautiful ambient lighting.',
     features: [
+      'Dimensions: Height: 10 inch',
       'Handi-style design',
       'Authentic iron work',
       'Ambient lighting',
