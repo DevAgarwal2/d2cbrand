@@ -453,7 +453,116 @@ export const products = [
     ],
     inStock: true,
     fastDelivery: true
-  }
+  },
+  // Wooden Products
+{
+  id: 'Small-Wooden-Door',
+  title: 'Small Wooden Door',
+  category: 'Wooden-Products',
+  categoryName: 'Wooden Products',
+  price: '₹3,200',
+  originalPrice: '₹3,800',
+  discount: '16% off',
+  rating: 4.8,
+  reviews: 123,
+  image: 'https://ik.imagekit.io/pi9wuccc0i/small-wood-door.jpeg?updatedAt=1757693658384',
+  images: [
+    'https://ik.imagekit.io/pi9wuccc0i/small-wood-door.jpeg?updatedAt=1757693658384',
+    'https://ik.imagekit.io/pi9wuccc0i/small-wood-door2.jpeg?updatedAt=1757693653002',
+    'https://ik.imagekit.io/pi9wuccc0i/small-wood-door3.jpeg?updatedAt=1757693653028'
+  ],
+  description: 'Handcrafted small wooden door made from premium solid wood. Perfect for decorative use in interiors, temples, or as a wall accent piece.',
+  features: [
+    'Dimensions: Length 18.5 inch, Width 9 inch',
+    'Made from durable solid wood',
+    'Hand-carved traditional design',
+    'Polished finish for a rich look',
+    'Ideal for home decor, pooja rooms, or gifting'
+  ],
+  inStock: true,
+  fastDelivery: true
+},
+{
+  id: 'Wooden-Elephant-Statue',
+  title: 'Wooden Elephant Statue',
+  category: 'Wooden-Products',
+  categoryName: 'Wooden Products',
+  price: '₹3,500',
+  originalPrice: '₹4,200',
+  discount: '17% off',
+  rating: 4.8,
+  reviews: 145,
+  image: 'https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg?updatedAt=1757693653993',
+  images: [
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg?updatedAt=1757693653993',
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-statue2.jpeg?updatedAt=1757693653840',
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-statue3.jpeg?updatedAt=1757693654291'
+  ],
+  description: 'Exquisitely carved wooden elephant statue symbolizing strength, wisdom, and prosperity. A timeless addition to your home decor or office space.',
+  features: [
+    'Dimensions: Height 13 inch, Width 13 inch',
+    'Handcrafted from high-quality wood',
+    'Detailed carving with smooth finish',
+    'Represents traditional Indian artistry',
+    'Great for home, office, or gifting'
+  ],
+  inStock: true,
+  fastDelivery: true
+},
+{
+  id: 'Elephant-Box',
+  title: 'Wooden Elephant Box',
+  category: 'Wooden-Products',
+  categoryName: 'Wooden Products',
+  price: '₹2,800',
+  originalPrice: '₹3,400',
+  discount: '18% off',
+  rating: 4.7,
+  reviews: 98,
+  image: 'https://ik.imagekit.io/pi9wuccc0i/elephant-box.jpeg?updatedAt=1757693652975',
+  images: [
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-box.jpeg?updatedAt=1757693652975',
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-box2.jpeg?updatedAt=1757693653640',
+    'https://ik.imagekit.io/pi9wuccc0i/elephant-box3.jpeg?updatedAt=1757693653285'
+  ],
+  description: 'Handcrafted wooden elephant box with intricate design, ideal for storing jewelry, trinkets, or gifting purposes.',
+  features: [
+    'Dimensions: Length 15 inch, Width 8.5 inch, Depth 6.5 inch',
+    'Made from premium quality wood',
+    'Carved elephant motifs on the surface',
+    'Polished for durability and shine',
+    'Perfect for storage or as a decorative piece'
+  ],
+  inStock: true,
+  fastDelivery: true
+},
+{
+  id: 'Square-Wooden-Candle',
+  title: 'Square Wooden Candle Holder',
+  category: 'Wooden-Products',
+  categoryName: 'Wooden Products',
+  price: '₹1,500',
+  originalPrice: '₹1,900',
+  discount: '21% off',
+  rating: 4.6,
+  reviews: 76,
+  image: 'https://ik.imagekit.io/pi9wuccc0i/square-wood.jpeg?updatedAt=1757693654273',
+  images: [
+    'https://ik.imagekit.io/pi9wuccc0i/square-wood.jpeg?updatedAt=1757693654273',
+    'https://ik.imagekit.io/pi9wuccc0i/square-wood2.jpeg?updatedAt=1757693654146'
+  ],
+  description: 'Stylish square wooden candle holder, handcrafted for an elegant rustic look. Perfect for creating a warm, cozy ambiance.',
+  features: [
+    'Dimensions: Height 6.5 inch, Length 9.5 inch',
+    'Crafted from solid wood',
+    'Smooth finish with natural wooden texture',
+    'Holds candles securely',
+    'Ideal for living rooms, bedrooms, and special occasions'
+  ],
+  inStock: true,
+  fastDelivery: true
+}
+
 ];
 
 export const categories = [
@@ -484,5 +593,12 @@ export const categories = [
     description: 'Traditional iron lamps and lighting fixtures',
     icon: '🟢',
     count: products.filter(p => p.category === 'iron-lamps').length
+  },
+  {
+    id: 'Wooden-Products',
+    name: 'Wooden Products',
+    description: 'Traditional Wooden Products',
+    icon: '🟤',
+    count: products.filter(p => p.category === 'Wooden-Products').length
   }
 ];
