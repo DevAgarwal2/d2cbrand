@@ -1,6 +1,4 @@
 ---
-import logo from "../assets/logo.jpeg";
-
 export interface Props {
 	title?: string;
 	description?: string;
@@ -17,20 +15,32 @@ const {
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href={logo.src}/>
-		<link rel="apple-touch-icon" href={logo.src} />
+		
+		<!-- Favicon & Apple Icon -->
+		<link rel="icon" type="image/jpeg" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+		<link rel="apple-touch-icon" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<meta name="keywords" content="brass vessels, dhoopdani, iron lamps, brass boxes, traditional handicrafts, Gujarat artisans, Indian brass items, temple accessories, home decor, authentic crafts, handmade brass, spiritual items, prayer accessories, traditional vessels, Indian handicrafts online" />
 		<meta name="author" content="Shreeyam HandiCrafts" />
 		<meta name="robots" content="index, follow" />
+
+		<!-- Open Graph Meta -->
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="en_IN" />
+		<meta property="og:image" content="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+
+		<!-- Twitter Meta -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+
 		<link rel="canonical" href={Astro.url} />
 		<title>{title}</title>
 		
