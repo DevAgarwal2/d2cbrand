@@ -1,846 +1,457 @@
 ---
-import { products, categories } from '../data/products.js';
-import logo from "../assets/logo.jpeg";
+// src/pages/index.astro
+import { products } from '../data/products.js';
 
-// Get featured products (first 8 products for display)
+// --- 1. LOGO CONFIGURATION ---
+import logo from "../assets/logo.jpeg"; 
+
+// Hero Product: Antique Brass Box
+const heroProduct = products.find(p => p.id === 'antique-brass-box');
+const heroImageSrc = heroProduct ? heroProduct.image : 'https://via.placeholder.com/800x1000';
+
 const featuredProducts = products.slice(0, 8);
+
+const getWhatsAppLink = (productTitle: any) => {
+    const message = `Hi Shreeyam Handicrafts, I am interested in buying the ${productTitle}.`;
+    return `https://wa.me/919726983835?text=${encodeURIComponent(message)}`;
+};
 ---
 
-<!-- Navigation -->
-<nav class="bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-100 sticky top-0 z-50" role="navigation" aria-label="Main navigation">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-24">
-            <!-- Logo -->
-            <div class="flex items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <div class="w-12 h-12 sm:w-16 sm:h-16 from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-lg">
-                        <img src={logo.src} alt="Shreeyam HandiCrafts" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                        <span class="text-xl sm:text-2xl hidden">🏺</span>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        color: #1c1917; 
+        /* The D2C "Paper" Gradient */
+        background: radial-gradient(circle at 0% 0%, #FFFFFF 0%, #F2F0E9 100%);
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, .font-playfair {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    html { scroll-behavior: smooth; }
+
+    /* Custom Button Hover */
+    .btn-d2c {
+        transition: all 0.3s ease;
+    }
+    .btn-d2c:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(0,0,0,0.2);
+    }
+</style>
+
+<div class="min-h-screen">
+
+    <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 overflow-hidden rounded-lg bg-stone-100">
+                        <img src={logo.src} alt="Shreeyam" class="w-full h-full object-cover mix-blend-multiply">
                     </div>
                     <div>
-                        <h1 class="text-lg sm:text-2xl font-bold text-neutral-800 font-playfair">Shreeyam HandiCrafts</h1>
-                        <p class="text-xs sm:text-sm text-neutral-600 font-medium">Authentic • Traditional • Quality</p>
+                        <h1 class="text-xl font-bold text-stone-900 tracking-wide leading-none font-playfair">SHREEYAM</h1>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-stone-500 font-medium">Handicrafts</p>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Desktop Navigation -->
-            <div class="hidden lg:block">
-                <div class="flex items-center space-x-1">
-                    <a href="#home" class="text-neutral-700 hover:text-primary-600 px-4 py-2 text-base font-medium transition-all duration-200 rounded-xl hover:bg-primary-50 relative group">
-                        Home
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-600 transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    <a href="#products" class="text-neutral-700 hover:text-primary-600 px-4 py-2 text-base font-medium transition-all duration-200 rounded-xl hover:bg-primary-50 relative group">
-                        Products
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-600 transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    <a href="#testimonials" class="text-neutral-700 hover:text-primary-600 px-4 py-2 text-base font-medium transition-all duration-200 rounded-xl hover:bg-primary-50 relative group">
-                        Reviews
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-600 transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    <a href="#contact" class="text-neutral-700 hover:text-primary-600 px-4 py-2 text-base font-medium transition-all duration-200 rounded-xl hover:bg-primary-50 relative group">
-                        Contact
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-primary-600 transition-all duration-200 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    <div class="ml-6 pl-6 border-l border-neutral-200">
-                        <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 text-base">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-                            </svg>
-                            Chat with Us
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mobile menu button -->
-            <div class="lg:hidden">
-                <button id="mobile-menu-btn" class="text-neutral-700 hover:text-primary-600 p-2 rounded-md" aria-label="Open menu">
-                    <svg class="h-6 w-6 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-neutral-200">
-        <div class="px-4 pt-4 pb-6 space-y-2">
-            <a href="#home" class="text-neutral-700 hover:text-primary-600 block px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-lg font-medium rounded-lg hover:bg-primary-50">Home</a>
-            <a href="#products" class="text-neutral-700 hover:text-primary-600 block px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-lg font-medium rounded-lg hover:bg-primary-50">Products</a>
-            <a href="#testimonials" class="text-neutral-700 hover:text-primary-600 block px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-lg font-medium rounded-lg hover:bg-primary-50">Reviews</a>
-            <a href="#contact" class="text-neutral-700 hover:text-primary-600 block px-3 py-2.5 sm:px-4 sm:py-3 text-base sm:text-lg font-medium rounded-lg hover:bg-primary-50">Contact</a>
-            <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-lg text-base sm:text-lg font-semibold w-full mt-3 sm:mt-4 flex items-center justify-center gap-2">
-                💬 Chat with WhatsApp
-            </button>
-        </div>
-    </div>
-</nav>
-
-<!-- 1. HERO SECTION -->
-<section id="home" class="bg-gradient-to-br from-primary-50 via-white to-earth-50 pt-12 pb-20 lg:pb-32">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Trust indicators -->
-        <div class="flex flex-wrap justify-center gap-6 mb-12 text-sm text-neutral-600">
-            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <span class="text-green-600">✓</span>
-                <span>1000+ Happy Customers</span>
-            </div>
-            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <span class="text-blue-600">📍</span>
-                <span>Serving Gujarat Since Years</span>
-            </div>
-            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                <span class="text-purple-600">⭐</span>
-                <span>4.8 Star Rating</span>
-            </div>
-        </div>
-        
-        <div class="text-center">
-            <!-- Main headline -->
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-neutral-800 font-playfair mb-6 sm:mb-8 leading-tight">
-                Where Tradition
-                <span class="text-primary-600 block">Meets Your Home</span>
-            </h1>
-            
-            <p class="text-lg sm:text-xl lg:text-2xl text-neutral-600 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
-                Every piece tells a story of ancient craftsmanship, lovingly handmade by skilled artisans 
-                who pour their heart into creating beauty that transforms your space into a sanctuary.
-            </p>
-            
-            <!-- CTA buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 px-4">
-                <button 
-                    onclick="window.location.href='/products'"
-                    class="bg-primary-600 hover:bg-primary-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-2xl text-lg sm:text-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-xl"
-                >
-                    🎨 Explore Our Collection
-                </button>
-                <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 sm:px-10 py-4 sm:py-5 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-base sm:text-base">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-                    </svg>
-                    Chat with Us
-                </button>
-            </div>
-            
-            <!-- Hero product showcase -->
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto px-4">
-                <div class="bg-gradient-to-br from-amber-50 to-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-amber-100">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
-                        <span class="text-2xl sm:text-3xl">✨</span>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2 text-center">Artisan Crafted</h3>
-                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed text-center">Each piece handmade by master craftsmen with 15+ years of experience</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-emerald-50 to-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-emerald-100">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
-                        <span class="text-2xl sm:text-3xl">🏛️</span>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2 text-center">Cultural Heritage</h3>
-                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed text-center">Authentic Gujarat traditions preserved in brass and iron</p>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Home</a>
+                    <a href="#categories" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Collections</a>
+                    <a href="#products" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Best Sellers</a>
+                    <a href="#contact" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Contact</a>
                 </div>
                 
-                <div class="bg-gradient-to-br from-rose-50 to-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-rose-100">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-rose-400 to-rose-500 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-md">
-                        <span class="text-2xl sm:text-3xl">🏠</span>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2 text-center">Home Elegance</h3>
-                    <p class="text-xs sm:text-sm text-neutral-600 leading-relaxed text-center">Transform your space with timeless beauty and spiritual energy</p>
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/919726983835" target="_blank" class="hidden md:flex bg-stone-900 text-white px-5 py-2.5 rounded-full text-sm font-medium items-center gap-2 btn-d2c">
+                        <span>WhatsApp Us</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF7] border-t border-stone-100 absolute w-full shadow-xl">
+            <div class="flex flex-col p-4 space-y-2">
+                <a href="#home" class="p-3 text-base font-medium text-stone-800">Home</a>
+                <a href="#categories" class="p-3 text-base font-medium text-stone-800">Collections</a>
+                <a href="#products" class="p-3 text-base font-medium text-stone-800">Best Sellers</a>
+                <a href="#contact" class="p-3 text-base font-medium text-stone-800">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-<!-- 2. FEATURED PRODUCTS SECTION -->
-<section id="products" class="py-20 lg:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 sm:mb-20 px-4">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-800 font-playfair mb-6 sm:mb-8">
-                Handpicked for Your Home
-            </h2>
-            <p class="text-lg sm:text-xl text-neutral-600 max-w-3xl mx-auto">
-                Each piece is carefully selected from our artisan workshops, representing the finest in traditional Indian craftsmanship
-            </p>
+    <section id="home" class="relative pt-10 pb-16 md:pt-20 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            <div class="lg:col-span-5 text-center lg:text-left relative z-10">
+                <span class="inline-block py-1 mb-6 text-xs font-bold uppercase tracking-[0.2em] text-stone-500 border-b border-stone-300">
+                    Est. 2025 • Gujarat
+                </span>
+                
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-medium text-stone-900 mb-6 leading-[1.05] font-playfair">
+                    Timeless <br>
+                    <span class="italic text-stone-600">Brass</span> & <br class="hidden md:block">
+                    Heritage.
+                </h1>
+                
+                <p class="text-lg text-stone-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 font-light">
+                    Curating India's spiritual elegance for the modern home. Handcrafted brass boxes, vessels, and decor that tell a story.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#products" class="w-full sm:w-auto bg-stone-900 text-white px-8 py-4 rounded-full font-medium shadow-lg btn-d2c text-center">
+                        Shop Collection
+                    </a>
+                    <a href="https://wa.me/919726983835" target="_blank" class="w-full sm:w-auto bg-transparent border border-stone-300 text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-white transition-all text-center">
+                        Custom Orders
+                    </a>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-stone-200 flex items-center justify-center lg:justify-start gap-8">
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">1k+</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Homes</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">4.8</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Rating</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">100%</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Handmade</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 relative">
+                <div class="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-[5/4] bg-[#F2F0E9]">
+                    <img 
+                        src={heroImageSrc} 
+                        alt="Antique Brass Box" 
+                        class="object-cover w-full h-full hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                    >
+                    
+                    <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-sm md:max-w-xs border border-white/50">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="flex text-amber-500 text-xs">★★★★★</div>
+                        </div>
+                        <p class="font-serif italic text-stone-900 text-sm">"The antique finish is even better in person. A true masterpiece."</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        
-        <!-- Category showcase -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-20 px-4">
-            <div class="bg-gradient-to-br from-amber-50 to-white p-4 sm:p-5 rounded-2xl shadow-md border border-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-md">
-                    <span class="text-white text-lg sm:text-xl">📦</span>
-                </div>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2">Brass Boxes</h3>
-                <p class="text-xs sm:text-sm text-neutral-600 mb-3 sm:mb-4 leading-relaxed line-clamp-2">Traditional brass boxes for storage and decoration</p>
-                <div class="flex items-center justify-between">
-                    <div class="text-amber-600 font-semibold text-sm">6 Pieces</div>
-                    <div class="text-xs text-neutral-500">₹1,800+</div>
-                </div>
+    </section>
+
+    <section id="categories" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <h2 class="text-3xl md:text-4xl font-playfair text-stone-900">Our Collections</h2>
+                <a href="/products" class="hidden md:block text-sm font-medium border-b border-stone-900 pb-1 hover:text-stone-600 hover:border-stone-600 transition-colors">View All</a>
             </div>
-            
-            <div class="bg-gradient-to-br from-blue-50 to-white p-4 sm:p-5 rounded-2xl shadow-md border border-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-md">
-                    <span class="text-white text-lg sm:text-xl">🏺</span>
-                </div>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2">Brass Vessels</h3>
-                <p class="text-xs sm:text-sm text-neutral-600 mb-3 sm:mb-4 leading-relaxed line-clamp-2">Traditional vessels for ceremonies and daily use</p>
-                <div class="flex items-center justify-between">
-                    <div class="text-blue-600 font-semibold text-sm">5 Pieces</div>
-                    <div class="text-xs text-neutral-500">₹1,200+</div>
-                </div>
-            </div>
-            
-            <div class="bg-gradient-to-br from-rose-50 to-white p-4 sm:p-5 rounded-2xl shadow-md border border-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-rose-500 to-rose-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-md">
-                    <span class="text-white text-lg sm:text-xl">🪔</span>
-                </div>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2">Brass Dhoopdani</h3>
-                <p class="text-xs sm:text-sm text-neutral-600 mb-3 sm:mb-4 leading-relaxed line-clamp-2">Incense holders for prayer rooms and rituals</p>
-                <div class="flex items-center justify-between">
-                    <div class="text-rose-600 font-semibold text-sm">3 Pieces</div>
-                    <div class="text-xs text-neutral-500">₹900+</div>
-                </div>
-            </div>
-            
-            <div class="bg-gradient-to-br from-emerald-50 to-white p-4 sm:p-5 rounded-2xl shadow-md border border-neutral-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-md">
-                    <span class="text-white text-lg sm:text-xl">💡</span>
-                </div>
-                <h3 class="text-base sm:text-lg font-bold text-neutral-800 mb-2">Iron Lamps</h3>
-                <p class="text-xs sm:text-sm text-neutral-600 mb-3 sm:mb-4 leading-relaxed line-clamp-2">Traditional lamps for beautiful ambient lighting</p>
-                <div class="flex items-center justify-between">
-                    <div class="text-emerald-600 font-semibold text-sm">2 Lamps</div>
-                    <div class="text-xs text-neutral-500">₹2,800+</div>
-                </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                <a href="#products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/big_lotta.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Vessels">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Brass Vessels</h3>
+                </a>
+                <a href="#products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/brass_box_1.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Boxes">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Antique Boxes</h3>
+                </a>
+                <a href="#products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Wooden">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Wooden Decor</h3>
+                </a>
+                <a href="#products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/table_lamp.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Lamps">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Iron Lamps</h3>
+                </a>
             </div>
         </div>
-        
-        <!-- Featured Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 px-4">
+    </section>
+
+    <section id="products" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-playfair text-stone-900 mb-4">Curated Favorites</h2>
+            <p class="text-stone-500">Pieces loved by our customers</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12">
             {featuredProducts.map((product) => (
-                <div class="bg-white rounded-3xl shadow-sm border border-neutral-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="relative">
+                <div class="group flex flex-col h-full">
+                    <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#F2F0E9] mb-5">
                         <img 
                             src={product.image} 
-                            alt={product.title}
-                            class="w-full h-48 sm:h-56 lg:h-64 object-cover"
+                            alt={product.title} 
+                            class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                         />
-                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
-                            <div class="flex items-center gap-1">
-                                <span class="text-yellow-400 text-xs sm:text-sm">⭐</span>
-                                <span class="text-xs sm:text-sm font-semibold text-neutral-700">{product.rating}</span>
-                            </div>
-                        </div>
+                        
                     </div>
                     
-                    <div class="p-4 sm:p-6">
-                        <div class="flex items-center gap-2 mb-2 sm:mb-3">
-                            <span class="text-xs text-neutral-500 bg-neutral-100 px-2 sm:px-3 py-1 rounded-full">{product.categoryName}</span>
-                        </div>
+                    <div class="flex-grow flex flex-col">
+                        <h3 class="font-medium text-stone-900 text-base md:text-lg mb-1">{product.title}</h3>
+                        <p class="text-sm text-stone-500 mb-3">{product.categoryName}</p>
                         
-                        <h3 class="text-base sm:text-lg font-semibold text-neutral-800 mb-2 sm:mb-3 line-clamp-2 leading-tight">
-                            {product.title}
-                        </h3>
-                        
-                        <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                            <span class="text-xl sm:text-2xl font-bold text-primary-600">{product.price}</span>
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-lg font-serif text-stone-900">{product.originalPrice}</span>
+                            </div>
                         </div>
                         
                         <button 
                             onclick={`window.location.href='/product/${product.id}'`}
-                            class="w-full bg-primary-600 hover:bg-primary-700 text-white py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-colors duration-200"
+                            class="mt-4 block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
                         >
-                            View Details
+                            Buy Now
                         </button>
                     </div>
                 </div>
             ))}
         </div>
-        
-        <div class="text-center mt-12 sm:mt-16 px-4">
-            <button 
-                onclick="window.location.href='/products'"
-                class="bg-neutral-800 hover:bg-neutral-900 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-2xl text-lg sm:text-xl font-semibold transition-all duration-200 transform hover:scale-105"
-            >
-                🎨 Explore Full Collection
-            </button>
-        </div>
-    </div>
-</section>
 
-<!-- 4. CUSTOMER TESTIMONIALS & VIDEO REVIEWS -->
-<section id="testimonials" class="py-16 lg:py-24 bg-gradient-to-b from-white to-neutral-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Text Reviews -->
-        <div class="text-center mb-10 sm:mb-14 px-4">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-800 font-playfair mb-4 sm:mb-6">
-                What Our Customers Say
-            </h2>
-            <p class="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto">
-                Join 1000+ happy families who've made our crafts part of their homes
-            </p>
+        <div class="mt-16 text-center">
+            <a href="/products" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl btn-d2c">
+                View Full Collection
+            </a>
         </div>
-            
-        <!-- Customer Stats -->
-        <div class="grid grid-cols-3 gap-4 max-w-3xl mx-auto mb-10 sm:mb-14">
-            <div class="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-neutral-100">
-                <div class="text-2xl sm:text-3xl font-bold text-amber-600 mb-1">1000+</div>
-                <div class="text-xs sm:text-sm text-neutral-600">Happy Families</div>
-            </div>
-            <div class="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-neutral-100">
-                <div class="text-2xl sm:text-3xl font-bold text-amber-600 mb-1">4.8⭐</div>
-                <div class="text-xs sm:text-sm text-neutral-600">Rating</div>
-            </div>
-            <div class="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-neutral-100">
-                <div class="text-2xl sm:text-3xl font-bold text-amber-600 mb-1">98%</div>
-                <div class="text-xs sm:text-sm text-neutral-600">Recommend</div>
-            </div>
-        </div>
-        
-        <!-- Text Testimonials Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-14">
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Priya+S&background=fbbf24&color=fff&size=48" alt="Priya S." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Priya Sharma</h4>
-                        <p class="text-xs text-neutral-500">Ahmedabad</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "The brass vessels are stunning! Perfect for our daily prayers. Quality is exceptional."
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-            
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Rajesh+P&background=10b981&color=fff&size=48" alt="Rajesh P." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Rajesh Patel</h4>
-                        <p class="text-xs text-neutral-500">Anand</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "Dhoopdani is perfect for our home temple. Guests always compliment it!"
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-            
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Meera+J&background=ec4899&color=fff&size=48" alt="Meera J." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Meera Joshi</h4>
-                        <p class="text-xs text-neutral-500">Vadodara</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "Beautiful iron lamps! They create such a peaceful ambiance in our home."
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-            
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100 md:block hidden">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Amit+K&background=3b82f6&color=fff&size=48" alt="Amit K." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Amit Kumar</h4>
-                        <p class="text-xs text-neutral-500">Surat</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "Excellent quality brass boxes. Perfect for gifting on special occasions."
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-            
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100 lg:block hidden">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Kavita+M&background=8b5cf6&color=fff&size=48" alt="Kavita M." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Kavita Mehta</h4>
-                        <p class="text-xs text-neutral-500">Rajkot</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "Traditional craftsmanship at its best. Every piece tells a story!"
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-            
-            <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-neutral-100 lg:block hidden">
-                <div class="flex items-center gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=Neha+D&background=f59e0b&color=fff&size=48" alt="Neha D." class="w-12 h-12 rounded-full">
-                    <div>
-                        <h4 class="text-sm font-bold text-neutral-800">Neha Desai</h4>
-                        <p class="text-xs text-neutral-500">Gandhinagar</p>
-                        <div class="flex text-yellow-400 text-xs mt-0.5">
-                            ⭐⭐⭐⭐⭐
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-neutral-700 leading-relaxed">
-                    "Fast delivery and beautiful packaging. Products exceeded expectations!"
-                </p>
-                <div class="mt-3 pt-3 border-t border-neutral-100">
-                    <span class="text-xs text-emerald-600 font-medium">✓ Verified Purchase</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Video Reviews -->
-        <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-neutral-800 font-playfair mb-4">
-                🎥 Real Stories, Real Homes
-            </h3>
-            <p class="text-lg text-neutral-600">
-                Watch how our handicrafts have transformed homes across Gujarat
-            </p>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Video Review 1 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 h-48 flex items-center justify-center relative">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-white text-2xl">▶️</span>
-                        </div>
-                        <p class="text-neutral-700 font-semibold">Priya's Home Tour</p>
-                        <p class="text-sm text-neutral-500">2:30 mins</p>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                        <span class="text-sm text-neutral-600">5.0</span>
-                    </div>
-                    <h4 class="font-bold text-neutral-800 mb-2">"Absolutely love my brass vessels!"</h4>
-                    <p class="text-sm text-neutral-600 mb-3">Watch how Priya arranged her prayer room with our handcrafted pieces</p>
-                    <p class="text-xs text-neutral-500">Priya S., Ahmedabad</p>
-                </div>
-            </div>
-            
-            <!-- Video Review 2 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 h-48 flex items-center justify-center relative">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-earth-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-white text-2xl">▶️</span>
-                        </div>
-                        <p class="text-neutral-700 font-semibold">Office Makeover</p>
-                        <p class="text-sm text-neutral-500">1:45 mins</p>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                        <span class="text-sm text-neutral-600">5.0</span>
-                    </div>
-                    <h4 class="font-bold text-neutral-800 mb-2">"Perfect for our home temple"</h4>
-                    <p class="text-sm text-neutral-600 mb-3">See how dhoopdani enhanced their prayer space ambiance</p>
-                    <p class="text-xs text-neutral-500">Rajesh P., Anand</p>
-                </div>
-            </div>
-            
-            <!-- Video Review 3 -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div class="bg-gradient-to-br from-neutral-100 to-neutral-200 h-48 flex items-center justify-center relative">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-white text-2xl">▶️</span>
-                        </div>
-                        <p class="text-neutral-700 font-semibold">Festival Décor</p>
-                        <p class="text-sm text-neutral-500">3:15 mins</p>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
-                        <span class="text-sm text-neutral-600">5.0</span>
-                    </div>
-                    <h4 class="font-bold text-neutral-800 mb-2">"Made our Diwali extra special"</h4>
-                    <p class="text-sm text-neutral-600 mb-3">Beautiful brass lamps and dhoopdani that completed their festival setup</p>
-                    <p class="text-xs text-neutral-500">Kavita M., Surat</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="text-center mt-12">
-            <button class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-200 transform hover:scale-105">
-                📹 Share Your Story
-            </button>
-        </div>
-    </div>
-</section>
+    </section>
 
-<!-- 5. WHY CHOOSE US SECTION -->
-<section class="py-20 lg:py-32 bg-gradient-to-r from-earth-50 to-primary-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl lg:text-5xl font-bold text-neutral-800 font-playfair mb-8">
-                Why Choose Shreeyam HandiCrafts?
-            </h2>
-            <p class="text-xl text-neutral-600 max-w-3xl mx-auto">
-                We've been serving customers in Gujarat for years, providing authentic handcrafted items that bring beauty and tradition to your home.
-            </p>
-        </div>
-        
-        <div class="grid lg:grid-cols-3 gap-8">
-            <div class="bg-white p-8 rounded-3xl shadow-lg text-center">
-                <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-primary-600 text-3xl">✓</span>
-                </div>
-                <h3 class="text-2xl font-bold text-neutral-800 mb-4">Authentic Craftsmanship</h3>
-                <p class="text-neutral-600 leading-relaxed">Each piece is handmade by skilled artisans using traditional techniques passed down through generations</p>
+    <section id="testimonials" class="py-20 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-playfair text-stone-900 mb-4">Stories from Home</h2>
             </div>
-            
-            <div class="bg-white p-8 rounded-3xl shadow-lg text-center">
-                <div class="w-20 h-20 bg-earth-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-earth-600 text-3xl">✓</span>
-                </div>
-                <h3 class="text-2xl font-bold text-neutral-800 mb-4">Quality Materials</h3>
-                <p class="text-neutral-600 leading-relaxed">We use only premium wood, brass, and other materials sourced ethically and sustainably</p>
-            </div>
-            
-            <div class="bg-white p-8 rounded-3xl shadow-lg text-center">
-                <div class="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <span class="text-primary-600 text-3xl">✓</span>
-                </div>
-                <h3 class="text-2xl font-bold text-neutral-800 mb-4">Customer Satisfaction</h3>
-                <p class="text-neutral-600 leading-relaxed">Over 1000+ happy customers with 4.8-star average rating across Gujarat</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- 6. CONTACT & SOCIAL SECTION -->
-<section id="contact" class="py-20 lg:py-32 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 sm:mb-16 px-4">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-800 font-playfair mb-6 sm:mb-8">
-                Let's Create Something Beautiful Together
-            </h2>
-            <p class="text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto">
-                Ready to bring authentic Indian craftsmanship to your home? Connect with us on your preferred platform.
-            </p>
-        </div>
-        
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16">
-            <!-- Contact Info -->
-            <div class="space-y-6 sm:space-y-8 px-4 lg:px-0">
-                <div class="bg-primary-50 p-6 sm:p-8 rounded-3xl">
-                    <h3 class="text-xl sm:text-2xl font-bold text-neutral-800 mb-6 sm:mb-8">Get in Touch</h3>
-                    
-                    <div class="space-y-4 sm:space-y-6">
-                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-green-200 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-green-700 text-xl sm:text-2xl">💬</span>
-                            </div>
-                            <div class="text-center sm:text-left">
-                                <p class="font-bold text-base sm:text-lg text-neutral-800">WhatsApp</p>
-                                <p class="text-neutral-600 text-base sm:text-lg">+91 97269 83835</p>
-                                <p class="text-xs sm:text-sm text-neutral-500">Quick response guaranteed</p>
-                            </div>
+            <div class="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-3 snap-x">
+                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
+                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
+                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
+                        "The brass vessel is even more beautiful in person. Heavy, authentic, and adds such a divine feel to my prayer room."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">PS</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-stone-900">Priya Sharma</h4>
+                            <p class="text-xs text-stone-500">Ahmedabad</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
+                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
+                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
+                        "I was looking for traditional iron lamps for Diwali and these are perfect. The craftsmanship is visibly superior."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">RP</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-stone-900">Rajesh Patel</h4>
+                            <p class="text-xs text-stone-500">Vadodara</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
+                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
+                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
+                        "Excellent packaging and very responsive team. The Dhoopdani is a piece of art itself."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">MJ</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-stone-900">Meera Joshi</h4>
+                            <p class="text-xs text-stone-500">Surat</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 lg:py-32 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 px-4">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 font-playfair mb-6 sm:mb-8">
+                    Let's Create Something Beautiful
+                </h2>
+                <p class="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto font-light">
+                    Ready to bring authentic Indian craftsmanship to your home? Connect with us on your preferred platform.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16">
+                <div class="space-y-6 sm:space-y-8 px-4 lg:px-0">
+                    <div class="bg-[#F2F0E9] p-6 sm:p-8 rounded-[2rem] border border-stone-200">
+                        <h3 class="text-xl sm:text-2xl font-bold text-stone-900 mb-6 sm:mb-8 font-playfair">Get in Touch</h3>
                         
-                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-earth-200 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-earth-700 text-xl sm:text-2xl">📍</span>
+                        <div class="space-y-4 sm:space-y-6">
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">💬</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">WhatsApp</p>
+                                    <p class="text-stone-600 text-base sm:text-lg">+91 97269 83835</p>
+                                    <p class="text-xs sm:text-sm text-stone-500">Quick response guaranteed</p>
+                                </div>
                             </div>
-                            <div class="text-center sm:text-left">
-                                <p class="font-bold text-base sm:text-lg text-neutral-800">Locations</p>
-                                <p class="text-neutral-600 text-sm sm:text-base">Ahmedabad & Anand, Gujarat</p>
-                                <p class="text-xs sm:text-sm text-neutral-500">Serving across Gujarat</p>
+                            
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">📍</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">Locations</p>
+                                    <p class="text-stone-600 text-sm sm:text-base">Ahmedabad & Anand, Gujarat</p>
+                                    <p class="text-xs sm:text-sm text-stone-500">Serving across Gujarat</p>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-primary-200 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span class="text-primary-700 text-xl sm:text-2xl">⏰</span>
-                            </div>
-                            <div class="text-center sm:text-left">
-                                <p class="font-bold text-base sm:text-lg text-neutral-800">Business Hours</p>
-                                <p class="text-neutral-600 text-sm sm:text-base">Mon - Sat: 9:00 AM - 7:00 PM</p>
-                                <p class="text-xs sm:text-sm text-neutral-500">Sunday: By appointment</p>
+                            
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">⏰</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">Business Hours</p>
+                                    <p class="text-stone-600 text-sm sm:text-base">Mon - Sat: 9:00 AM - 7:00 PM</p>
+                                    <p class="text-xs sm:text-sm text-stone-500">Sunday: By appointment</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Social Media Connect -->
-            <div class="bg-neutral-50 p-6 sm:p-8 rounded-3xl px-4 lg:px-0">
-                <h3 class="text-xl sm:text-2xl font-bold text-neutral-800 mb-4 sm:mb-6 text-center">Connect With Us</h3>
-                <p class="text-sm sm:text-base text-neutral-600 mb-6 sm:mb-8 text-center">Choose your preferred platform to get in touch</p>
-                
-                <div class="space-y-3 sm:space-y-4">
-                    <!-- WhatsApp -->
-                    <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 sm:py-4 px-4 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 sm:gap-3 transform hover:scale-[1.02] min-h-[52px]">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-                        </svg>
-                        <span class="truncate">WhatsApp Us - Instant Response</span>
-                    </button>
-                    
-                    <!-- Instagram -->
-                    <button onclick="window.open('https://www.instagram.com/shreeyam_handicrafts/profilecard/', '_blank')" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-3 sm:py-4 px-4 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 sm:gap-3 transform hover:scale-[1.02] min-h-[52px]">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>
-                        <span class="truncate">Follow on Instagram - See Our Work</span>
-                    </button>
-                    
-                    <!-- Facebook -->
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 sm:py-4 px-4 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 sm:gap-3 transform hover:scale-[1.02] min-h-[52px]">
-                        <svg class="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                        <span class="truncate">Like on Facebook - Join Our Community</span>
-                    </button>
                 </div>
                 
-                <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-white rounded-xl sm:rounded-2xl text-center">
-                    <p class="text-xs sm:text-sm text-neutral-600 mb-1 sm:mb-2">💬 <strong>Quick Response Guaranteed</strong></p>
-                    <p class="text-xs text-neutral-500">We typically respond within 30 minutes during business hours</p>
-                    <div class="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-2 text-xs text-neutral-400">
-                        <span>🏆 Trusted by 1000+ families</span>
-                        <span class="hidden sm:inline">•</span>
-                        <span>⭐ 4.8 star rating</span>
+                <div class="bg-white p-6 sm:p-8 rounded-[2rem] border border-stone-200 px-4 lg:px-0 shadow-sm">
+                    <h3 class="text-xl sm:text-2xl font-bold text-stone-900 mb-4 sm:mb-6 text-center font-playfair">Connect With Us</h3>
+                    <p class="text-sm sm:text-base text-stone-600 mb-6 sm:mb-8 text-center">Choose your preferred platform to get in touch</p>
+                    
+                    <div class="space-y-3 sm:space-y-4">
+                        <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+                            </svg>
+                            <span class="truncate">WhatsApp Us</span>
+                        </button>
+                        
+                        <button onclick="window.open('https://www.instagram.com/shreeyam_handicrafts/profilecard/', '_blank')" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            <span class="truncate">Follow on Instagram</span>
+                        </button>
+                        
+                        <button class="w-full bg-blue-700 hover:bg-blue-800 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            <span class="truncate">Join our community on Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6 sm:mt-8 p-4 bg-[#F2F0E9] rounded-xl text-center border border-stone-100">
+                        <p class="text-xs sm:text-sm text-stone-600 mb-1 sm:mb-2">💬 <strong>Quick Response Guaranteed</strong></p>
+                        <p class="text-xs text-stone-500">We typically respond within 30 minutes during business hours</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Footer -->
-<footer class="bg-neutral-800 text-neutral-200 py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-8">
-            <div class="space-y-4">
-                <div class="flex items-center">
-                    <div class="w-12 h-12 bg-primary-500 rounded-lg flex items-center justify-center mr-3">
-                        <span class="text-white text-xl">🏺</span>
+    <footer class="bg-[#1c1917] text-stone-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-stone-800 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-xl">🏺</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold font-playfair text-white">Shreeyam</h3>
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest">Handicrafts</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold font-playfair">Shreeyam HandiCrafts</h3>
-                        <p class="text-sm text-neutral-400">Authentic • Traditional • Quality</p>
-                    </div>
+                    <p class="text-stone-500 text-sm leading-relaxed">Preserving Gujarat's heritage through authentic brass vessels, dhoopdani, traditional boxes, and iron lamps crafted with excellence.</p>
                 </div>
-                <p class="text-neutral-400">Preserving Gujarat's heritage through authentic brass vessels, dhoopdani, traditional boxes, and iron lamps crafted with traditional excellence.</p>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Products</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors">Reviews</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Collections</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/products" class="hover:text-white transition-colors">Brass Boxes</a></li>
+                        <li><a href="/products" class="hover:text-white transition-colors">Brass Vessels</a></li>
+                        <li><a href="/products" class="hover:text-white transition-colors">Brass Dhoopdani</a></li>
+                        <li><a href="/products" class="hover:text-white transition-colors">Iron Lamps</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Connect</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2">
+                            <span>💬</span>
+                            <span>+91 97269 83835</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span>📍</span>
+                            <span>Ahmedabad, Gujarat</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span>⏰</span>
+                            <span>Mon-Sat: 9AM-7PM</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
             
-            <div>
-                <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                <ul class="space-y-2">
-                    <li><a href="#home" class="text-neutral-400 hover:text-white transition-colors">Home</a></li>
-                    <li><a href="#products" class="text-neutral-400 hover:text-white transition-colors">Products</a></li>
-                    <li><a href="#testimonials" class="text-neutral-400 hover:text-white transition-colors">Reviews</a></li>
-                    <li><a href="#contact" class="text-neutral-400 hover:text-white transition-colors">Contact</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-lg font-semibold mb-4">Categories</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="text-neutral-400 hover:text-white transition-colors">🟡 Brass Boxes</a></li>
-                    <li><a href="#" class="text-neutral-400 hover:text-white transition-colors">🔵 Brass Vessels</a></li>
-                    <li><a href="#" class="text-neutral-400 hover:text-white transition-colors">🔴 Brass Dhoopdani</a></li>
-                    <li><a href="#" class="text-neutral-400 hover:text-white transition-colors">🟢 Iron Lamps</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
-                <ul class="space-y-3 text-neutral-400">
-                    <li class="flex items-center gap-2">
-                        <span>💬</span>
-                        <span>WhatsApp: +91 97269 83835</span>
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span>📍</span>
-                        <span>Ahmedabad, Gujarat</span>
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span>⏰</span>
-                        <span>Mon-Sat: 9AM-7PM</span>
-                    </li>
-                </ul>
+            <div class="border-t border-stone-800 mt-12 pt-8 text-center text-xs text-stone-600">
+                <p>&copy; 2025 Shreeyam Handicrafts. All rights reserved.</p>
+                <p class="mt-2 opacity-50">Made with ❤️ in Gujarat</p>
             </div>
         </div>
-        
-        <div class="border-t border-neutral-700 mt-12 pt-8 text-center text-neutral-400">
-            <p>&copy; 2025 Shreeyam HandiCrafts. All rights reserved.</p>
-            <p class="mt-2 text-sm">Made with ❤️ in Gujarat • Preserving tradition, creating memories</p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Floating WhatsApp Button -->
-<div class="fixed bottom-6 right-6 z-50">
-    <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 animate-pulse">
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-        </svg>
-    </button>
+    <a href="https://wa.me/919726983835" target="_blank" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+    </svg>
+    </a>
 </div>
 
-<style>
-    html {
-        scroll-behavior: smooth;
-    }
-    
-    .font-playfair {
-        font-family: 'Playfair Display', serif;
-    }
-    
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    
-    button:focus, 
-    input:focus, 
-    select:focus, 
-    textarea:focus {
-        outline: 2px solid #d97006;
-        outline-offset: 2px;
-    }
-    
-    .hover-lift:hover {
-        transform: translateY(-2px);
-        transition: transform 0.2s ease;
-    }
-    
-    @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.8;
-        }
-    }
-    
-    .animate-pulse {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    /* Mobile-specific improvements */
-    @media (max-width: 640px) {
-        /* Ensure text is readable on small screens */
-        body {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        
-        /* Improve touch targets */
-        button, a {
-            min-height: 44px;
-            min-width: 44px;
-        }
-        
-        /* Prevent horizontal scroll */
-        .container {
-            overflow-x: hidden;
-        }
-        
-        /* Better spacing for mobile */
-        section {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-    }
-    
-    /* Tablet improvements */
-    @media (min-width: 641px) and (max-width: 1024px) {
-        /* Optimize for tablet view */
-        .grid {
-            gap: 1.5rem;
-        }
-    }
-</style>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mobile menu functionality
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuBtn?.addEventListener('click', function() {
-            mobileMenu?.classList.toggle('hidden');
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    // Close mobile menu if open
-                    mobileMenu?.classList.add('hidden');
-                }
-            });
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for scroll animations
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        }
     });
 </script>

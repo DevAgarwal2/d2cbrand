@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { products } from '../../data/products.js';
+import logo from "../../assets/logo.jpeg"; 
 
 export function getStaticPaths() {
   return products.map((product) => ({
@@ -15,276 +16,315 @@ if (!product) {
   return Astro.redirect('/404');
 }
 
-// Get related products from same category
+// Get related products
 const relatedProducts = products
   .filter(p => p.category === product.category && p.id !== product.id)
   .slice(0, 3);
+
+// Base message (The URL will be added by JavaScript below)
+const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title} (Price: ${product.price}).`;
 ---
 
 <Layout title={product.title} description={product.description}>
-  <!-- Breadcrumb Navigation -->
-  <nav class="bg-neutral-50 py-4 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center space-x-2 text-sm">
-        <a href="/" class="text-primary-600 hover:text-primary-700">Home</a>
-        <span class="text-neutral-400">→</span>
-        <a href="/#products" class="text-primary-600 hover:text-primary-700">Products</a>
-        <span class="text-neutral-400">→</span>
-        <span class="text-neutral-600">{product.categoryName}</span>
-        <span class="text-neutral-400">→</span>
-        <span class="text-neutral-800 font-medium">{product.title}</span>
-      </div>
-    </div>
-  </nav>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
 
-  <!-- Product Details -->
-  <section class="py-8 lg:py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12">
-        <!-- Product Images -->
-        <div>
-          <!-- Main Image -->
-          <div class="bg-neutral-50 rounded-2xl overflow-hidden mb-4">
-            <img 
-              id="main-image"
-              src={product.image} 
-              alt={product.title}
-              class="w-full h-96 lg:h-[500px] object-cover"
-            />
-          </div>
-          
-          <!-- Image Thumbnails -->
-          {product.images && product.images.length > 1 && (
-            <div class="grid grid-cols-4 gap-3">
-              {product.images.map((img, index) => (
-                <button 
-                  class="thumbnail bg-neutral-50 rounded-lg overflow-hidden border-2 border-transparent hover:border-primary-500 transition-colors"
-                  onclick={`document.getElementById('main-image').src = '${img}'`}
-                >
-                  <img 
-                    src={img} 
-                    alt={`${product.title} view ${index + 1}`}
-                    class="w-full h-20 object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        :root {
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Outfit', sans-serif;
+        }
 
-        <!-- Product Info -->
-        <div class="space-y-6">
-          <!-- Category Badge -->
-          <div class="flex items-center gap-2">
-            <span class="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium">
-              {product.categoryName}
-            </span>
-            {product.inStock && (
-              <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                ✓ In Stock
-              </span>
-            )}
-            {product.fastDelivery && (
-              <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
-                🚚 Fast Delivery
-              </span>
-            )}
-          </div>
+        body {
+            font-family: var(--font-sans);
+            background: radial-gradient(circle at 0% 0%, #FFFFFF 0%, #F2F0E9 100%);
+            background-attachment: fixed;
+        }
 
-          <!-- Title -->
-          <h1 class="text-3xl lg:text-4xl font-bold text-neutral-800 font-playfair leading-tight">
-            {product.title}
-          </h1>
+        .font-playfair { font-family: var(--font-serif); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-          <!-- Rating and Reviews -->
-          <div class="flex items-center gap-4">
-            <div class="flex items-center gap-2">
-              <div class="flex text-yellow-400">
-                {'⭐'.repeat(Math.floor(product.rating))}
-              </div>
-              <span class="text-lg font-semibold text-neutral-700">{product.rating}</span>
-            </div>
-            <span class="text-neutral-600">({product.reviews} reviews)</span>
-          </div>
+        .btn-d2c { transition: all 0.3s ease; }
+        .btn-d2c:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.2);
+        }
+    </style>
 
-          <!-- Price -->
-          <div class="space-y-2">
-            <div class="flex items-center gap-4">
-              <span class="text-4xl font-bold text-primary-600">{product.price}</span>
-            </div>
-          </div>
-
-          <!-- WhatsApp Contact -->
-          <div class="space-y-4 pt-4 border-t border-neutral-200">
-            <h3 class="text-lg font-semibold text-neutral-800">Get in Touch</h3>
-            <button 
-              data-product-title={product.title}
-              data-product-price={product.price}
-              class="whatsapp-product-btn w-full bg-green-500 hover:bg-green-600 text-white py-4 px-6 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-              </svg>
-              <span class="text-lg">WhatsApp Us - Instant Response</span>
-            </button>
-            <p class="text-sm text-neutral-600 text-center">💬 Quick response guaranteed within 30 minutes</p>
-          </div>
-
-          <!-- Description -->
-          <div>
-            <h3 class="text-xl font-semibold text-neutral-800 mb-3">Description</h3>
-            <p class="text-lg text-neutral-600 leading-relaxed">{product.description}</p>
-          </div>
-
-          <!-- Features -->
-          {product.features && (
-            <div>
-              <h3 class="text-xl font-semibold text-neutral-800 mb-3">Features</h3>
-              <ul class="space-y-2">
-                {product.features.map((feature) => (
-                  <li class="flex items-center gap-3 text-neutral-600">
-                    <span class="text-green-600 font-bold">✓</span>
-                    <span class="text-lg">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-
-          <!-- Additional Info -->
-          <div class="bg-neutral-50 p-6 rounded-xl space-y-4">
-            <h3 class="text-lg font-semibold text-neutral-800">Product Information</h3>
-            <div class="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <span class="text-neutral-600">Category:</span>
-                <span class="ml-2 font-medium text-neutral-800">{product.categoryName}</span>
-              </div>
-              <div>
-                <span class="text-neutral-600">Availability:</span>
-                <span class="ml-2 font-medium text-green-600">
-                  {product.inStock ? 'In Stock' : 'Out of Stock'}
-                </span>
-              </div>
-              <div>
-                <span class="text-neutral-600">Delivery:</span>
-                <span class="ml-2 font-medium text-neutral-800">
-                  {product.fastDelivery ? '2-3 days' : '5-7 days'}
-                </span>
-              </div>
-              <div>
-                <span class="text-neutral-600">Rating:</span>
-                <span class="ml-2 font-medium text-neutral-800">{product.rating}/5.0</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Related Products -->
-      {relatedProducts.length > 0 && (
-        <div class="mt-16 lg:mt-24">
-          <h2 class="text-3xl font-bold text-neutral-800 font-playfair mb-8">
-            Related Products
-          </h2>
-          
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedProducts.map((relatedProduct) => (
-              <div class="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <div class="relative">
-                  <img 
-                    src={relatedProduct.image} 
-                    alt={relatedProduct.title}
-                    class="w-full h-64 object-cover"
-                    loading="lazy"
-                  />
+    <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 overflow-hidden rounded-lg bg-stone-100 group-hover:scale-105 transition-transform">
+                        <img src={logo.src} alt="Shreeyam" class="w-full h-full object-cover mix-blend-multiply">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-stone-900 tracking-wide leading-none font-playfair">SHREEYAM</h1>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-stone-500 font-medium">Handicrafts</p>
+                    </div>
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="/#home" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Home</a>
+                    <a href="/products" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Collections</a>
+                    <a href="/#products" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Best Sellers</a>
+                    <a href="/#testimonials" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Reviews</a>
                 </div>
                 
-                <div class="p-6">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-sm text-neutral-500 bg-neutral-100 px-2 py-1 rounded-md">{relatedProduct.categoryName}</span>
-                    <div class="flex items-center gap-1">
-                      <span class="text-yellow-400">⭐</span>
-                      <span class="text-sm text-neutral-600">{relatedProduct.rating}</span>
-                    </div>
-                  </div>
-                  
-                  <h3 class="text-lg font-semibold text-neutral-800 mb-3 line-clamp-2 leading-tight">
-                    {relatedProduct.title}
-                  </h3>
-                  
-                  <div class="flex items-center gap-3 mb-4">
-                    <span class="text-2xl font-bold text-primary-600">{relatedProduct.price}</span>
-                  </div>
-                  
-                  <button 
-                    onclick={`window.location.href='/product/${relatedProduct.id}'`}
-                    class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-lg font-semibold transition-colors duration-200"
-                  >
-                    View Details
-                  </button>
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/919726983835" target="_blank" class="hidden md:flex bg-stone-900 text-white px-5 py-2.5 rounded-full text-sm font-medium items-center gap-2 btn-d2c">
+                        <span>WhatsApp Us</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
                 </div>
-              </div>
-            ))}
-          </div>
+            </div>
         </div>
-      )}
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF7] border-t border-stone-100 absolute w-full shadow-xl">
+            <div class="flex flex-col p-4 space-y-2">
+                <a href="/#home" class="p-3 text-base font-medium text-stone-800">Home</a>
+                <a href="/products" class="p-3 text-base font-medium text-stone-800">Collections</a>
+                <a href="/#products" class="p-3 text-base font-medium text-stone-800">Best Sellers</a>
+                <a href="/#testimonials" class="p-3 text-base font-medium text-stone-800">Reviews</a>
+            </div>
+        </div>
+    </nav>
+    <div class="border-b border-stone-200/50 bg-white/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center text-sm font-medium overflow-x-auto no-scrollbar whitespace-nowrap">
+                <a href="/" class="text-stone-500 hover:text-stone-900 transition-colors">Home</a>
+                <span class="mx-2 text-stone-300">/</span>
+                <a href="/products" class="text-stone-500 hover:text-stone-900 transition-colors">Collection</a>
+                <span class="mx-2 text-stone-300">/</span>
+                <span class="text-stone-900 border-b border-stone-900 pb-0.5">{product.title}</span>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <!-- Fixed Bottom Bar for Mobile -->
-  
+    <section class="py-8 lg:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white p-2 rounded-[2rem] shadow-sm border border-stone-100">
+                        <div class="relative aspect-[4/5] lg:aspect-auto lg:h-[650px] overflow-hidden rounded-[1.5rem] bg-[#F2F0E9] group">
+                            <img 
+                                id="main-image"
+                                src={product.image} 
+                                alt={product.title}
+                                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out"
+                            />
+                            <div class="absolute top-6 left-6 flex flex-col gap-2">
+                                <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
+                                    {product.categoryName}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {product.images && product.images.length > 1 && (
+                        <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar px-1">
+                            {product.images.map((img, index) => (
+                                <button 
+                                    class="thumbnail flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 border-transparent transition-all hover:border-stone-900 focus:border-stone-900"
+                                    onclick={`changeImage('${img}', this)`}
+                                >
+                                    <img src={img} class="w-full h-full object-cover" alt="" />
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div class="lg:sticky lg:top-32">
+                        <div class="mb-8 border-b border-stone-200 pb-8">
+                            <h1 class="text-4xl lg:text-5xl font-playfair text-stone-900 mb-4 leading-tight">
+                                {product.title}
+                            </h1>
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl font-light text-stone-900 font-sans tracking-tight">
+                                    {product.price}
+                                </span>
+                                <div class="flex items-center gap-1.5 bg-stone-100 px-3 py-1 rounded-full">
+                                    <span class="text-amber-500 text-sm">★★★★★</span>
+                                    <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">{product.rating} Rating</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 mb-8">
+                            <p class="text-lg text-stone-600 font-light leading-relaxed">
+                                {product.description}
+                            </p>
+                            {product.features && (
+                                <ul class="space-y-3 pt-4">
+                                    {product.features.map((feature) => (
+                                        <li class="flex items-start gap-3 text-stone-700">
+                                            <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-stone-400 flex-shrink-0"></span>
+                                            <span>{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                        <div class="hidden lg:block space-y-4">
+                            <button 
+                                data-message={baseMessage}
+                                class="whatsapp-btn btn-d2c w-full bg-stone-900 text-white text-lg font-medium py-5 rounded-full flex items-center justify-center gap-3"
+                            >
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/></svg>
+                                <span>Order via WhatsApp</span>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-stone-200">
+                            <div class="text-center">
+                                <div class="font-playfair text-xl text-stone-900 mb-1">100%</div>
+                                <div class="text-[10px] uppercase tracking-widest text-stone-500">Handmade</div>
+                            </div>
+                            <div class="text-center border-l border-stone-200">
+                                <div class="font-playfair text-xl text-stone-900 mb-1">Safe</div>
+                                <div class="text-[10px] uppercase tracking-widest text-stone-500">Shipping</div>
+                            </div>
+                            <div class="text-center border-l border-stone-200">
+                                <div class="font-playfair text-xl text-stone-900 mb-1">Est.</div>
+                                <div class="text-[10px] uppercase tracking-widest text-stone-500">2015</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {relatedProducts.length > 0 && (
+                <div class="mt-24 pt-16 border-t border-stone-200">
+                    <h2 class="text-3xl lg:text-4xl font-playfair text-stone-900 mb-8 text-center">You May Also Like</h2>
+                    
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                        {relatedProducts.map((relatedProduct) => (
+                            <div class="group flex flex-col h-full">
+                                <a href={`/product/${relatedProduct.id}`} class="block relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#F2F0E9] mb-4">
+                                    <img 
+                                        src={relatedProduct.image} 
+                                        alt={relatedProduct.title}
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        loading="lazy"
+                                    />
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+                                </a>
+                                
+                                <div class="flex-grow flex flex-col">
+                                    <h3 class="font-medium text-stone-900 text-lg mb-1 group-hover:text-stone-600 transition-colors">
+                                        {relatedProduct.title}
+                                    </h3>
+                                    <div class="text-stone-500 font-serif mb-4">{relatedProduct.originalPrice}</div>
+                                    
+                                    <a 
+                                        href={`/product/${relatedProduct.id}`}
+                                        class="mt-auto block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
+                                    >
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    </section>
+
+    <footer class="bg-[#1c1917] text-stone-400 py-12 md:py-16 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 md:gap-12">
+            <div class="md:col-span-2">
+                <h3 class="text-2xl font-bold text-white font-playfair mb-4">SHREEYAM</h3>
+                <p class="text-sm leading-relaxed max-w-sm">
+                    Bringing the spiritual and artistic heritage of Gujarat to modern homes. Each piece tells a story of tradition.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Collections</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="/#products" class="hover:text-white transition-colors">Brass Vessels</a></li>
+                    <li><a href="/#products" class="hover:text-white transition-colors">Iron Lamps</a></li>
+                    <li><a href="/#products" class="hover:text-white transition-colors">Wooden Decor</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Contact</h4>
+                <ul class="space-y-3 text-sm">
+                    <li>Ahmedabad, Gujarat</li>
+                    <li>+91 97269 83835</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-stone-800 text-center text-xs">
+            &copy; 2025 Shreeyam Handicrafts. All rights reserved.
+        </div>
+    </footer>
+    <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-stone-200 p-4 lg:hidden z-50 pb-safe shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <div class="flex items-center gap-4 max-w-7xl mx-auto">
+            <div class="flex-1">
+                <p class="text-xs text-stone-500 uppercase tracking-wider mb-0.5">Price</p>
+                <p class="text-xl font-serif text-stone-900">{product.originalPrice}</p>
+            </div>
+            <button 
+                data-message={baseMessage}
+                class="whatsapp-btn flex-1 bg-stone-900 text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform"
+            >
+                <span>Buy Now</span>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/></svg>
+            </button>
+        </div>
+    </div>
 </Layout>
 
 <style>
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  /* Add padding bottom for mobile fixed bar */
-  @media (max-width: 768px) {
-    body {
-      padding-bottom: 80px;
-    }
-  }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
 </style>
 
-<script>
-  // Image gallery functionality
-  document.addEventListener('DOMContentLoaded', function() {
-    const thumbnails = document.querySelectorAll('.thumbnail');
+<script is:inline>
+  // Image Switcher
+  window.changeImage = function(src, btn) {
     const mainImage = document.getElementById('main-image');
-    
-    thumbnails.forEach((thumbnail, index) => {
-      thumbnail.addEventListener('click', function() {
-        // Remove active state from all thumbnails
-        thumbnails.forEach(t => t.classList.remove('border-primary-500'));
-        // Add active state to clicked thumbnail
-        this.classList.add('border-primary-500');
-      });
-    });
-    
-    // Set first thumbnail as active by default
-    if (thumbnails.length > 0) {
-      thumbnails[0].classList.add('border-primary-500');
+    mainImage.style.opacity = '0.7';
+    setTimeout(() => {
+      mainImage.src = src;
+      mainImage.style.opacity = '1';
+    }, 200);
+
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('border-stone-900'));
+    btn.classList.add('border-stone-900');
+  }
+
+  // Mobile Menu
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1. Mobile Menu Logic
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if(btn && menu) {
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
     }
-    
-    // WhatsApp button functionality
-    const whatsappButtons = document.querySelectorAll('.whatsapp-product-btn');
-    whatsappButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        const productTitle = this.getAttribute('data-product-title');
-        const productPrice = this.getAttribute('data-product-price');
-        const productUrl = window.location.href;
-        
-        const message = `Hi! I would like to inquire about: ${productTitle}\n\nPrice: ${productPrice}\n\nProduct Link: ${productUrl}`;
-        const whatsappUrl = `https://wa.me/919726983835?text=${encodeURIComponent(message)}`;
-        
-        window.open(whatsappUrl, '_blank');
-      });
+
+    // 2. WhatsApp Button Logic (To Include URL)
+    const whatsappBtns = document.querySelectorAll('.whatsapp-btn');
+    whatsappBtns.forEach(button => {
+        button.addEventListener('click', () => {
+            const baseMessage = button.getAttribute('data-message');
+            const currentUrl = window.location.href; // Get the current page URL
+            
+            // Construct full message
+            const fullMessage = `${baseMessage}\n\nProduct Link: ${currentUrl}`;
+            
+            // Open WhatsApp
+            const whatsappUrl = `https://wa.me/919726983835?text=${encodeURIComponent(fullMessage)}`;
+            window.open(whatsappUrl, '_blank');
+        });
     });
   });
 </script>
-

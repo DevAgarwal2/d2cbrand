@@ -1,58 +1,119 @@
 ---
+// src/layouts/Layout.astro
 export interface Props {
-	title?: string;
-	description?: string;
+    title?: string;
+    description?: string;
+    image?: string;
 }
 
 const { 
-	title = "Shreeyam HandiCrafts - Traditional Brass Vessels, Dhoopdani & Iron Lamps | Gujarat",
-	description = "Authentic handcrafted brass vessels, traditional dhoopdani, decorative boxes & iron lamps from Gujarat. Premium quality Indian handicrafts for home & temple. Fast delivery across India."
+    title = "Shreeyam HandiCrafts - Traditional Brass Vessels, Dhoopdani & Iron Lamps | Gujarat",
+    description = "Authentic handcrafted brass vessels, traditional dhoopdani, decorative boxes & iron lamps from Gujarat. Premium quality Indian handicrafts for home & temple. Fast delivery across India.",
+    image = "https://ik.imagekit.io/pi9wuccc0i/preview-banner.jpeg"
 } = Astro.props;
+
+// --- FIX: Safe URL Generation ---
+// If Astro.site is undefined (dev mode), fall back to the current request origin
+const siteBase = Astro.site ? Astro.site.href : Astro.url.origin;
+const canonicalURL = new URL(Astro.url.pathname, siteBase);
+
+// JSON-LD Structured Data for Local Business
+const schema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Shreeyam HandiCrafts",
+  "image": "https://ik.imagekit.io/pi9wuccc0i/logo.jpeg",
+  "description": description,
+  "telephone": "+919726983835",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "addressCountry": "IN"
+  },
+  "url": siteBase, 
+  "priceRange": "₹₹",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "opens": "09:00",
+    "closes": "19:00"
+  }
+});
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+        
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="keywords" content="brass vessels, dhoopdani, iron lamps, brass boxes, traditional handicrafts, Gujarat artisans, Indian brass items, temple accessories, home decor, authentic crafts, handmade brass, spiritual items, prayer accessories, traditional vessels, Indian handicrafts online" />
+        <meta name="author" content="Shreeyam HandiCrafts" />
+        <link rel="canonical" href={canonicalURL} />
 
-		<!-- Favicon & Apple Icon -->
-		<link rel="icon" type="image/jpeg" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
-		<link rel="apple-touch-icon" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+        <link rel="icon" type="image/jpeg" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+        <link rel="apple-touch-icon" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+        <meta name="theme-color" content="#1c1917" />
 
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<meta name="keywords" content="brass vessels, dhoopdani, iron lamps, brass boxes, traditional handicrafts, Gujarat artisans, Indian brass items, temple accessories, home decor, authentic crafts, handmade brass, spiritual items, prayer accessories, traditional vessels, Indian handicrafts online" />
-		<meta name="author" content="Shreeyam HandiCrafts" />
-		<meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={Astro.url} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
+        <meta property="og:locale" content="en_IN" />
+        <meta property="og:site_name" content="Shreeyam HandiCrafts" />
 
-		<!-- Open Graph Meta (for Facebook, WhatsApp, LinkedIn) -->
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="en_IN" />
-		<meta property="og:image" content="https://ik.imagekit.io/pi9wuccc0i/preview-banner.jpeg" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={Astro.url} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
 
-		<!-- Twitter Meta -->
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="https://ik.imagekit.io/pi9wuccc0i/preview-banner.jpeg" />
+        <meta name="geo.region" content="IN-GJ" />
+        <meta name="geo.placename" content="Ahmedabad" />
+        <meta name="geo.position" content="23.0225;72.5714" />
+        <meta name="ICBM" content="23.0225, 72.5714" />
 
-		<link rel="canonical" href={Astro.url} />
-		<title>{title}</title>
-		
-		<!-- Enhanced Google Fonts for Traditional Indian Theme -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
-		
-		<!-- Font Awesome -->
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-	</head>
-	<body class="font-inter bg-gradient-to-br from-brass-50 via-white to-primary-50 text-neutral-800 selection:bg-brass-200 selection:text-brass-900">
-		<slot />
-	</body>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+
+        <script type="application/ld+json" set:html={schema} />
+
+        <style is:global>
+            /* Global Font Variables */
+            :root {
+                --font-serif: 'Playfair Display', serif;
+                --font-sans: 'Outfit', sans-serif;
+                --font-body: 'Inter', sans-serif;
+            }
+            
+            /* Smooth Scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Custom Selection Color to match brand */
+            ::selection {
+                background-color: #f59e0b; /* Amber-500 */
+                color: white;
+            }
+        </style>
+    </head>
+    <body class="font-sans antialiased text-stone-900 bg-[#FAFAF9]">
+        <slot />
+    </body>
 </html>

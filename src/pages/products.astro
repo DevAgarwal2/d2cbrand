@@ -5,313 +5,239 @@ import logo from "../assets/logo.jpeg";
 
 ---
 
-<Layout title="All Products - Shreeyam HandiCrafts">
-    <!-- Navigation -->
-    <nav class="bg-white/95 backdrop-blur-md shadow-lg border-b border-neutral-100 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center">
-                    <a href="/" class="flex items-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3 sm:mr-4 shadow-lg">
-                            <img src={logo.src} alt="Shreeyam HandiCrafts" class="w-8 h-8 sm:w-10 sm:h-10 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                           
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-bold text-neutral-800 font-playfair">Shreeyam HandiCrafts</h1>
-                            <p class="text-xs text-neutral-600">Authentic • Traditional • Quality</p>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="/" class="text-neutral-700 hover:text-primary-600 px-3 py-2 font-medium transition-colors">Home</a>
-                    <a href="/#story" class="text-neutral-700 hover:text-primary-600 px-3 py-2 font-medium transition-colors">Our Story</a>
-                    <a href="/products" class="text-primary-600 px-3 py-2 font-semibold">Products</a>
-                    <a href="/#contact" class="text-neutral-700 hover:text-primary-600 px-3 py-2 font-medium transition-colors">Contact</a>
-                    <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2 text-base">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
-                        </svg>
-                        Chat with Us
-                    </button>
-                </div>
-                
-                <button class="md:hidden p-2 text-neutral-700">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-primary-50 via-white to-earth-50 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl lg:text-6xl font-bold text-neutral-800 font-playfair mb-6">
-                Our Complete Collection
-            </h1>
-            <p class="text-xl text-neutral-600 max-w-3xl mx-auto mb-8">
-                Discover our entire range of traditional brass boxes, vessels, dhoopdani, and iron lamps. 
-                Each item is carefully crafted by skilled artisans using traditional techniques.
-            </p>
-            
-            <!-- Category Filter -->
-            <div class="flex flex-wrap justify-center gap-4 mb-8">
-                <button onclick="filterProducts('all')" class="filter-btn active bg-primary-600 text-white px-6 py-3 rounded-full font-semibold transition-all duration-200 hover:bg-primary-700">
-                    All Products ({products.length})
-                </button>
-                {categories.map((category) => (
-                    <button 
-                        onclick={`filterProducts('${category.id}')`} 
-                        class="filter-btn bg-white text-neutral-700 px-6 py-3 rounded-full font-semibold border border-neutral-200 hover:bg-primary-50 hover:border-primary-200 transition-all duration-200"
-                    >
-                        {category.icon} {category.name} ({category.count})
-                    </button>
-                ))}
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Grid -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div id="products-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {products.map((product) => (
-                    <div class="product-card bg-white rounded-3xl shadow-sm border border-neutral-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category={product.category}>
-                        <div class="relative">
-                            <img 
-                                src={product.image} 
-                                alt={product.title}
-                                class="w-full h-64 object-cover"
-                                loading="lazy"
-                            />
-                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
-                                <div class="flex items-center gap-1">
-                                    <span class="text-yellow-400 text-sm">⭐</span>
-                                    <span class="text-sm font-semibold text-neutral-700">{product.rating}</span>
-                                </div>
-                            </div>
-                            {product.fastDelivery && (
-                                <div class="absolute bottom-4 left-4 bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
-                                    🚀 Fast Delivery
-                                </div>
-                            )}
-                        </div>
-                        
-                        <div class="p-6">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-xs text-neutral-500 bg-neutral-100 px-3 py-1 rounded-full">{product.categoryName}</span>
-                                {product.inStock ? (
-                                    <span class="text-xs text-green-600 bg-green-100 px-3 py-1 rounded-full">In Stock</span>
-                                ) : (
-                                    <span class="text-xs text-red-600 bg-red-100 px-3 py-1 rounded-full">Out of Stock</span>
-                                )}
-                            </div>
-                            
-                            <h3 class="text-lg font-semibold text-neutral-800 mb-3 line-clamp-2 leading-tight">
-                                {product.title}
-                            </h3>
-                            
-                            <p class="text-sm text-neutral-600 mb-4 line-clamp-2">
-                                {product.description}
-                            </p>
-                            
-                            <div class="flex items-center gap-3 mb-4">
-                                <span class="text-2xl font-bold text-primary-600">{product.price}</span>
-                            </div>
-                            
-                            <div class="flex items-center gap-2 mb-4 text-sm text-neutral-500">
-                                <span class="text-yellow-400">⭐</span>
-                                <span>{product.rating}</span>
-                                <span>•</span>
-                                <span>{product.reviews} reviews</span>
-                            </div>
-                            
-                            <button 
-                                onclick={`window.location.href='/product/${product.id}'`}
-                                class="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 rounded-xl font-semibold transition-colors duration-200"
-                            >
-                                View Details
-                            </button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            
-            <!-- No products found message -->
-            <div id="no-products" class="hidden text-center py-16">
-                <div class="text-6xl mb-4">🔍</div>
-                <h3 class="text-2xl font-bold text-neutral-800 mb-2">No products found</h3>
-                <p class="text-neutral-600">Try selecting a different category to see our beautiful handcrafted items.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us Section -->
-    <section class="py-16 bg-gradient-to-r from-primary-50 to-earth-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-neutral-800 font-playfair mb-12">
-                Why Choose Our Handcrafted Items?
-            </h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-primary-600 text-2xl">✋</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-neutral-800 mb-3">Handmade with Love</h3>
-                    <p class="text-neutral-600">Each piece is carefully crafted by skilled artisans using traditional techniques passed down through generations.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-earth-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-earth-600 text-2xl">🌟</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-neutral-800 mb-3">Premium Quality</h3>
-                    <p class="text-neutral-600">We use only the finest materials - premium wood, pure brass, and sustainable resources for lasting beauty.</p>
-                </div>
-                
-                <div class="bg-white p-6 rounded-2xl shadow-lg">
-                    <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-primary-600 text-2xl">🏠</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-neutral-800 mb-3">Perfect for Your Home</h3>
-                    <p class="text-neutral-600">Our designs blend traditional craftsmanship with modern aesthetics, perfect for contemporary homes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-neutral-800 text-neutral-200 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div class="space-y-4">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center mr-3">
-                            <img src="/images/logo.jpeg" alt="Shreeyam HandiCrafts" class="w-6 h-6 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                            <span class="text-white text-lg hidden">🏺</span>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold font-playfair">Shreeyam HandiCrafts</h3>
-                            <p class="text-xs text-neutral-400">Authentic • Traditional • Quality</p>
-                        </div>
-                    </div>
-                    <p class="text-neutral-400 text-sm">Preserving Gujarat's heritage through authentic brass vessels, dhoopdani, traditional boxes, and iron lamps.</p>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="/" class="text-neutral-400 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="/products" class="text-neutral-400 hover:text-white transition-colors">Products</a></li>
-                        <li><a href="/#contact" class="text-neutral-400 hover:text-white transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Categories</h4>
-                    <ul class="space-y-2">
-                        <li><span class="text-neutral-400">🟡 Brass Boxes</span></li>
-                        <li><span class="text-neutral-400">🔵 Brass Vessels / Containers</span></li>
-                        <li><span class="text-neutral-400">🔴 Brass Dhoopdani</span></li>
-                        <li><span class="text-neutral-400">🟢 Iron Lamps</span></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
-                    <ul class="space-y-3 text-neutral-400 text-sm">
-                        <li class="flex items-center gap-2">
-                            <span>💬</span>
-                            <span>WhatsApp: +91 97269 83835</span>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span>📍</span>
-                            <span>Ahmedabad & Anand, Gujarat</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-neutral-700 mt-8 pt-6 text-center text-neutral-400">
-                <p>&copy; 2024 Shreeyam HandiCrafts. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
+<Layout title="All Products - Shreeyam Handicrafts">
     <style>
-        .font-playfair {
-            font-family: 'Playfair Display', serif;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
         
-        .line-clamp-2 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Outfit', sans-serif; }
         
-        .filter-btn.active {
-            background-color: #d97006 !important;
-            color: white !important;
-            border-color: #d97006 !important;
+        /* D2C Gradient Background */
+        .page-bg {
+            background: radial-gradient(circle at 50% 0%, #FFFFFF 0%, #F2F0E9 100%);
+            background-attachment: fixed;
         }
-        
-        .product-card.hidden {
-            display: none;
+
+        /* Smooth Fade In Animation */
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
         }
-        
-        html {
-            scroll-behavior: smooth;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 
-    <script>
-        window.filterProducts = function(category) {
-            console.log('Filtering by category:', category);
+    <div class="page-bg min-h-screen">
+        
+        <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-20">
+                    <div class="flex items-center">
+                        <a href="/" class="flex items-center group">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center mr-3 bg-stone-100 group-hover:scale-105 transition-transform overflow-hidden">
+                                <img src={logo.src} alt="Shreeyam" class="w-full h-full object-cover mix-blend-multiply">
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-stone-900 font-playfair leading-none">SHREEYAM</h1>
+                                <p class="text-[10px] text-stone-500 tracking-[0.2em] uppercase font-medium">Handicrafts</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="/" class="text-stone-600 hover:text-stone-900 px-3 py-2 font-medium transition-colors">Home</a>
+                        <a href="/products" class="text-stone-900 px-3 py-2 font-bold border-b-2 border-stone-900">Products</a>
+                        <a href="/#contact" class="text-stone-600 hover:text-stone-900 px-3 py-2 font-medium transition-colors">Contact</a>
+                        <a href="https://wa.me/919726983835" target="_blank" class="bg-stone-900 hover:bg-stone-800 text-white px-6 py-2.5 rounded-full font-medium transition-all duration-200 transform hover:translate-y-px shadow-lg flex items-center gap-2 text-sm">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/></svg>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                    
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-900 rounded-md hover:bg-stone-100">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden absolute top-20 left-0 w-full bg-[#FDFBF7] border-b border-stone-200 shadow-xl">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="/" class="text-stone-900 font-medium px-2 py-1">Home</a>
+                    <a href="/products" class="text-stone-900 font-bold px-2 py-1 bg-stone-100 rounded">Products</a>
+                    <a href="/#contact" class="text-stone-600 font-medium px-2 py-1">Contact</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="py-8 md:py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-3xl md:text-6xl font-bold text-stone-900 font-playfair mb-4 md:mb-6">
+                    Our Collection
+                </h1>
+                <p class="text-base md:text-lg text-stone-500 max-w-2xl mx-auto mb-8 md:mb-10 font-light leading-relaxed">
+                    Discover our range of traditional brass boxes, vessels, dhoopdani, and iron lamps. 
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
+                    <button 
+                        onclick="filterProducts('all')" 
+                        data-id="all"
+                        class="filter-btn bg-stone-900 text-white border-stone-900 px-5 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium transition-all duration-200 border hover:shadow-lg"
+                    >
+                        All Products ({products.length})
+                    </button>
+                    
+                    {categories.map((category) => (
+                        <button 
+                            onclick={`filterProducts('${category.id}')`} 
+                            data-id={category.id}
+                            class="filter-btn bg-white text-stone-600 border-stone-200 px-5 py-2 md:px-6 md:py-3 rounded-full text-sm md:text-base font-medium border hover:bg-stone-50 hover:border-stone-300 transition-all duration-200"
+                        >
+                             {category.name} ({category.count})
+                        </button>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="products-grid" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 gap-y-6 md:gap-y-10">
+                    {products.map((product) => (
+                        <div class="product-card group bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full" data-category={product.category}>
+                            <a href={`/product/${product.id}`} class="relative block aspect-[4/5] overflow-hidden bg-[#F2F0E9]">
+                                <img 
+                                    src={product.image} 
+                                    alt={product.title}
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                                <div class="absolute top-2 right-2 md:top-3 md:right-3 bg-white/90 backdrop-blur px-2 py-1 rounded-full shadow-sm">
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-amber-500 text-[10px] md:text-xs">★</span>
+                                        <span class="text-[10px] md:text-xs font-bold text-stone-900">{product.rating}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                            <div class="p-3 md:p-5 flex flex-col flex-grow">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span class="text-[8px] md:text-[10px] uppercase tracking-wider font-bold text-stone-500 bg-stone-50 px-2 py-1 rounded truncate">{product.categoryName}</span>
+                                </div>
+                                
+                                <h3 class="text-sm md:text-lg font-medium text-stone-900 mb-1 line-clamp-2 leading-tight group-hover:text-stone-600 transition-colors">
+                                    {product.title}
+                                </h3>
+                                
+                                <div class="mt-auto pt-2 md:pt-3">
+                                    <div class="flex items-center justify-between mb-3 md:mb-4">
+                                        <span class="text-base md:text-xl font-serif text-stone-900">{product.originalPrice}</span>
+                                        <span class="hidden md:inline text-xs text-stone-400">{product.reviews} reviews</span>
+                                    </div>
+                                    
+                                    <a 
+                                        href={`/product/${product.id}`}
+                                        class="block w-full text-center bg-transparent border border-stone-200 hover:bg-stone-900 hover:text-white hover:border-stone-900 text-stone-900 py-2 md:py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] md:text-xs transition-all duration-200"
+                                    >
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div id="no-products" class="hidden text-center py-20">
+                    <div class="text-6xl mb-4 opacity-20 grayscale">🏺</div>
+                    <h3 class="text-2xl font-bold text-stone-900 mb-2 font-playfair">No products found</h3>
+                    <p class="text-stone-500">Try selecting a different category.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="bg-[#1c1917] text-stone-400 py-12 md:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 md:gap-12">
+                <div class="md:col-span-2">
+                    <h3 class="text-2xl font-bold text-white font-playfair mb-4">SHREEYAM</h3>
+                    <p class="text-sm leading-relaxed max-w-sm">
+                        Bringing the spiritual and artistic heritage of Gujarat to modern homes. Each piece tells a story of tradition.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Collections</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><button class="hover:text-white transition-colors text-left" onclick="filterProducts('brass-vessels')">Brass Vessels</button></li>
+                        <li><button class="hover:text-white transition-colors text-left" onclick="filterProducts('iron-lamps')">Iron Lamps</button></li>
+                        <li><button class="hover:text-white transition-colors text-left" onclick="filterProducts('wooden-decor')">Wooden Decor</button></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Contact</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li>Ahmedabad, Gujarat</li>
+                        <li>+91 97269 83835</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-stone-800 text-center text-xs">
+                &copy; 2025 Shreeyam Handicrafts. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <script is:inline>
+        // --- 1. Product Filtering Logic (Fixed White Button Issue) ---
+        window.filterProducts = function(targetCategoryId) {
+            console.log('Filtering by:', targetCategoryId);
+            
             const productCards = document.querySelectorAll('.product-card');
             const filterButtons = document.querySelectorAll('.filter-btn');
             const noProductsMessage = document.getElementById('no-products');
             
-            console.log('Found', productCards.length, 'product cards');
-            
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Find and activate the clicked button
+            // Define styles for Active and Inactive states
+            const activeClasses = ['bg-stone-900', 'text-white', 'border-stone-900'];
+            const inactiveClasses = ['bg-white', 'text-stone-600', 'border-stone-200', 'hover:bg-stone-50'];
+
+            // A. Update Active Button State
             filterButtons.forEach(btn => {
-                const btnText = btn.textContent || '';
-                if ((category === 'all' && btnText.includes('All Products')) ||
-                    (category === 'brass-boxes' && btnText.includes('Brass Boxes')) ||
-                    (category === 'brass-vessels' && btnText.includes('Brass Vessels')) ||
-                    (category === 'brass-dhoopdani' && btnText.includes('Brass Dhoopdani')) ||
-                    (category === 'iron-lamps' && btnText.includes('Iron Lamps')) ||
-                    (category === 'Wooden-Products' && btnText.includes('Wooden Products')) 
+                const btnId = btn.getAttribute('data-id');
                 
-                ) {
-                    btn.classList.add('active');
-                    console.log('Activated button:', btnText);
+                if (btnId === targetCategoryId) {
+                    // Make Active
+                    btn.classList.add(...activeClasses);
+                    btn.classList.remove(...inactiveClasses);
+                } else {
+                    // Make Inactive
+                    btn.classList.add(...inactiveClasses);
+                    btn.classList.remove(...activeClasses);
                 }
             });
             
             let visibleCount = 0;
             
+            // B. Show/Hide Cards
             productCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
-                console.log('Card category:', cardCategory, 'Filter category:', category);
-                if (category === 'all' || cardCategory === category) {
+                
+                // Reset animation
+                card.classList.remove('fade-in-up');
+                void card.offsetWidth; // Trigger reflow
+
+                if (targetCategoryId === 'all' || cardCategory === targetCategoryId) {
                     card.classList.remove('hidden');
+                    card.classList.add('fade-in-up'); 
                     visibleCount++;
                 } else {
                     card.classList.add('hidden');
                 }
             });
             
-            console.log('Visible products:', visibleCount);
-            
-            // Show/hide no products message
+            // C. Empty State
             if (visibleCount === 0 && noProductsMessage) {
                 noProductsMessage.classList.remove('hidden');
             } else if (noProductsMessage) {
@@ -319,28 +245,22 @@ import logo from "../assets/logo.jpeg";
             }
         }
         
-        // Scroll animations
+        // --- 2. Mobile Menu Logic ---
         document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            
+            if(btn && menu) {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    menu.classList.toggle('hidden');
+                });
+                document.addEventListener('click', (e) => {
+                    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                        menu.classList.add('hidden');
                     }
                 });
-            }, observerOptions);
-
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
+            }
         });
     </script>
 </Layout>
