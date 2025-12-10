@@ -1,5 +1,7 @@
 ---
-// src/pages/index.astro
+
+// --- src/pages/index.astro ---
+
 import { products } from '../data/products.js';
 
 // --- 1. LOGO CONFIGURATION ---
@@ -92,7 +94,7 @@ const getWhatsAppLink = (productTitle: any) => {
             
             <div class="lg:col-span-5 text-center lg:text-left relative z-10">
                 <span class="inline-block py-1 mb-6 text-xs font-bold uppercase tracking-[0.2em] text-stone-500 border-b border-stone-300">
-                    Est. 2025 • Gujarat
+                    Est. 2024 • Gujarat
                 </span>
                 
                 <h1 class="text-5xl sm:text-6xl lg:text-7xl font-medium text-stone-900 mb-6 leading-[1.05] font-playfair">
@@ -203,8 +205,9 @@ const getWhatsAppLink = (productTitle: any) => {
                         <img 
                             src={product.image} 
                             alt={product.title} 
-                            class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                            class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer"
                             loading="lazy"
+                            onclick={`window.location.href='/product/${product.id}'`}
                         />
                         
                     </div>
@@ -325,7 +328,7 @@ const getWhatsAppLink = (productTitle: any) => {
                                 </div>
                                 <div class="text-center sm:text-left">
                                     <p class="font-bold text-base sm:text-lg text-stone-900">Locations</p>
-                                    <p class="text-stone-600 text-sm sm:text-base">Ahmedabad & Anand, Gujarat</p>
+                                    <p class="text-stone-600 text-sm sm:text-base">Ahmedabad & Vadodara, Gujarat</p>
                                     <p class="text-xs sm:text-sm text-stone-500">Serving across Gujarat</p>
                                 </div>
                             </div>
@@ -426,7 +429,7 @@ const getWhatsAppLink = (productTitle: any) => {
                         </li>
                         <li class="flex items-center gap-2">
                             <span>📍</span>
-                            <span>Ahmedabad, Gujarat</span>
+                            <span>Ahmedabad & Vadodara, Gujarat</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <span>⏰</span>

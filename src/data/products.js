@@ -1,10 +1,10 @@
 export const products = [
-  // 🟡 Brass Boxes
+  // 🟡 Brass Products (Combined Boxes & Vessels)
   {
     id: 'antique-brass-box',
     title: 'Antique Brass Box',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹2,500',
     originalPrice: '₹1950',
     discount: '17% off',
@@ -31,10 +31,10 @@ export const products = [
   {
     id: 'gungru-small-box',
     title: 'Gungru Small Box',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹1,800',
-    originalPrice: '₹800',
+    originalPrice: '₹750',
     discount: '18% off',
     rating: 4.7,
     reviews: 89,
@@ -59,8 +59,8 @@ export const products = [
   {
     id: 'small-bird-box',
     title: 'Small Bird Box',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹2,200',
     originalPrice: '₹1,650',
     discount: '21% off',
@@ -89,8 +89,8 @@ export const products = [
   {
     id: 'medium-bird-box',
     title: 'Medium Bird Box',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹3,200',
     originalPrice: '₹1,850',
     discount: '16% off',
@@ -119,8 +119,8 @@ export const products = [
   {
     id: 'big-bird-box',
     title: 'Big Bird Box',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹4,500',
     originalPrice: '₹2,350',
     discount: '13% off',
@@ -149,10 +149,10 @@ export const products = [
   {
     id: 'antique-chapati-box-stand',
     title: 'Antique Chappati Box with Stand',
-    category: 'brass-boxes',
-    categoryName: 'Brass Boxes',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹6,800',
-    originalPrice: '₹4,000',
+    originalPrice: '₹3,990',
     discount: '15% off',
     rating: 4.8,
     reviews: 43,
@@ -176,13 +176,11 @@ export const products = [
     inStock: true,
     fastDelivery: false
   },
-
-  // 🔵 Brass Vessels / Containers
   {
     id: 'small-chari',
     title: 'Small Chari',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹1,200',
     originalPrice: '₹1,650',
     discount: '20% off',
@@ -211,8 +209,8 @@ export const products = [
   {
     id: 'big-lotta',
     title: 'Big Lotta',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹3,800',
     originalPrice: '₹2,150',
     discount: '16% off',
@@ -241,10 +239,10 @@ export const products = [
   {
     id: 'kettle',
     title: 'Kettle',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹2,800',
-    originalPrice: '₹3,050',
+    originalPrice: '₹2,950',
     discount: '18% off',
     rating: 4.9,
     reviews: 145,
@@ -271,8 +269,8 @@ export const products = [
   {
     id: 'tiffin',
     title: 'Tiffin',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹2,200',
     originalPrice: '₹2,850',
     discount: '21% off',
@@ -301,8 +299,8 @@ export const products = [
   {
     id: 'antique-brass-banni',
     title: 'Antique Brass Banni',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹4,200',
     originalPrice: '₹2,350',
     discount: '16% off',
@@ -328,15 +326,14 @@ export const products = [
     inStock: true,
     fastDelivery: false
   },
-  // 🆕 NEW BRASS BUCKETS
   {
     id: 'antique-brass-small-bucket',
     title: 'Antique Brass Small Bucket',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹3,500',
-    originalPrice: '₹4,200',
-    discount: '17% off',
+    originalPrice: '₹3,550',
+    discount: 'Deal',
     rating: 4.8,
     reviews: 32,
     image: 'https://ik.imagekit.io/pi9wuccc0i/brass-small-buck1.jpeg',
@@ -345,13 +342,13 @@ export const products = [
       'https://ik.imagekit.io/pi9wuccc0i/brass-small-buck3.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/brass-small-buck2.jpeg'
     ],
-    description: 'Beautifully aged antique brass bucket. Can be used for decorative storage, as a planter, or a standalone accent piece.',
+    description: 'Beautifully aged antique brass bucket. Versatile utility - perfect for use as an ice bucket or wine bottle cooler. Can also be used as a planter or a standalone accent piece.',
     features: [
       'Dimensions: Height: 7.1 inch, Diameter: 7.1 inch, Depth: 6.2 inch',
       'Solid antique brass',
       'Heavy duty handle',
+      'Ideal for cooling wine or storing ice',
       'Traditional bucket design',
-      'Multipurpose use',
       "Please note that this is an antique piece and slightly different from product"
     ],
     inStock: true,
@@ -360,17 +357,17 @@ export const products = [
   {
     id: 'antique-brass-big-bucket',
     title: 'Antique Brass Big Bucket',
-    category: 'brass-vessels',
-    categoryName: 'Brass Vessels / Containers',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
     price: '₹5,200',
     originalPrice: '₹6,500',
     discount: '20% off',
     rating: 4.9,
     reviews: 28,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck2.jpeg',
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck1.jpeg',
     images: [
-      'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck2.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck2.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/brass-big-buck3.jpeg'
     ],
     description: 'Large antique brass bucket with a rich patina. Perfect for holding larger plants, firewood, or as a grand decorative statement.',
@@ -386,7 +383,6 @@ export const products = [
     fastDelivery: false
   },
 
-
   // 🔴 Brass Dhoopdani (Incense Holders)
   {
     id: 'peacock-dhoopdani',
@@ -394,7 +390,7 @@ export const products = [
     category: 'brass-dhoopdani',
     categoryName: 'Brass Dhoopdani (Incense Holders)',
     price: '₹1,800',
-    originalPrice: '₹2,000',
+    originalPrice: '₹1,990',
     discount: '18% off',
     rating: 4.9,
     reviews: 234,
@@ -648,7 +644,6 @@ export const products = [
     inStock: true,
     fastDelivery: true
   },
-  // 🆕 NEW WOODEN ITEMS
   {
     id: 'wooden-grinder-small',
     title: 'Small Wooden Grinder',
@@ -713,9 +708,9 @@ export const products = [
     discount: '15% off',
     rating: 4.9,
     reviews: 52,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/grinder3.jpeg',
+    image: 'https://ik.imagekit.io/pi9wuccc0i/grinder.jpeg',
     images: [
-      'https://ik.imagekit.io/pi9wuccc0i/grinder3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/grinder.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/grinder1.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/grinder2.jpeg'
     ],
@@ -786,8 +781,149 @@ export const products = [
     inStock: true,
     fastDelivery: true
   },
+  // 🆕 NEW WOODEN ITEMS
+  {
+    id: 'antique-wooden-box-brass-fitting',
+    title: 'Antique Wooden Box with Brass Fitting',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹4,590',
+    originalPrice: '₹4,590',
+    discount: '16% off',
+    rating: 4.9,
+    reviews: 12,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box3.jpeg'
+    ],
+    description: 'Exquisite single-piece Mango wood box featuring antique brass fittings. A rare collectible perfect for heritage decor.',
+    features: [
+      'Dimensions: Height 9 inch, Width 13.5 inch, Depth 4.5 inch',
+      'Material: Old Mango Wood (Single Piece)',
+      'Antique Brass Fittings',
+      'Heavy and durable',
+      'Perfect for storage or display',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'wooden-hanging-planter-small',
+    title: 'Wooden Hanging Planter (Small)',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,050',
+    originalPrice: '₹2,050',
+    discount: '18% off',
+    rating: 4.7,
+    reviews: 34,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter3.jpeg'
+    ],
+    description: 'Charming purse-shaped wooden hanging planter. Handcrafted from pure teak wood to add a rustic touch to your garden or balcony.',
+    features: [
+      'Dimensions: Height 6 inch, Width 6 inch',
+      'Material: Pure Teak Wood',
+      'Unique purse shape',
+      'Hanging mechanism included',
+      'Weather resistant finish',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'wooden-hanging-planter-big',
+    title: 'Wooden Hanging Planter (Big)',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,490',
+    originalPrice: '₹2,490',
+    discount: '20% off',
+    rating: 4.8,
+    reviews: 28,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-planter3.jpeg'
+    ],
+    description: 'Large wooden hanging planter in a unique purse design. Crafted from premium teak wood for long-lasting outdoor beauty.',
+    features: [
+      'Dimensions: Height 7 inch, Width 8 inch',
+      'Material: Pure Teak Wood',
+      'Spacious for plants',
+      'Decorative hanging accent',
+      'Hand-polished finish',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'wooden-horse-statue',
+    title: 'Wooden Horse Statue',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,950',
+    originalPrice: '₹2,950',
+    discount: '18% off',
+    rating: 4.9,
+    reviews: 15,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse2.jpeg'
+    ],
+    description: 'Majestic wooden horse statue mounted on a sturdy iron stand. A striking art piece carved from pure teak wood.',
+    features: [
+      'Dimensions: Height 13.5 inch, Width 4 inch',
+      'Material: Pure Teak Wood',
+      'Includes iron stand',
+      'Hand-carved detailing',
+      'Perfect for mantels or shelves',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'wooden-candle-holder-set',
+    title: 'Wooden Candle Holder (Teak)',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,500',
+    originalPrice: '₹2,500',
+    discount: '22% off',
+    rating: 4.6,
+    reviews: 42,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle1.jpeg'
+    ],
+    description: 'Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades.',
+    features: [
+      'Dimensions: Height 6 inch',
+      'Material: Pure Teak Wood',
+      'Available in 3 wood tones',
+      'Classic turned design',
+      'Fits standard taper candles',
+      "Please note that sizes may vary slightly"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
 
-  // 🎨 NEW PAINTINGS
+  // 🎨 Paintings
   {
     id: 'madhubani-painting-red-fish',
     title: 'Vintage Madhubani Painting (Red Fishes)',
@@ -876,18 +1012,11 @@ export const products = [
 
 export const categories = [
   {
-    id: 'brass-boxes',
-    name: 'Brass Boxes',
-    description: 'Traditional brass boxes and storage containers',
+    id: 'brass-products',
+    name: 'Brass Products',
+    description: 'Traditional brass boxes, vessels, and storage containers',
     icon: '🟡',
-    count: products.filter(p => p.category === 'brass-boxes').length
-  },
-  {
-    id: 'brass-vessels',
-    name: 'Brass Vessels / Containers',
-    description: 'Traditional brass vessels and containers for storage and ceremonies',
-    icon: '🔵',
-    count: products.filter(p => p.category === 'brass-vessels').length
+    count: products.filter(p => p.category === 'brass-products').length
   },
   {
     id: 'brass-dhoopdani',
