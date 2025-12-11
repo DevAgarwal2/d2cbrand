@@ -735,11 +735,11 @@ export const products = [
     discount: '17% off',
     rating: 4.6,
     reviews: 64,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-wine2.jpeg',
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-wine1.jpeg',
     images: [
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-wine2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-wine1.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/wooden-wine3.jpeg',
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-wine1.jpeg'
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-wine2.jpeg'
     ],
     description: 'Unique handcrafted wooden wine bottle sculpture. A conversation starter and beautiful shelf decor.',
     features: [
@@ -792,10 +792,10 @@ export const products = [
     discount: '16% off',
     rating: 4.9,
     reviews: 12,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg',
+    image: 'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box2.jpeg',
     images: [
-      'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box3.jpeg'
     ],
     description: 'Exquisite single-piece Mango wood box featuring antique brass fittings. A rare collectible perfect for heritage decor.',
