@@ -30,7 +30,7 @@ export const products = [
   },
   {
     id: 'gungru-small-box',
-    title: 'Gungru Small Box',
+    title: 'Gungru  Box',
     category: 'brass-products',
     categoryName: 'Brass Products',
     price: '₹1,800',
@@ -44,7 +44,7 @@ export const products = [
       'https://ik.imagekit.io/pi9wuccc0i/gungru_small_box2.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/gungru_small_box3.jpeg'
     ],
-    description: 'Traditional Gungru small brass box with authentic craftsmanship. Ideal for storing small items.',
+    description: 'Traditional Gungru  brass box with authentic craftsmanship. Ideal for storing small items.',
     features: [
       'Dimensions: Height: 1.5 inch, Diameter: 2 inch',
       'Traditional design',
@@ -116,6 +116,7 @@ export const products = [
     inStock: true,
     fastDelivery: false
   },
+  //3500
   {
     id: 'big-bird-box',
     title: 'Big Bird Box',
@@ -562,7 +563,7 @@ export const products = [
     category: 'Wooden-Products',
     categoryName: 'Wooden Products',
     price: '₹3,500',
-    originalPrice: '₹3,000',
+    originalPrice: '₹3,500',
     discount: '17% off',
     rating: 4.8,
     reviews: 145,
