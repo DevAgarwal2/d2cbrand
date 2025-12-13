@@ -111,11 +111,12 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                     <div class="bg-white p-2 rounded-[2rem] shadow-sm border border-stone-100">
                         <div class="relative aspect-[4/5] lg:aspect-auto lg:h-[650px] overflow-hidden rounded-[1.5rem] bg-[#F2F0E9] group">
                             <img 
-                                id="main-image"
-                                src={product.image} 
-                                alt={product.title}
-                                class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 ease-out"
-                            />
+    id="main-image"
+    src={product.image} 
+    alt={product.title}
+    class="w-full h-full transition-transform duration-1000 group-hover:scale-105 ease-out"
+    style={`object-fit: ${product.id === 'antique-chapati-box-stand' ? 'contain' : 'cover'}`}
+/>
                             <div class="absolute top-6 left-6 flex flex-col gap-2">
                                 <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
                                     {product.categoryName}

@@ -157,7 +157,7 @@ export const products = [
     discount: '15% off',
     rating: 4.8,
     reviews: 43,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/chapati_box.jpeg',
+    image: 'https://ik.imagekit.io/pi9wuccc0i/chapati-box2.jpeg',
     images: [
       'https://ik.imagekit.io/pi9wuccc0i/chapati_box.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/chapati_box2.jpeg',
@@ -705,7 +705,7 @@ export const products = [
     category: 'Wooden-Products',
     categoryName: 'Wooden Products',
     price: '₹3,800',
-    originalPrice: '₹4,500',
+    originalPrice: '₹4,500 each',
     discount: '15% off',
     rating: 4.9,
     reviews: 52,
@@ -901,7 +901,7 @@ export const products = [
     category: 'Wooden-Products',
     categoryName: 'Wooden Products',
     price: '₹2,500',
-    originalPrice: '₹2,500',
+    originalPrice: '₹2,500 each',
     discount: '22% off',
     rating: 4.6,
     reviews: 42,
@@ -911,7 +911,7 @@ export const products = [
       'https://ik.imagekit.io/pi9wuccc0i/wooden-candle2.jpeg',
       'https://ik.imagekit.io/pi9wuccc0i/wooden-candle1.jpeg'
     ],
-    description: 'Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades.',
+    description: 'Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades. (each)',
     features: [
       'Dimensions: Height 6 inch',
       'Material: Pure Teak Wood',
