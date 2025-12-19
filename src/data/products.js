@@ -86,6 +86,354 @@ export const products = [
     inStock: true,
     fastDelivery: true
   },
+  // 🟡 NEW BRASS PRODUCTS
+  {
+    id: 'wooden-horse-statue',
+    title: 'Wooden Horse Statue',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,950',
+    originalPrice: '₹2,950',
+    discount: '18% off',
+    rating: 4.9,
+    reviews: 15,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse2.jpeg'
+    ],
+    description: 'Majestic wooden horse statue mounted on a sturdy iron stand. A striking art piece carved from pure teak wood.',
+    features: [
+      'Dimensions: Height 13.5 inch, Width 4 inch',
+      'Material: Pure Teak Wood',
+      'Includes iron stand',
+      'Hand-carved detailing',
+      'Perfect for mantels or shelves',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'wooden-candle-holder-set',
+    title: 'Wooden Candle Holder (Teak)',
+    category: 'Wooden-Products',
+    categoryName: 'Wooden Products',
+    price: '₹2,500',
+    originalPrice: '₹2,500 each',
+    discount: '22% off',
+    rating: 4.6,
+    reviews: 42,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle1.jpeg'
+    ],
+    description: 'Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades. (each)',
+    features: [
+      'Dimensions: Height 6 inch',
+      'Material: Pure Teak Wood',
+      'Available in 3 wood tones',
+      'Classic turned design',
+      'Fits standard taper candles',
+      "Please note that sizes may vary slightly"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+
+  {
+    id: 'antique-brass-fruit-basket',
+    title: 'Antique Brass Fruit Basket',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹2,950',
+    originalPrice: '₹3,500',
+    discount: '16% off',
+    rating: 4.7,
+    reviews: 22,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-fruit.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-fruit.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-fruit2.jpeg'
+    ],
+    description: 'Vintage brass fruit basket with a wide brim. Perfect for dining tables or as a standalone centerpiece.',
+    features: [
+      'Dimensions: Height 12 inch, Width 11 inch, Depth 4 inch',
+      'Large capacity',
+      'Traditional woven-style design',
+      'Sturdy handle',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: false
+  },
+  {
+    id: 'antique-brass-chapati-box-flat',
+    title: 'Antique Brass Chappati Box',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹3,250',
+    originalPrice: '₹3,850',
+    discount: '15% off',
+    rating: 4.8,
+    reviews: 18,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-chapati1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-chapati1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-chapati3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-chapati2.jpeg'
+    ],
+    description: 'Classic flat antique brass box traditionally used for keeping chapatis warm. Features heavy-duty brass work.',
+    features: [
+      'Dimensions: Height 3 inch, Diameter 8.5 inch, Depth 2 inch',
+      'Food safe brass',
+      'Heavy lid for insulation',
+      'Traditional circular design',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-chari',
+    title: 'Antique Brass Chari',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹5,350',
+    originalPrice: '₹6,300',
+    discount: '15% off',
+    rating: 4.9,
+    reviews: 10,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-chari2.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-chari2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-chari1.jpeg'
+    ],
+    description: 'Heavy antique brass Chari vessel. A collector\'s item representing traditional Indian kitchenware.',
+    features: [
+      'Dimensions: Height 8 inch, Diameter 7 inch',
+      'Thick gauge brass',
+      'Traditional shape',
+      'Ideal for home decor or collection',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: false
+  },
+  {
+    id: 'antique-brass-glass',
+    title: 'Antique Brass Glass',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹1,750',
+    originalPrice: '₹2,050',
+    discount: '15% off',
+    rating: 4.6,
+    reviews: 30,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-glass1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-glass1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-glass2.jpeg'
+    ],
+    description: 'Tall antique brass glass with etching details. Can be used as a vase or a drinking vessel.',
+    features: [
+      'Dimensions: Height 5.5 inch',
+      'Solid brass',
+      'Intricate detailing',
+      'Vintage patina',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-chari-lamp',
+    title: 'Antique Brass Chari with Lamp',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹7,900',
+    originalPrice: '₹9,500',
+    discount: '17% off',
+    rating: 5.0,
+    reviews: 8,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-lamp.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-lamp.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-lamp2.jpeg'
+    ],
+    description: 'A magnificent fusion of a Chari vessel and a tall lamp. A stunning floor or table centerpiece for heritage homes.',
+    features: [
+      'Dimensions: Height 22 inch, Chari Width 5 inch',
+      'Unique fusion design',
+      'Tall statement piece',
+      'Ideal for entryways or corners',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: false
+  },
+  {
+    id: 'antique-brass-urnil',
+    title: 'Antique Brass Urli',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹4,100',
+    originalPrice: '₹4,850',
+    discount: '15% off',
+    rating: 4.8,
+    reviews: 25,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-urnil1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-urnil1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-urnil2.jpeg'
+    ],
+    description: 'Traditional wide-mouthed brass Urli. Perfect for floating flowers or candles for festive decoration.',
+    features: [
+      'Dimensions: Height 6.5 inch, Diameter 10 inch',
+      'Classic Urli shape',
+      'Ideal for floral arrangements',
+      'Heavy quality brass',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+
+  {
+    id: 'antique-brass-horse-box-small',
+    title: 'Antique Brass Horse Box (Small)',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹1,550',
+    originalPrice: '₹1,850',
+    discount: '16% off',
+    rating: 4.8,
+    reviews: 12,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/small-brass-horse.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/small-brass-horse.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/small-brass-horse3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/small-brass-horse2.jpeg'
+    ],
+    description: 'Small antique brass box featuring a horse motif. Distinctive craftsmanship perfect for collectors.',
+    features: [
+      'Dimensions: Height 2 inch, Diameter 3 inch, Depth 1.5 inch',
+      'Solid brass construction',
+      'Horse motif design',
+      'Antique finish',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-horse-box-big',
+    title: 'Antique Brass Horse Box (Big)',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹1,950',
+    originalPrice: '₹2,350',
+    discount: '17% off',
+    rating: 4.9,
+    reviews: 15,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/big-brass-horse.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/big-brass-horse.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/big-brass-horse3.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/big-brass-horse2.jpeg'
+    ],
+    description: 'Large antique brass horse box with deep storage space. A substantial decorative piece with intricate detailing.',
+    features: [
+      'Dimensions: Height 5.5 inch, Diameter 4.8 inch, Depth 4.8 inch',
+      'Heavy brass material',
+      'Detailed horse design',
+      'Spacious interior',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-mukhvas-dani',
+    title: 'Antique Brass Mukhvas Dani',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹4,250',
+    originalPrice: '₹5,000',
+    discount: '15% off',
+    rating: 4.7,
+    reviews: 14,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas2.jpeg'
+    ],
+    description: 'Rectangular antique brass container used for serving mouth fresheners (mukhvas). Beautifully crafted lid and compartments.',
+    features: [
+      'Dimensions: Length 6.5 inch, Height 2.5 inch, Width 4.5 inch',
+      'Rectangular design',
+      'Compartmentalized storage',
+      'Detailed brass work',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-mug',
+    title: 'Antique Brass Mug',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹2,150',
+    originalPrice: '₹2,550',
+    discount: '16% off',
+    rating: 4.5,
+    reviews: 28,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-mug1.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-mug1.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-mug2.jpeg'
+    ],
+    description: 'Vintage brass mug with a sturdy handle. Can be used as a desk organizer or a retro drinking cup.',
+    features: [
+      'Dimensions: Height 4.9 inch',
+      'Sturdy handle',
+      'Solid base',
+      'Retro aesthetic',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
+  {
+    id: 'antique-brass-hanging-mukhvas',
+    title: 'Antique Brass Hanging Mukhvas Dani',
+    category: 'brass-products',
+    categoryName: 'Brass Products',
+    price: '₹750',
+    originalPrice: '₹900',
+    discount: '17% off',
+    rating: 4.8,
+    reviews: 35,
+    image: 'https://ik.imagekit.io/pi9wuccc0i/brass-hanging2.jpeg',
+    images: [
+      'https://ik.imagekit.io/pi9wuccc0i/brass-hanging2.jpeg',
+      'https://ik.imagekit.io/pi9wuccc0i/brass-hanging.jpeg'
+    ],
+    description: 'Unique hanging style brass mukhvas container. Adds a traditional touch to your dining area or kitchen.',
+    features: [
+      'Dimensions: Height 8.5 inch',
+      'Hanging mechanism',
+      'Compact storage',
+      'Traditional design',
+      "Please note that this is an antique piece"
+    ],
+    inStock: true,
+    fastDelivery: true
+  },
   {
     id: 'medium-bird-box',
     title: 'Medium Bird Box',
@@ -239,7 +587,7 @@ export const products = [
   },
   {
     id: 'kettle',
-    title: 'Kettle',
+    title: 'Antique brass Kettle',
     category: 'brass-products',
     categoryName: 'Brass Products',
     price: '₹2,800',
@@ -269,7 +617,7 @@ export const products = [
   },
   {
     id: 'tiffin',
-    title: 'Tiffin',
+    title: 'Antique Brass Tiffin',
     category: 'brass-products',
     categoryName: 'Brass Products',
     price: '₹2,200',
@@ -867,63 +1215,7 @@ export const products = [
     inStock: true,
     fastDelivery: true
   },
-  {
-    id: 'wooden-horse-statue',
-    title: 'Wooden Horse Statue',
-    category: 'Wooden-Products',
-    categoryName: 'Wooden Products',
-    price: '₹2,950',
-    originalPrice: '₹2,950',
-    discount: '18% off',
-    rating: 4.9,
-    reviews: 15,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
-    images: [
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg',
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse3.jpeg',
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-horse2.jpeg'
-    ],
-    description: 'Majestic wooden horse statue mounted on a sturdy iron stand. A striking art piece carved from pure teak wood.',
-    features: [
-      'Dimensions: Height 13.5 inch, Width 4 inch',
-      'Material: Pure Teak Wood',
-      'Includes iron stand',
-      'Hand-carved detailing',
-      'Perfect for mantels or shelves',
-      "Please note that this is an antique piece"
-    ],
-    inStock: true,
-    fastDelivery: true
-  },
-  {
-    id: 'wooden-candle-holder-set',
-    title: 'Wooden Candle Holder (Teak)',
-    category: 'Wooden-Products',
-    categoryName: 'Wooden Products',
-    price: '₹2,500',
-    originalPrice: '₹2,500 each',
-    discount: '22% off',
-    rating: 4.6,
-    reviews: 42,
-    image: 'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
-    images: [
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg',
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle2.jpeg',
-      'https://ik.imagekit.io/pi9wuccc0i/wooden-candle1.jpeg'
-    ],
-    description: 'Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades. (each)',
-    features: [
-      'Dimensions: Height 6 inch',
-      'Material: Pure Teak Wood',
-      'Available in 3 wood tones',
-      'Classic turned design',
-      'Fits standard taper candles',
-      "Please note that sizes may vary slightly"
-    ],
-    inStock: true,
-    fastDelivery: true
-  },
-
+  
   // 🎨 Paintings
   {
     id: 'madhubani-painting-red-fish',
