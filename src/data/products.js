@@ -414,7 +414,7 @@ export const products = [
     category: 'brass-products',
     categoryName: 'Brass Products',
     price: '₹750',
-    originalPrice: '₹900',
+    originalPrice: '₹1850',
     discount: '17% off',
     rating: 4.8,
     reviews: 35,
