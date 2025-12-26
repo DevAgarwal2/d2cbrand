@@ -25,6 +25,7 @@ export const products = [
       'Velvet interior lining',
       'Perfect for gifting'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -53,6 +54,7 @@ export const products = [
       'Durable construction',
       'Easy to maintain'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -83,6 +85,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -112,6 +115,7 @@ export const products = [
       'Perfect for mantels or shelves',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -140,6 +144,7 @@ export const products = [
       'Fits standard taper candles',
       "Please note that sizes may vary slightly"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -167,6 +172,7 @@ export const products = [
       'Sturdy handle',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -194,6 +200,7 @@ export const products = [
       'Traditional circular design',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -220,6 +227,7 @@ export const products = [
       'Ideal for home decor or collection',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -246,6 +254,7 @@ export const products = [
       'Vintage patina',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -272,6 +281,7 @@ export const products = [
       'Ideal for entryways or corners',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -298,6 +308,7 @@ export const products = [
       'Heavy quality brass',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -326,6 +337,7 @@ export const products = [
       'Antique finish',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -353,6 +365,7 @@ export const products = [
       'Spacious interior',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -379,6 +392,7 @@ export const products = [
       'Detailed brass work',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -405,6 +419,7 @@ export const products = [
       'Retro aesthetic',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -431,6 +446,7 @@ export const products = [
       'Traditional design',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -461,6 +477,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -492,6 +509,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -522,6 +540,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -552,6 +571,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -582,6 +602,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -612,6 +633,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -642,6 +664,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -672,6 +695,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -700,6 +724,7 @@ export const products = [
       'Traditional bucket design',
       "Please note that this is an antique piece and slightly different from product"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -728,6 +753,7 @@ export const products = [
       'Ideal for home & garden',
       "Please note that this is an antique piece and slightly different from product"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -758,6 +784,7 @@ export const products = [
       'Spiritual significance',
       'Artistic craftsmanship'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -786,6 +813,7 @@ export const products = [
       'Easy to use',
       'Affordable option'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -814,6 +842,7 @@ export const products = [
       'Durable construction',
       'Practical for ceremonies'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -844,6 +873,7 @@ export const products = [
       'Warm lighting',
       'Durable build'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -872,6 +902,7 @@ export const products = [
       'Traditional appeal',
       'Handcrafted quality'
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -902,6 +933,7 @@ export const products = [
       "Please note that this is an antique piece and slightly different from product"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -931,6 +963,7 @@ export const products = [
       "Please note that this is an antique piece"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -961,6 +994,7 @@ export const products = [
       "Please note that this is an antique piece"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -990,6 +1024,7 @@ export const products = [
       "Please note that this is an antique piece"
 
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1017,6 +1052,7 @@ export const products = [
       'Traditional design',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1044,6 +1080,7 @@ export const products = [
       'Vintage appeal',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1071,6 +1108,7 @@ export const products = [
       'Authentic antique look',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: false
   },
@@ -1099,6 +1137,7 @@ export const products = [
       'Unique gift idea',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1127,6 +1166,7 @@ export const products = [
       'Classic design',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1156,6 +1196,7 @@ export const products = [
       'Perfect for storage or display',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1184,6 +1225,7 @@ export const products = [
       'Weather resistant finish',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1212,6 +1254,7 @@ export const products = [
       'Hand-polished finish',
       "Please note that this is an antique piece"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1242,6 +1285,7 @@ export const products = [
       'Unframed (Canvas/Paper only)',
       "Please note that this is an antique/vintage piece and may have natural aging marks"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1270,6 +1314,7 @@ export const products = [
       'Unframed',
       "Please note that this is an antique/vintage piece and may have natural aging marks"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   },
@@ -1298,6 +1343,7 @@ export const products = [
       'Unframed',
       "Please note that this is an antique/vintage piece and may have natural aging marks"
     ],
+    shipping: 'Shipping charges included',
     inStock: true,
     fastDelivery: true
   }

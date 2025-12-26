@@ -111,12 +111,12 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                     <div class="bg-white p-2 rounded-[2rem] shadow-sm border border-stone-100">
                         <div class="relative aspect-[4/5] lg:aspect-auto lg:h-[650px] overflow-hidden rounded-[1.5rem] bg-[#F2F0E9] group">
                             <img 
-    id="main-image"
-    src={product.image} 
-    alt={product.title}
-    class="w-full h-full transition-transform duration-1000 group-hover:scale-105 ease-out"
-    style={`object-fit: ${product.id === 'antique-chapati-box-stand' ? 'contain' : 'cover'}`}
-/>
+                                id="main-image"
+                                src={product.image} 
+                                alt={product.title}
+                                class="w-full h-full transition-transform duration-1000 group-hover:scale-105 ease-out"
+                                style={`object-fit: ${product.id === 'antique-chapati-box-stand' ? 'contain' : 'cover'}`}
+                            />
                             <div class="absolute top-6 left-6 flex flex-col gap-2">
                                 <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
                                     {product.categoryName}
@@ -154,6 +154,10 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                     <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">{product.rating} Rating</span>
                                 </div>
                             </div>
+                            <p class="text-sm text-stone-500 font-medium mt-2 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                {product.shipping}
+                            </p>
                         </div>
 
                         <div class="space-y-6 mb-8">
@@ -274,6 +278,8 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
             <div class="flex-1">
                 <p class="text-xs text-stone-500 uppercase tracking-wider mb-0.5">Price</p>
                 <p class="text-xl font-serif text-stone-900">{product.originalPrice}</p>
+                {/* Added Shipping Info for Mobile Sticky Footer */}
+                <p class="text-[10px] text-stone-500">{product.shipping}</p>
             </div>
             <button 
                 data-message={baseMessage}
