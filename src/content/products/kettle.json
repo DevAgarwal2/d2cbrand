@@ -1,0 +1,30 @@
+{
+  "id": "kettle",
+  "title": "Antique brass Kettle",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,800",
+  "originalPrice": "₹2,950",
+  "discount": "18% off",
+  "rating": 4.9,
+  "reviews": 145,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/kettle.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/kettle.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/kettle2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/kettle3.jpeg"
+  ],
+  "description": "Traditional brass kettle with elegant design. Perfect for tea preparation and serving.",
+  "features": [
+    "Dimensions: Height: 7 inch, Diameter: 5 inch",
+    "Traditional kettle design",
+    "Heat-resistant handle",
+    "Medium capacity",
+    "Easy pour spout",
+    "Authentic brass construction",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

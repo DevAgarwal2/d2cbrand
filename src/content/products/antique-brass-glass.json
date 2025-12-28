@@ -1,0 +1,27 @@
+{
+  "id": "antique-brass-glass",
+  "title": "Antique Brass Glass",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹1,750",
+  "originalPrice": "₹2,050",
+  "discount": "15% off",
+  "rating": 4.6,
+  "reviews": 30,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-glass1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-glass1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-glass2.jpeg"
+  ],
+  "description": "Tall antique brass glass with etching details. Can be used as a vase or a drinking vessel.",
+  "features": [
+    "Dimensions: Height 5.5 inch",
+    "Solid brass",
+    "Intricate detailing",
+    "Vintage patina",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

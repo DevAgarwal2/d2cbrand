@@ -1,0 +1,27 @@
+{
+  "id": "antique-brass-fruit-basket",
+  "title": "Antique Brass Fruit Basket",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,950",
+  "originalPrice": "₹3,500",
+  "discount": "16% off",
+  "rating": 4.7,
+  "reviews": 22,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-fruit.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-fruit.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-fruit2.jpeg"
+  ],
+  "description": "Vintage brass fruit basket with a wide brim. Perfect for dining tables or as a standalone centerpiece.",
+  "features": [
+    "Dimensions: Height 12 inch, Width 11 inch, Depth 4 inch",
+    "Large capacity",
+    "Traditional woven-style design",
+    "Sturdy handle",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

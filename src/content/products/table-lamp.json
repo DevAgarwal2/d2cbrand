@@ -1,0 +1,29 @@
+{
+  "id": "table-lamp",
+  "title": "Table Lamp",
+  "category": "iron-lamps",
+  "categoryName": "Iron Lamps",
+  "price": "₹3,200",
+  "originalPrice": "₹1,050",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 123,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/table_lamp.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/table_lamp.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/table_lamp2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/table_lamp3.jpeg"
+  ],
+  "description": "Elegant iron table lamp with traditional design. Perfect for adding warm lighting to your space.",
+  "features": [
+    "Dimensions: Height: 10.5 inch, Diameter: 6 inch",
+    "Iron construction",
+    "Traditional design",
+    "Perfect table size",
+    "Warm lighting",
+    "Durable build"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

@@ -1,0 +1,29 @@
+{
+  "id": "madhubani-painting-red-fish",
+  "title": "Vintage Madhubani Painting (Red Fishes)",
+  "category": "paintings",
+  "categoryName": "Paintings",
+  "price": "₹1,100",
+  "originalPrice": "₹1,300",
+  "discount": "15% off",
+  "rating": 4.8,
+  "reviews": 24,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/madh-painting2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/madh-painting2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/madh-painting1.jpeg"
+  ],
+  "description": "A rare, handcrafted vintage Madhubani masterpiece featuring vibrant red fishes, symbolizing fertility and prosperity. Created using traditional natural pigments on aged handmade paper, this piece carries the authentic soul of Mithila folk art. A perfect collector’s item for heritage wall decor.",
+  "features": [
+    "Dimensions: Length 14.5 inch, Width 11.1 inch",
+    "Authentic vintage hand-painting",
+    "Created with natural mineral pigments",
+    "Symbolizes good luck and prosperity",
+    "Preserved traditional Mithila art",
+    "Unframed (Canvas/Paper only)",
+    "Please note that this is an antique/vintage piece and may have natural aging marks"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

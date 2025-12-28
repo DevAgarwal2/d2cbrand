@@ -1,0 +1,29 @@
+{
+  "id": "wooden-hanging-planter-big",
+  "title": "Wooden Hanging Planter (Big)",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,490",
+  "originalPrice": "₹2,490 each",
+  "discount": "20% off",
+  "rating": 4.8,
+  "reviews": 28,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter3.jpeg"
+  ],
+  "description": "Large wooden hanging planter in a unique purse design. Crafted from premium teak wood for long-lasting outdoor beauty.",
+  "features": [
+    "Dimensions: Height 7 inch, Width 8 inch",
+    "Material: Pure Teak Wood",
+    "Spacious for plants",
+    "Decorative hanging accent",
+    "Hand-polished finish",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

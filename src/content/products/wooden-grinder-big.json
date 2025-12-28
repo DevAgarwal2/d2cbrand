@@ -1,0 +1,28 @@
+{
+  "id": "wooden-grinder-big",
+  "title": "Big Wooden Grinder",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹3,800",
+  "originalPrice": "₹4,500 each",
+  "discount": "15% off",
+  "rating": 4.9,
+  "reviews": 52,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/grinder.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/grinder.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder2.jpeg"
+  ],
+  "description": "Large vintage wooden grinder statement piece. Perfect for large spaces and traditional settings.",
+  "features": [
+    "Dimensions: Height 8 inch, Diameter 18 inch, Depth 2.5 inch",
+    "Premium solid wood",
+    "Large statement size",
+    "Authentic antique look",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

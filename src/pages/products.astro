@@ -1,8 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { products, categories } from '../data/products.js';
 import logo from "../assets/logo.jpeg";
+// 👇 1. Import Collection
+import { getCollection } from 'astro:content';
 
+// 👇 2. Fetch Data
+const allProductEntries = await getCollection('products');
+const products = allProductEntries.map(entry => entry.data);
+
+// 👇 3. Dynamically Generate Categories (Counts how many items per category)
+const categoryMap = new Map();
+
+products.forEach(product => {
+    if (!categoryMap.has(product.category)) {
+        categoryMap.set(product.category, {
+            id: product.category,
+            name: product.categoryName, // Uses the display name from the data
+            count: 0
+        });
+    }
+    categoryMap.get(product.category).count++;
+});
+
+const categories = Array.from(categoryMap.values());
 ---
 
 <Layout title="All Products - Shreeyam Handicrafts">

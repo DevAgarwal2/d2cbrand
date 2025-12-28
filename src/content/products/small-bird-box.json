@@ -1,0 +1,30 @@
+{
+  "id": "small-bird-box",
+  "title": "Small Bird Box",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,200",
+  "originalPrice": "₹1,450",
+  "discount": "21% off",
+  "rating": 4.9,
+  "reviews": 156,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/small_bird_box.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/small_bird_box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_bird_box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_bird_box3.jpeg"
+  ],
+  "description": "Charming small bird-shaped brass box with intricate detailing. Perfect decorative piece for your home.",
+  "features": [
+    "Dimensions: Height: 2.5 inch, Diameter: 2.5 inch",
+    "Bird-shaped design",
+    "Intricate brass work",
+    "Small storage compartment",
+    "Decorative appeal",
+    "Handcrafted quality",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

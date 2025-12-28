@@ -1,0 +1,30 @@
+{
+  "id": "big-bird-box",
+  "title": "Big Bird Box",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹4,500",
+  "originalPrice": "₹2,150",
+  "discount": "13% off",
+  "rating": 4.9,
+  "reviews": 67,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/big_bird_box.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/big_bird_box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big_bird_box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big_bird_box3.jpeg"
+  ],
+  "description": "Large bird-shaped brass box with elaborate detailing. Perfect statement piece for your living room.",
+  "features": [
+    "Dimensions: Height: 4.5 inch, Diameter: 4.5 inch",
+    "Large size",
+    "Elaborate bird design",
+    "Premium brass quality",
+    "Spacious storage",
+    "Statement decorative piece",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

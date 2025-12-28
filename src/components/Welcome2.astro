@@ -1,11 +1,13 @@
 ---
-
 // --- src/pages/index.astro ---
 
-import { products } from '../data/products.js';
-
-// --- 1. LOGO CONFIGURATION ---
+// 👇 1. Import Collection Helper
+import { getCollection } from 'astro:content';
 import logo from "../assets/logo.jpeg"; 
+
+// 👇 2. Fetch All Products from JSON files
+const allProductEntries = await getCollection('products');
+const products = allProductEntries.map(entry => entry.data);
 
 // Hero Product: Antique Brass Box
 const heroProduct = products.find(p => p.id === 'antique-brass-box');

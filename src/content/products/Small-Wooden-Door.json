@@ -1,0 +1,29 @@
+{
+  "id": "Small-Wooden-Door",
+  "title": "Small Wooden Door",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹3,200",
+  "originalPrice": "₹2,300",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 123,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/small-wood-door.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/small-wood-door.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small-wood-door2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small-wood-door3.jpeg"
+  ],
+  "description": "Handcrafted small wooden door made from premium solid wood. Perfect for decorative use in interiors, temples, or as a wall accent piece.",
+  "features": [
+    "Dimensions: Length 18.5 inch, Width 9 inch",
+    "Made from durable solid wood",
+    "Hand-carved traditional design",
+    "Polished finish for a rich look",
+    "Ideal for home decor, pooja rooms, or gifting",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

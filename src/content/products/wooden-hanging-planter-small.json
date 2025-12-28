@@ -1,0 +1,29 @@
+{
+  "id": "wooden-hanging-planter-small",
+  "title": "Wooden Hanging Planter (Small)",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,050",
+  "originalPrice": "₹2,050 each",
+  "discount": "18% off",
+  "rating": 4.7,
+  "reviews": 34,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-planter3.jpeg"
+  ],
+  "description": "Charming purse-shaped wooden hanging planter. Handcrafted from pure teak wood to add a rustic touch to your garden or balcony.",
+  "features": [
+    "Dimensions: Height 6 inch, Width 6 inch",
+    "Material: Pure Teak Wood",
+    "Unique purse shape",
+    "Hanging mechanism included",
+    "Weather resistant finish",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

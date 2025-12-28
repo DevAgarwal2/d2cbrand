@@ -1,0 +1,29 @@
+{
+  "id": "wooden-horse-statue",
+  "title": "Wooden Horse Statue",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,950",
+  "originalPrice": "₹2,750 each",
+  "discount": "18% off",
+  "rating": 4.9,
+  "reviews": 15,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-horse1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-horse3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-horse2.jpeg"
+  ],
+  "description": "Majestic wooden horse statue mounted on a sturdy iron stand. A striking art piece carved from pure teak wood.",
+  "features": [
+    "Dimensions: Height 13.5 inch, Width 4 inch",
+    "Material: Pure Teak Wood",
+    "Includes iron stand",
+    "Hand-carved detailing",
+    "Perfect for mantels or shelves",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

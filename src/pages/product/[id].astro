@@ -1,12 +1,18 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { products } from '../../data/products.js';
 import logo from "../../assets/logo.jpeg"; 
+// 👇 1. Import the collection helper instead of the old file
+import { getCollection } from 'astro:content';
 
-export function getStaticPaths() {
-  return products.map((product) => ({
-    params: { id: product.id },
-    props: { product },
+export async function getStaticPaths() {
+  // 👇 2. Fetch all products from the src/content/products folder
+  const products = await getCollection('products');
+  
+  return products.map((entry) => ({
+    // entry.id is the filename (e.g., 'antique-brass-box')
+    params: { id: entry.id }, 
+    // entry.data is the actual JSON content inside the file
+    props: { product: entry.data }, 
   }));
 }
 
@@ -16,12 +22,14 @@ if (!product) {
   return Astro.redirect('/404');
 }
 
-// Get related products
-const relatedProducts = products
+// 👇 3. Updated Logic for Related Products
+const allProducts = await getCollection('products');
+const relatedProducts = allProducts
+  .map(p => p.data) // Extract the JSON data from each file
   .filter(p => p.category === product.category && p.id !== product.id)
   .slice(0, 3);
 
-// Base message (The URL will be added by JavaScript below)
+// Base message
 const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title} (Price: ${product.originalPrice}).`;
 ---
 
@@ -154,6 +162,8 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                     <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">{product.rating} Rating</span>
                                 </div>
                             </div>
+                            
+                            {/* Shipping Info added here */}
                             <p class="text-sm text-stone-500 font-medium mt-2 flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                                 {product.shipping}
@@ -278,7 +288,7 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
             <div class="flex-1">
                 <p class="text-xs text-stone-500 uppercase tracking-wider mb-0.5">Price</p>
                 <p class="text-xl font-serif text-stone-900">{product.originalPrice}</p>
-                {/* Added Shipping Info for Mobile Sticky Footer */}
+                {/* Shipping info in Mobile Footer */}
                 <p class="text-[10px] text-stone-500">{product.shipping}</p>
             </div>
             <button 
@@ -319,17 +329,15 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
     }
 
-    // 2. WhatsApp Button Logic (To Include URL)
+    // 2. WhatsApp Button Logic
     const whatsappBtns = document.querySelectorAll('.whatsapp-btn');
     whatsappBtns.forEach(button => {
         button.addEventListener('click', () => {
             const baseMessage = button.getAttribute('data-message');
-            const currentUrl = window.location.href; // Get the current page URL
+            const currentUrl = window.location.href; 
             
-            // Construct full message
             const fullMessage = `${baseMessage}\n\nProduct Link: ${currentUrl}`;
             
-            // Open WhatsApp
             const whatsappUrl = `https://wa.me/919726983835?text=${encodeURIComponent(fullMessage)}`;
             window.open(whatsappUrl, '_blank');
         });

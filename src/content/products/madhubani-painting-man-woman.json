@@ -1,0 +1,29 @@
+{
+  "id": "madhubani-painting-man-woman",
+  "title": "Vintage Folklore Painting (Man & Woman)",
+  "category": "paintings",
+  "categoryName": "Paintings",
+  "price": "₹1,600",
+  "originalPrice": "₹1,900",
+  "discount": "16% off",
+  "rating": 4.7,
+  "reviews": 15,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/men-paint2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/men-paint2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/men-paint1.jpeg"
+  ],
+  "description": "A classic vintage Madhubani portraying traditional rural folklore with distinctive geometric patterns. This hand-painted treasure captures the essence of ancient storytelling through bold strokes and vivid natural colors. A timeless piece of cultural history preserved on canvas.",
+  "features": [
+    "Dimensions: Length 25.6 inch, Width 11 inch",
+    "Traditional figurative storytelling",
+    "Bold geometric borders",
+    "Hand-painted using traditional tools (twigs/nibs)",
+    "Rich cultural significance",
+    "Unframed",
+    "Please note that this is an antique/vintage piece and may have natural aging marks"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

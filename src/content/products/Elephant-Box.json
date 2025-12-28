@@ -1,0 +1,30 @@
+{
+  "id": "Elephant-Box",
+  "title": "Wooden Elephant Box",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,800",
+  "originalPrice": "₹4,200 each",
+  "discount": "18% off",
+  "rating": 4.7,
+  "reviews": 98,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/elephant-box.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-box4.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-box3.jpeg"
+  ],
+  "description": "Handcrafted wooden elephant box with intricate design, ideal for storing jewelry, trinkets, or gifting purposes.",
+  "features": [
+    "Dimensions: Length 15 inch, Width 8.5 inch, Depth 6.5 inch",
+    "Made from premium quality wood",
+    "Carved elephant motifs on the surface",
+    "Polished for durability and shine",
+    "Perfect for storage or as a decorative piece",
+    "Pure teakwood(Sagwan)",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

@@ -1,0 +1,29 @@
+{
+  "id": "Wooden-Elephant-Statue",
+  "title": "Wooden Elephant Statue",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹3,500",
+  "originalPrice": "₹3,500",
+  "discount": "17% off",
+  "rating": 4.8,
+  "reviews": 145,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-statue2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/elephant-statue3.jpeg"
+  ],
+  "description": "Exquisitely carved wooden elephant statue symbolizing strength, wisdom, and prosperity. A timeless addition to your home decor or office space.",
+  "features": [
+    "Dimensions: Height 13 inch, Width 13 inch",
+    "Handcrafted from high-quality wood",
+    "Detailed carving with smooth finish",
+    "Represents traditional Indian artistry",
+    "Great for home, office, or gifting",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

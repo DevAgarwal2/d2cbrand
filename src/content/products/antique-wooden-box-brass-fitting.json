@@ -1,0 +1,29 @@
+{
+  "id": "antique-wooden-box-brass-fitting",
+  "title": "Antique Wooden Box with Brass Fitting",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹4,590",
+  "originalPrice": "₹4,590",
+  "discount": "16% off",
+  "rating": 4.9,
+  "reviews": 12,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/antique-wooden-box3.jpeg"
+  ],
+  "description": "Exquisite single-piece Mango wood box featuring antique brass fittings. A rare collectible perfect for heritage decor.",
+  "features": [
+    "Dimensions: Height 9 inch, Width 13.5 inch, Depth 4.5 inch",
+    "Material: Old Mango Wood (Single Piece)",
+    "Antique Brass Fittings",
+    "Heavy and durable",
+    "Perfect for storage or display",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

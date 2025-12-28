@@ -1,0 +1,27 @@
+{
+  "id": "antique-brass-mukhvas-dani",
+  "title": "Antique Brass Mukhvas Dani",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹4,250",
+  "originalPrice": "₹4,950",
+  "discount": "15% off",
+  "rating": 4.7,
+  "reviews": 14,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-mukhwas2.jpeg"
+  ],
+  "description": "Rectangular antique brass container used for serving mouth fresheners (mukhvas). Beautifully crafted lid and compartments.",
+  "features": [
+    "Dimensions: Length 6.5 inch, Height 2.5 inch, Width 4.5 inch",
+    "Rectangular design",
+    "Compartmentalized storage",
+    "Detailed brass work",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

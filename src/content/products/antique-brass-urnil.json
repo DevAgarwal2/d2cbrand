@@ -1,0 +1,27 @@
+{
+  "id": "antique-brass-urnil",
+  "title": "Antique Brass Urli",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹4,100",
+  "originalPrice": "₹4,850",
+  "discount": "15% off",
+  "rating": 4.8,
+  "reviews": 25,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-urnil1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-urnil1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-urnil2.jpeg"
+  ],
+  "description": "Traditional wide-mouthed brass Urli. Perfect for floating flowers or candles for festive decoration.",
+  "features": [
+    "Dimensions: Height 6.5 inch, Diameter 10 inch",
+    "Classic Urli shape",
+    "Ideal for floral arrangements",
+    "Heavy quality brass",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

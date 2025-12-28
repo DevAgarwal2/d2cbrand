@@ -1,0 +1,28 @@
+{
+  "id": "antique-brass-horse-box-small",
+  "title": "Antique Brass Horse Box (Small)",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹1,550",
+  "originalPrice": "₹1,650",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 12,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/small-brass-horse.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/small-brass-horse.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small-brass-horse3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small-brass-horse2.jpeg"
+  ],
+  "description": "Small antique brass box featuring a horse motif. Distinctive craftsmanship perfect for collectors.",
+  "features": [
+    "Dimensions: Height 2 inch, Diameter 3 inch, Depth 1.5 inch",
+    "Solid brass construction",
+    "Horse motif design",
+    "Antique finish",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

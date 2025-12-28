@@ -1,0 +1,29 @@
+{
+  "id": "antique-brass-box",
+  "title": "Antique Brass Box",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,500",
+  "originalPrice": "₹1950",
+  "discount": "17% off",
+  "rating": 4.8,
+  "reviews": 124,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass_box_1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass_box_1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass_box_2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brax_box_3.jpeg"
+  ],
+  "description": "Exquisitely crafted antique brass box with intricate designs. Perfect for storing jewelry and small treasures.",
+  "features": [
+    "Dimensions: Height: 3 inch, Diameter: 4 inch",
+    "Pure brass construction",
+    "Antique finish",
+    "Secure locking mechanism",
+    "Velvet interior lining",
+    "Perfect for gifting"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

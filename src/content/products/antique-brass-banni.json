@@ -1,0 +1,30 @@
+{
+  "id": "antique-brass-banni",
+  "title": "Antique Brass Banni",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹4,200",
+  "originalPrice": "₹2,350",
+  "discount": "16% off",
+  "rating": 4.9,
+  "reviews": 87,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass_bani.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass_bani.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass_bani2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass_bani3.jpeg"
+  ],
+  "description": "Antique brass banni with traditional craftsmanship. Beautiful vessel for ceremonial and decorative use.",
+  "features": [
+    "Dimensions: Height: 5 inch, Diameter: 4 inch",
+    "Antique brass finish",
+    "Traditional craftsmanship",
+    "Ceremonial vessel",
+    "Decorative appeal",
+    "Cultural significance",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

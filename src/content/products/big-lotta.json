@@ -1,0 +1,30 @@
+{
+  "id": "big-lotta",
+  "title": "Big Lotta",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹3,800",
+  "originalPrice": "₹2,150",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 76,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/big_lotta.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/big_lotta.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big_lotta2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big_lotta3.jpeg"
+  ],
+  "description": "Large traditional brass lotta (water pot) with authentic design. Perfect for traditional households.",
+  "features": [
+    "Dimensions: Height: 6 inch, Diameter: 3 inch",
+    "Large capacity",
+    "Traditional lotta design",
+    "Premium brass quality",
+    "Water storage vessel",
+    "Cultural significance",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

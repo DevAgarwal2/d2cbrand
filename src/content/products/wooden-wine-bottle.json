@@ -1,0 +1,29 @@
+{
+  "id": "wooden-wine-bottle",
+  "title": "Wooden Wine Bottle",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹1,700",
+  "originalPrice": "₹2,050",
+  "discount": "17% off",
+  "rating": 4.6,
+  "reviews": 64,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-wine1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-wine1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-wine3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-wine2.jpeg"
+  ],
+  "description": "Unique handcrafted wooden wine bottle sculpture. A conversation starter and beautiful shelf decor.",
+  "features": [
+    "Dimensions: Height 13.5 inch, Length 8.5 inch, Width 4.5 inch",
+    "Artistic wooden carving",
+    "Smooth polished finish",
+    "Decorative use only",
+    "Unique gift idea",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}
