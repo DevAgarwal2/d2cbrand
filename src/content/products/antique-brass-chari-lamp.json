@@ -1,27 +1,27 @@
 {
-  "id": "antique-brass-chari-lamp",
-  "title": "Antique Brass Chari with Lamp",
-  "category": "brass-products",
+  "discount": "17% off",
   "categoryName": "Brass Products",
   "price": "₹7,900",
-  "originalPrice": "₹9,500",
-  "discount": "17% off",
-  "rating": 5,
-  "reviews": 8,
-  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-lamp.jpeg",
+  "shipping": "Shipping charges included",
+  "fastDelivery": false,
+  "inStock": true,
+  "originalPrice": "₹8,500",
+  "title": "Antique Brass Chari with Lamp",
   "images": [
     "https://ik.imagekit.io/pi9wuccc0i/brass-lamp.jpeg",
     "https://ik.imagekit.io/pi9wuccc0i/brass-lamp2.jpeg"
   ],
+  "reviews": 8,
+  "id": "antique-brass-chari-lamp",
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-lamp.jpeg",
   "description": "A magnificent fusion of a Chari vessel and a tall lamp. A stunning floor or table centerpiece for heritage homes.",
   "features": [
     "Dimensions: Height 22 inch, Chari Width 5 inch",
     "Unique fusion design",
     "Tall statement piece",
     "Ideal for entryways or corners",
-    "Please note that this is an antique piece"
+    "Please note that this is an antique piece and slightly different from product "
   ],
-  "shipping": "Shipping charges included",
-  "inStock": true,
-  "fastDelivery": false
+  "rating": 5,
+  "category": "brass-products"
 }
