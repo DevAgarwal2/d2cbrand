@@ -1,19 +1,20 @@
 {
-  "id": "antique-brass-big-bucket",
-  "title": "Antique Brass Big Bucket",
-  "category": "brass-products",
+  "discount": "20% off",
   "categoryName": "Brass Products",
   "price": "₹5,200",
-  "originalPrice": "₹6,500",
-  "discount": "20% off",
-  "rating": 4.9,
-  "reviews": 28,
-  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-big-buck1.jpeg",
+  "shipping": "Shipping charges included",
+  "fastDelivery": false,
+  "inStock": true,
+  "originalPrice": "₹5800",
+  "title": "Antique Brass Big Bucket",
   "images": [
     "https://ik.imagekit.io/pi9wuccc0i/brass-big-buck1.jpeg",
     "https://ik.imagekit.io/pi9wuccc0i/brass-big-buck2.jpeg",
     "https://ik.imagekit.io/pi9wuccc0i/brass-big-buck3.jpeg"
   ],
+  "reviews": 28,
+  "id": "antique-brass-big-bucket",
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-big-buck1.jpeg",
   "description": "Large antique brass bucket with a rich patina. Perfect for holding larger plants, firewood, or as a grand decorative statement.",
   "features": [
     "Dimensions: Height: 12 inch, Diameter: 9.5 inch, Depth: 9 inch",
@@ -23,7 +24,6 @@
     "Ideal for home & garden",
     "Please note that this is an antique piece and slightly different from product"
   ],
-  "shipping": "Shipping charges included",
-  "inStock": true,
-  "fastDelivery": false
+  "rating": 4.9,
+  "category": "brass-products"
 }
