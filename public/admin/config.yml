@@ -1,7 +1,8 @@
 backend:
+  publish_mode: editorial_workflow
   name: git-gateway
   branch: main # Change to 'master' if your repo uses master
-  publish_mode: editorial_workflow
+  
   
 
 # This handles the NEW images
