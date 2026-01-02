@@ -1,27 +1,27 @@
 {
-  "id": "antique-brass-chari",
-  "title": "Antique Brass Chari",
-  "category": "brass-products",
+  "discount": "15% off",
   "categoryName": "Brass Products",
   "price": "₹5,350",
-  "originalPrice": "₹6,300",
-  "discount": "15% off",
-  "rating": 4.9,
-  "reviews": 10,
-  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-chari2.jpeg",
+  "shipping": "Shipping charges included",
+  "fastDelivery": false,
+  "inStock": true,
+  "originalPrice": "₹5,500",
+  "title": "Antique Brass Chari",
   "images": [
     "https://ik.imagekit.io/pi9wuccc0i/brass-chari2.jpeg",
     "https://ik.imagekit.io/pi9wuccc0i/brass-chari1.jpeg"
   ],
+  "reviews": 10,
+  "id": "antique-brass-chari",
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-chari2.jpeg",
   "description": "Heavy antique brass Chari vessel. A collector's item representing traditional Indian kitchenware.",
   "features": [
     "Dimensions: Height 8 inch, Diameter 7 inch",
     "Thick gauge brass",
     "Traditional shape",
     "Ideal for home decor or collection",
-    "Please note that this is an antique piece"
+    "Please note that this is an antique piece and slightly different from product "
   ],
-  "shipping": "Shipping charges included",
-  "inStock": true,
-  "fastDelivery": false
+  "rating": 4.9,
+  "category": "brass-products"
 }
