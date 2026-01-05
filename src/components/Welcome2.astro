@@ -1,18 +1,38 @@
 ---
-// --- src/pages/index.astro ---
-
-// 👇 1. Import Collection Helper
-import { getCollection } from 'astro:content';
+// --- src/components/Welcome2.astro ---
+import { supabase } from "../db/supabase";
 import logo from "../assets/logo.jpeg"; 
 
-// 👇 2. Fetch All Products from JSON files
-const allProductEntries = await getCollection('products');
-const products = allProductEntries.map(entry => entry.data);
+// 👇 1. FETCH DATA FROM SUPABASE
+// We select all products and join the 'categories' table to get the category name
+const { data: rawProducts, error } = await supabase
+  .from('products')
+  .select('*, categories(name)')
+  .order('title', { ascending: true });
 
+if (error) {
+  console.error("Error fetching products:", error);
+}
+
+// 👇 2. MAP DATA (Transform Supabase fields to match your UI)
+const products = rawProducts?.map(p => ({
+  ...p,
+  // Map 'image_url' (DB) to 'image' (Your UI)
+  image: p.image_url, 
+  // Map category name from the join
+  categoryName: p.categories?.name || 'Handicraft', 
+  // Add Currency Symbol if missing
+  price: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`,
+  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null,
+  outOfStock: !p.in_stock
+})) || [];
+
+// 👇 3. LOGIC (Kept exactly the same as before)
 // Hero Product: Antique Brass Box
 const heroProduct = products.find(p => p.id === 'antique-brass-box');
-const heroImageSrc = heroProduct ? heroProduct.image : 'https://via.placeholder.com/800x1000';
+const heroImageSrc = heroProduct ? heroProduct.image : 'https://ik.imagekit.io/pi9wuccc0i/ok_photo1.jpeg';
 
+// Curated Favorites (Top 8)
 const featuredProducts = products.slice(0, 8);
 
 const getWhatsAppLink = (productTitle: any) => {
@@ -110,7 +130,7 @@ const getWhatsAppLink = (productTitle: any) => {
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="/products" class="w-full sm:w-auto bg-stone-900 text-white px-8 py-4 rounded-full font-medium shadow-lg btn-d2c text-center">
+                    <a href="#products" class="w-full sm:w-auto bg-stone-900 text-white px-8 py-4 rounded-full font-medium shadow-lg btn-d2c text-center">
                         Shop Collection
                     </a>
                     <a href="https://wa.me/919726983835" target="_blank" class="w-full sm:w-auto bg-transparent border border-stone-300 text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-white transition-all text-center">
@@ -137,7 +157,7 @@ const getWhatsAppLink = (productTitle: any) => {
             <div class="lg:col-span-7 relative">
                 <div class="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-[5/4] bg-[#F2F0E9]">
                     <img 
-                        src="https://ik.imagekit.io/pi9wuccc0i/ok_photo1.jpeg"
+                        src={heroImageSrc}
                         alt="Antique Brass Box" 
                         class="object-cover w-full h-full hover:scale-105 transition-transform duration-[1.5s] ease-out"
                     >
@@ -158,32 +178,32 @@ const getWhatsAppLink = (productTitle: any) => {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <h2 class="text-3xl md:text-4xl font-playfair text-stone-900">Our Collections</h2>
-                <a href="/products" class="text-sm font-medium border-b border-stone-900 pb-1 hover:text-stone-600 hover:border-stone-600 transition-colors">View All</a>
+                <a href="products" class="text-sm font-medium border-b border-stone-900 pb-1 hover:text-stone-600 hover:border-stone-600 transition-colors">View All</a>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                <a href="/products" class="group">
+                <a href="products" class="group">
                     <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
                         <img src="https://ik.imagekit.io/pi9wuccc0i/big_lotta.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Vessels">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
                     </div>
                     <h3 class="font-medium text-stone-900 text-lg">Brass Vessels</h3>
                 </a>
-                <a href="/products" class="group">
+                <a href="products" class="group">
                     <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
                         <img src="https://ik.imagekit.io/pi9wuccc0i/brass_box_1.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Boxes">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
                     </div>
                     <h3 class="font-medium text-stone-900 text-lg">Antique Boxes</h3>
                 </a>
-                <a href="/products" class="group">
+                <a href="products" class="group">
                     <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
                         <img src="https://ik.imagekit.io/pi9wuccc0i/elephant-statue.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Wooden">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
                     </div>
                     <h3 class="font-medium text-stone-900 text-lg">Wooden Decor</h3>
                 </a>
-                <a href="/products" class="group">
+                <a href="products" class="group">
                     <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
                         <img src="https://ik.imagekit.io/pi9wuccc0i/table_lamp.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Lamps">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
@@ -211,7 +231,11 @@ const getWhatsAppLink = (productTitle: any) => {
                             loading="lazy"
                             onclick={`window.location.href='/product/${product.id}'`}
                         />
-                        
+                        {product.outOfStock && (
+                            <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">
+                                Out of Stock
+                            </div>
+                        )}
                     </div>
                     
                     <div class="flex-grow flex flex-col">
@@ -220,23 +244,26 @@ const getWhatsAppLink = (productTitle: any) => {
                         
                         <div class="mt-auto flex items-center justify-between">
                             <div class="flex items-baseline gap-2">
-                                <span class="text-lg font-serif text-stone-900">{product.originalPrice}</span>
+                                
+                                    <span class="text-lg font-serif text-stone-900">{product.originalPrice}</span>
+                                
                             </div>
                         </div>
                         
-                        <button 
-                            onclick={`window.location.href='/product/${product.id}'`}
+                        <a 
+                            href={getWhatsAppLink(product.title)}
+                            target="_blank"
                             class="mt-4 block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
                         >
-                            Buy Now
-                        </button>
+                            Buy on WhatsApp
+                        </a>
                     </div>
                 </div>
             ))}
         </div>
 
         <div class="mt-16 text-center">
-            <a href="/products" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl btn-d2c">
+            <a href="products" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl btn-d2c">
                 View Full Collection
             </a>
         </div>
@@ -414,10 +441,10 @@ const getWhatsAppLink = (productTitle: any) => {
                 <div>
                     <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Collections</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/products" class="hover:text-white transition-colors">Brass Boxes</a></li>
-                        <li><a href="/products" class="hover:text-white transition-colors">Brass Vessels</a></li>
-                        <li><a href="/products" class="hover:text-white transition-colors">Brass Dhoopdani</a></li>
-                        <li><a href="/products" class="hover:text-white transition-colors">Iron Lamps</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Boxes</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Vessels</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Dhoopdani</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Iron Lamps</a></li>
                     </ul>
                 </div>
                 

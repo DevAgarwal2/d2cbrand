@@ -1,21 +1,50 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import logo from "../assets/logo.jpeg";
-// 👇 1. Import Collection
-import { getCollection } from 'astro:content';
+// 👇 1. Import Supabase
+import { supabase } from "../db/supabase";
 
-// 👇 2. Fetch Data
-const allProductEntries = await getCollection('products');
-const products = allProductEntries.map(entry => entry.data);
+// 👇 2. Fetch Data from Supabase
+const { data: rawProducts, error } = await supabase
+  .from('products')
+  .select('*, categories(name)') // Join to get category name
+  .order('category_id', { ascending: true });
 
-// 👇 3. Dynamically Generate Categories (Counts how many items per category)
+if (error) {
+  console.error("Error fetching products:", error);
+}
+
+// 👇 3. Map Data to match your UI variables
+const products = rawProducts?.map(p => ({
+  id: p.id,
+  title: p.title,
+  // Map category_id from DB to 'category' for your filter logic
+  category: p.category_id || 'all', 
+  categoryName: p.categories?.name || 'Handicraft',
+  image: p.image_url,
+  rating: p.rating,
+  reviews: p.reviews,
+  outOfStock: !p.in_stock,
+  
+  // 👇 USER REQUEST: Use 'originalPrice' variable to show the main price
+  originalPrice: `₹${p.price}` 
+})) || [];
+products.sort((a, b) => {
+  // If 'a' is brass-products, move it to the front (-1)
+  if (a.category === 'brass-products') return -1;
+  // If 'b' is brass-products, move it to the front (1)
+  if (b.category === 'brass-products') return 1;
+  // For everything else, leave them alone (keep the 'created_at' order)
+  return 0;
+});
+// 👇 4. Dynamically Generate Categories (Keep your existing logic)
 const categoryMap = new Map();
 
 products.forEach(product => {
     if (!categoryMap.has(product.category)) {
         categoryMap.set(product.category, {
             id: product.category,
-            name: product.categoryName, // Uses the display name from the data
+            name: product.categoryName, 
             count: 0
         });
     }
@@ -141,6 +170,11 @@ const categories = Array.from(categoryMap.values());
                                         <span class="text-[10px] md:text-xs font-bold text-stone-900">{product.rating}</span>
                                     </div>
                                 </div>
+                                {product.outOfStock && (
+                                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-500 text-white px-2 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider">
+                                        Out of Stock
+                                    </div>
+                                )}
                             </a>
                             
                             <div class="p-3 md:p-5 flex flex-col flex-grow">

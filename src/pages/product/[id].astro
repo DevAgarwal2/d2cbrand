@@ -1,35 +1,60 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import logo from "../../assets/logo.jpeg"; 
-// 👇 1. Import the collection helper instead of the old file
-import { getCollection } from 'astro:content';
+// 👇 1. Import Supabase
+import { supabase } from "../../db/supabase";
 
-export async function getStaticPaths() {
-  // 👇 2. Fetch all products from the src/content/products folder
-  const products = await getCollection('products');
-  
-  return products.map((entry) => ({
-    // entry.id is the filename (e.g., 'antique-brass-box')
-    params: { id: entry.id }, 
-    // entry.data is the actual JSON content inside the file
-    props: { product: entry.data }, 
-  }));
-}
+// 👇 2. Get the ID from the URL (Live, no build needed)
+const { id } = Astro.params;
 
-const { product } = Astro.props;
-
-if (!product) {
+if (!id) {
   return Astro.redirect('/404');
 }
 
-// 👇 3. Updated Logic for Related Products
-const allProducts = await getCollection('products');
-const relatedProducts = allProducts
-  .map(p => p.data) // Extract the JSON data from each file
-  .filter(p => p.category === product.category && p.id !== product.id)
-  .slice(0, 3);
+// 👇 3. Fetch the Specific Product
+const { data: rawProduct, error } = await supabase
+  .from('products')
+  .select('*, categories(name)')
+  .eq('id', id)
+  .single();
 
-// Base message
+if (error || !rawProduct) {
+  console.error("Product not found or error:", error);
+  return Astro.redirect('/404');
+}
+
+// 👇 4. Map DB fields to your UI variables
+const product = {
+  ...rawProduct,
+  // Map DB 'image_url' to UI 'image'
+  image: rawProduct.image_url, 
+  // Map DB 'price' directly to UI 'originalPrice' (as requested)
+  originalPrice: rawProduct.price.toString().startsWith('₹') ? rawProduct.price : `₹${rawProduct.price}`,
+  // Map category name from join
+  categoryName: rawProduct.categories?.name || 'Handicraft',
+  // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
+  features: rawProduct.features || [],
+  images: rawProduct.images || [],
+  outOfStock: !rawProduct.in_stock
+};
+
+// 👇 5. Fetch Related Products (Same category, different ID)
+const { data: relatedRaw } = await supabase
+  .from('products')
+  .select('*')
+  .eq('category_id', rawProduct.category_id) // Match category
+  .neq('id', id) // Exclude current product
+  .limit(3); // Limit to 3
+
+const relatedProducts = relatedRaw?.map(p => ({
+  id: p.id,
+  title: p.title,
+  image: p.image_url,
+  outOfStock: !p.in_stock,
+  originalPrice: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`
+})) || [];
+
+// Base message for WhatsApp
 const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title} (Price: ${product.originalPrice}).`;
 ---
 
@@ -129,13 +154,18 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                 <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
                                     {product.categoryName}
                                 </span>
+                                {product.outOfStock && (
+                                    <span class="bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                                        Out of Stock
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </div>
 
                     {product.images && product.images.length > 1 && (
                         <div class="flex gap-4 overflow-x-auto pb-4 no-scrollbar px-1">
-                            {product.images.map((img, index) => (
+                            {product.images.map((img: string | null | undefined, index: any) => (
                                 <button 
                                     class="thumbnail flex-shrink-0 w-24 h-24 rounded-2xl overflow-hidden border-2 border-transparent transition-all hover:border-stone-900 focus:border-stone-900"
                                     onclick={`changeImage('${img}', this)`}
@@ -172,7 +202,7 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                             </p>
                             {product.features && (
                                 <ul class="space-y-3 pt-4">
-                                    {product.features.map((feature) => (
+                                    {product.features.map((feature: unknown) => (
                                         <li class="flex items-start gap-3 text-stone-700">
                                             <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-stone-400 flex-shrink-0"></span>
                                             <span>{feature}</span>
@@ -224,6 +254,11 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
                                     />
+                                    {relatedProduct.outOfStock && (
+                                        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">
+                                            Out of Stock
+                                        </div>
+                                    )}
                                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
                                 </a>
                                 
