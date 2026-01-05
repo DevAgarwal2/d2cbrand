@@ -35,7 +35,7 @@ const product = {
   // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
   features: rawProduct.features || [],
   images: rawProduct.images || [],
-  outOfStock: !rawProduct.in_stock
+  outOfStock: rawProduct.in_stock === false
 };
 
 // 👇 5. Fetch Related Products (Same category, different ID)
@@ -50,7 +50,7 @@ const relatedProducts = relatedRaw?.map(p => ({
   id: p.id,
   title: p.title,
   image: p.image_url,
-  outOfStock: !p.in_stock,
+  outOfStock: p.in_stock === false,
   originalPrice: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`
 })) || [];
 

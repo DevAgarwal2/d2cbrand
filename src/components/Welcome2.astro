@@ -24,7 +24,7 @@ const products = rawProducts?.map(p => ({
   // Add Currency Symbol if missing
   price: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`,
   originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null,
-  outOfStock: !p.in_stock
+  outOfStock: p.in_stock === false
 })) || [];
 
 // 👇 3. LOGIC (Kept exactly the same as before)

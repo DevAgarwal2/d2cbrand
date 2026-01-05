@@ -24,7 +24,7 @@ const products = rawProducts?.map(p => ({
   image: p.image_url,
   rating: p.rating,
   reviews: p.reviews,
-  outOfStock: !p.in_stock,
+  outOfStock: p.in_stock === false,
   
   // 👇 USER REQUEST: Use 'originalPrice' variable to show the main price
   originalPrice: `₹${p.price}` 
