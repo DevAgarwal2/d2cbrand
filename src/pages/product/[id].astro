@@ -34,8 +34,7 @@ const product = {
   categoryName: rawProduct.categories?.name || 'Handicraft',
   // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
   features: rawProduct.features || [],
-  images: rawProduct.images || [],
-  outOfStock: rawProduct.in_stock === false
+  images: rawProduct.images || []
 };
 
 // 👇 5. Fetch Related Products (Same category, different ID)
@@ -50,7 +49,6 @@ const relatedProducts = relatedRaw?.map(p => ({
   id: p.id,
   title: p.title,
   image: p.image_url,
-  outOfStock: p.in_stock === false,
   originalPrice: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`
 })) || [];
 
@@ -154,11 +152,6 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                 <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
                                     {product.categoryName}
                                 </span>
-                                {product.outOfStock && (
-                                    <span class="bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-                                        Out of Stock
-                                    </span>
-                                )}
                             </div>
                         </div>
                     </div>
@@ -254,11 +247,6 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         loading="lazy"
                                     />
-                                    {relatedProduct.outOfStock && (
-                                        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">
-                                            Out of Stock
-                                        </div>
-                                    )}
                                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
                                 </a>
                                 

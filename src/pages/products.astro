@@ -24,7 +24,6 @@ const products = rawProducts?.map(p => ({
   image: p.image_url,
   rating: p.rating,
   reviews: p.reviews,
-  outOfStock: p.in_stock === false,
   
   // 👇 USER REQUEST: Use 'originalPrice' variable to show the main price
   originalPrice: `₹${p.price}` 
@@ -170,11 +169,6 @@ const categories = Array.from(categoryMap.values());
                                         <span class="text-[10px] md:text-xs font-bold text-stone-900">{product.rating}</span>
                                     </div>
                                 </div>
-                                {product.outOfStock && (
-                                    <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-red-500 text-white px-2 py-1 rounded text-[10px] md:text-xs font-bold uppercase tracking-wider">
-                                        Out of Stock
-                                    </div>
-                                )}
                             </a>
                             
                             <div class="p-3 md:p-5 flex flex-col flex-grow">

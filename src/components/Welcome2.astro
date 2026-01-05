@@ -23,13 +23,12 @@ const products = rawProducts?.map(p => ({
   categoryName: p.categories?.name || 'Handicraft', 
   // Add Currency Symbol if missing
   price: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`,
-  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null,
-  outOfStock: p.in_stock === false
+  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null
 })) || [];
 
 // 👇 3. LOGIC (Kept exactly the same as before)
 // Hero Product: Antique Brass Box
-const heroProduct = products.find(p => p.id === 'antique-brass-box');
+const heroProduct = products.find((p: { id: string; }) => p.id === 'antique-brass-box');
 const heroImageSrc = heroProduct ? heroProduct.image : 'https://ik.imagekit.io/pi9wuccc0i/ok_photo1.jpeg';
 
 // Curated Favorites (Top 8)
@@ -231,11 +230,6 @@ const getWhatsAppLink = (productTitle: any) => {
                             loading="lazy"
                             onclick={`window.location.href='/product/${product.id}'`}
                         />
-                        {product.outOfStock && (
-                            <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">
-                                Out of Stock
-                            </div>
-                        )}
                     </div>
                     
                     <div class="flex-grow flex flex-col">
