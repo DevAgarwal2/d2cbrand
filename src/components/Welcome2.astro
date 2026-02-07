@@ -14,6 +14,17 @@ if (error) {
   console.error("Error fetching products:", error);
 }
 
+// 👇 FETCH REVIEWS FROM SUPABASE
+const { data: dbReviews, error: reviewsError } = await supabase
+  .from('feedback')
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(6);
+
+if (reviewsError) {
+  console.error("Error fetching reviews:", reviewsError);
+}
+
 // 👇 2. MAP DATA (Transform Supabase fields to match your UI)
 const products = rawProducts?.map(p => ({
   ...p,
@@ -29,7 +40,7 @@ const products = rawProducts?.map(p => ({
 // 👇 3. LOGIC (Kept exactly the same as before)
 // Hero Product: Antique Brass Box
 const heroProduct = products.find((p: { id: string; }) => p.id === 'antique-brass-box');
-const heroImageSrc = heroProduct ? heroProduct.image : 'https://ik.imagekit.io/pi9wuccc0i/ok_photo1.jpeg';
+const heroImageSrc = "landing_img.jpeg"
 
 // Curated Favorites (Top 8)
 const featuredProducts = products.slice(0, 8);
@@ -38,6 +49,58 @@ const getWhatsAppLink = (productTitle: any) => {
     const message = `Hi Shreeyam Handicrafts, I am interested in buying the ${productTitle}.`;
     return `https://wa.me/919726983835?text=${encodeURIComponent(message)}`;
 };
+
+// 👇 REVIEWS LOGIC - Use DB reviews if available, otherwise use hardcoded
+const hardcodedReviews = [
+    {
+        stars: 5,
+        title: "Beautiful Brass Vessel",
+        quote: "The brass vessel is even more beautiful in person. Heavy, authentic, and adds such a divine feel to my prayer room.",
+        image: null,
+        initials: "PS",
+        name: "Priya Sharma",
+        location: "Ahmedabad"
+    },
+    {
+        stars: 5,
+        title: "Perfect Diwali Lamps",
+        quote: "I was looking for traditional iron lamps for Diwali and these are perfect. The craftsmanship is visibly superior.",
+        image: null,
+        initials: "RP",
+        name: "Rajesh Patel",
+        location: "Vadodara"
+    },
+    {
+        stars: 5,
+        title: "Artistic Dhoopdani",
+        quote: "Excellent packaging and very responsive team. The Dhoopdani is a piece of art itself.",
+        image: null,
+        initials: "MJ",
+        name: "Meera Joshi",
+        location: "Surat"
+    }
+];
+
+// Map DB reviews to the same format with title, image, and location
+const dbReviewsFormatted = dbReviews?.map((review: any) => {
+    const nameParts = review.customer_name?.split(' ') || ['Customer'];
+    const initials = nameParts.map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
+    return {
+        stars: review.stars || 5,
+        title: review.title,
+        quote: review.description || review.title,
+        image: review.image_url,
+        initials: initials,
+        name: review.customer_name,
+        location: review.location || "India"
+    };
+}) || [];
+
+// Use DB reviews if available, otherwise fall back to hardcoded
+const reviews = dbReviewsFormatted.length > 0 ? dbReviewsFormatted : hardcodedReviews;
+
+// Helper function to render stars
+const renderStars = (count: number) => '★'.repeat(count);
 ---
 
 <style>
@@ -267,50 +330,67 @@ const getWhatsAppLink = (productTitle: any) => {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-playfair text-stone-900 mb-4">Stories from Home</h2>
+                {dbReviewsFormatted.length > 0 && (
+                    <p class="text-stone-500 text-sm">Real reviews from our customers</p>
+                )}
             </div>
 
             <div class="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-3 snap-x">
-                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
-                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
-                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
-                        "The brass vessel is even more beautiful in person. Heavy, authentic, and adds such a divine feel to my prayer room."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">PS</div>
-                        <div>
-                            <h4 class="text-sm font-bold text-stone-900">Priya Sharma</h4>
-                            <p class="text-xs text-stone-500">Ahmedabad</p>
+                {reviews.map((review: any) => (
+                    <div class="min-w-[300px] md:min-w-0 bg-[#FDFBF7] rounded-2xl border border-stone-100 snap-center overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+                        {/* Review Image */}
+                        {review.image ? (
+                            <div class="relative h-48 w-full overflow-hidden">
+                                <img 
+                                    src={review.image} 
+                                    alt={review.title}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+                                    <span class="text-amber-500 text-sm">{renderStars(review.stars)}</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div class="h-32 bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center">
+                                <span class="text-4xl">⭐</span>
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+                                    <span class="text-amber-500 text-sm">{renderStars(review.stars)}</span>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {/* Review Content */}
+                        <div class="p-6">
+                            {/* Title */}
+                            <h3 class="font-bold text-stone-900 text-lg mb-2 line-clamp-1">{review.title}</h3>
+                            
+                            {/* Quote */}
+                            <p class="text-stone-600 font-serif leading-relaxed italic mb-4 text-sm line-clamp-3">
+                                "{review.quote}"
+                            </p>
+                            
+                            {/* Divider */}
+                            <div class="border-t border-stone-200 my-4"></div>
+                            
+                            {/* Customer Info */}
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-stone-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                                    {review.initials}
+                                </div>
+                                <div class="min-w-0">
+                                    <h4 class="text-sm font-bold text-stone-900 truncate">{review.name}</h4>
+                                    <div class="flex items-center gap-1 text-xs text-stone-500">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span class="truncate">{review.location}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
-                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
-                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
-                        "I was looking for traditional iron lamps for Diwali and these are perfect. The craftsmanship is visibly superior."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">RP</div>
-                        <div>
-                            <h4 class="text-sm font-bold text-stone-900">Rajesh Patel</h4>
-                            <p class="text-xs text-stone-500">Vadodara</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="min-w-[280px] bg-[#FDFBF7] p-8 rounded-2xl border border-stone-100 snap-center">
-                    <div class="text-amber-500 text-lg mb-4">★★★★★</div>
-                    <p class="text-stone-700 font-serif leading-relaxed italic mb-6 text-sm">
-                        "Excellent packaging and very responsive team. The Dhoopdani is a piece of art itself."
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center text-xs font-bold text-stone-600">MJ</div>
-                        <div>
-                            <h4 class="text-sm font-bold text-stone-900">Meera Joshi</h4>
-                            <p class="text-xs text-stone-500">Surat</p>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     </section>
