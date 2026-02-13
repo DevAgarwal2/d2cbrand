@@ -27,14 +27,17 @@ if (error || !rawProduct) {
 const product = {
   ...rawProduct,
   // Map DB 'image_url' to UI 'image'
-  image: rawProduct.image_url, 
+  image: rawProduct.image_url,
   // Map DB 'price' directly to UI 'originalPrice' (as requested)
   originalPrice: rawProduct.price.toString().startsWith('₹') ? rawProduct.price : `₹${rawProduct.price}`,
   // Map category name from join
   categoryName: rawProduct.categories?.name || 'Handicraft',
   // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
   features: rawProduct.features || [],
-  images: rawProduct.images || []
+  images: rawProduct.images || [],
+  // Size variants
+  has_sizes: rawProduct.has_sizes || false,
+  size_variants: rawProduct.size_variants || []
 };
 
 // 👇 5. Fetch Related Products (Same category, different ID)
@@ -53,7 +56,7 @@ const relatedProducts = relatedRaw?.map(p => ({
 })) || [];
 
 // Base message for WhatsApp
-const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title} (Price: ${product.originalPrice}).`;
+const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title}.`;
 ---
 
 <Layout title={product.title} description={product.description}>
@@ -177,7 +180,7 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                 {product.title}
                             </h1>
                             <div class="flex items-center justify-between">
-                                <span class="text-3xl font-light text-stone-900 font-sans tracking-tight">
+                                <span id="price-display" class="text-3xl font-light text-stone-900 font-sans tracking-tight">
                                     {product.originalPrice}
                                 </span>
                                 <div class="flex items-center gap-1.5 bg-stone-100 px-3 py-1 rounded-full">
@@ -185,8 +188,28 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                                     <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">{product.rating} Rating</span>
                                 </div>
                             </div>
-                            
-                           
+
+                            {/* Size Selector */}
+                            {product.has_sizes && product.size_variants && product.size_variants.length > 0 && (
+                                <div class="mt-6">
+                                    <p class="text-sm font-medium text-stone-700 mb-3">Select Size</p>
+                                    <div class="flex flex-wrap gap-3" id="size-selector">
+                                        {product.size_variants.map((variant: any, index: number) => (
+                                            <button
+                                                type="button"
+                                                data-size={variant.size}
+                                                data-price={variant.price}
+                                                data-in-stock={variant.in_stock}
+                                                class={`size-option px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all ${index === 0 ? 'border-stone-900 bg-stone-900 text-white' : 'border-stone-200 text-stone-700 hover:border-stone-400'}`}
+                                            >
+                                                {variant.size}
+                                                <span class="block text-xs opacity-80">₹{variant.price}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <p id="size-error" class="text-red-500 text-sm mt-2 hidden">Please select a size</p>
+                                </div>
+                            )}
                         </div>
 
                         <div class="space-y-6 mb-8">
@@ -347,14 +370,72 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
     }
 
-    // 2. WhatsApp Button Logic
+    // 2. Size Selector Logic
+    let selectedSize = null;
+    let selectedPrice = null;
+    const sizeButtons = document.querySelectorAll('.size-option');
+    const priceDisplay = document.getElementById('price-display');
+    const sizeError = document.getElementById('size-error');
+    
+    if (sizeButtons.length > 0) {
+        // Select first size by default
+        const firstSize = sizeButtons[0];
+        selectedSize = firstSize.getAttribute('data-size');
+        selectedPrice = firstSize.getAttribute('data-price');
+        
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all
+                sizeButtons.forEach(b => {
+                    b.classList.remove('border-stone-900', 'bg-stone-900', 'text-white');
+                    b.classList.add('border-stone-200', 'text-stone-700');
+                });
+                
+                // Add active class to clicked
+                button.classList.remove('border-stone-200', 'text-stone-700');
+                button.classList.add('border-stone-900', 'bg-stone-900', 'text-white');
+                
+                // Update selected size and price
+                selectedSize = button.getAttribute('data-size');
+                selectedPrice = button.getAttribute('data-price');
+                
+                // Update price display
+                if (priceDisplay) {
+                    priceDisplay.textContent = '₹' + selectedPrice;
+                }
+                
+                // Hide error
+                if (sizeError) {
+                    sizeError.classList.add('hidden');
+                }
+            });
+        });
+    }
+
+    // 3. WhatsApp Button Logic
     const whatsappBtns = document.querySelectorAll('.whatsapp-btn');
     whatsappBtns.forEach(button => {
         button.addEventListener('click', () => {
             const baseMessage = button.getAttribute('data-message');
-            const currentUrl = window.location.href; 
+            const currentUrl = window.location.href;
             
-            const fullMessage = `${baseMessage}\n\nProduct Link: ${currentUrl}`;
+            // Check if sizes exist but none selected
+            if (sizeButtons.length > 0 && !selectedSize) {
+                if (sizeError) {
+                    sizeError.classList.remove('hidden');
+                }
+                return;
+            }
+            
+            // Build message with size if applicable
+            let fullMessage = baseMessage;
+            if (selectedSize && selectedPrice) {
+                fullMessage += `\nSize: ${selectedSize}\nPrice: ₹${selectedPrice}`;
+            } else {
+                const priceText = document.getElementById('price-display')?.textContent || '';
+                fullMessage += `\nPrice: ${priceText}`;
+            }
+            fullMessage += `\n\nProduct Link: ${currentUrl}`;
             
             const whatsappUrl = `https://wa.me/919726983835?text=${encodeURIComponent(fullMessage)}`;
             window.open(whatsappUrl, '_blank');
