@@ -1,0 +1,28 @@
+{
+  "id": "antique-brass-horse-box-big",
+  "title": "Antique Brass Horse Box (Big)",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹1,950",
+  "originalPrice": "₹2,150",
+  "discount": "17% off",
+  "rating": 4.9,
+  "reviews": 15,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/big-brass-horse.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/big-brass-horse.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big-brass-horse3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/big-brass-horse2.jpeg"
+  ],
+  "description": "Large antique brass horse box with deep storage space. A substantial decorative piece with intricate detailing.",
+  "features": [
+    "Dimensions: Height 5.5 inch, Diameter 4.8 inch, Depth 4.8 inch",
+    "Heavy brass material",
+    "Detailed horse design",
+    "Spacious interior",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

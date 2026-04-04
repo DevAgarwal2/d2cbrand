@@ -1,0 +1,30 @@
+{
+  "id": "small-chari",
+  "title": "Small Chari",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹1,200",
+  "originalPrice": "₹1,650",
+  "discount": "20% off",
+  "rating": 4.7,
+  "reviews": 134,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/small_chari.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/small_chari.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_chari2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_chari3.jpeg"
+  ],
+  "description": "Traditional small brass chari (vessel) perfect for water storage and traditional ceremonies.",
+  "features": [
+    "Dimensions: Height: 4.5 inch, Diameter: 3.5 inch",
+    "Pure brass material",
+    "Traditional vessel design",
+    "Perfect for ceremonies",
+    "Easy to clean",
+    "Compact size",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

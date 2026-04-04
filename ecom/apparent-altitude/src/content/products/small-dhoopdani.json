@@ -1,0 +1,29 @@
+{
+  "id": "small-dhoopdani",
+  "title": "Small Dhoopdani",
+  "category": "brass-dhoopdani",
+  "categoryName": "Brass Dhoopdani (Incense Holders)",
+  "price": "₹900",
+  "originalPrice": "₹1,200",
+  "discount": "25% off",
+  "rating": 4.7,
+  "reviews": 187,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/small_doodhpani.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/small_doodhpani.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_doodhpani2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/small_doodhpani3.jpeg"
+  ],
+  "description": "Compact brass dhoopdani perfect for small spaces. Ideal for daily prayer and meditation.",
+  "features": [
+    "Dimensions: Height: 2 inch, Diameter: 3.5 inch, Length: 7 inch",
+    "Compact design",
+    "Perfect for small spaces",
+    "Traditional brass work",
+    "Easy to use",
+    "Affordable option"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

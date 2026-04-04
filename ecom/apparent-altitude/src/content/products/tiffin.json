@@ -1,0 +1,30 @@
+{
+  "id": "tiffin",
+  "title": "Antique Brass Tiffin",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,200",
+  "originalPrice": "₹2,850",
+  "discount": "21% off",
+  "rating": 4.8,
+  "reviews": 198,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/tiffin.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/tiffin.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/tiffin2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/tiffin3.jpeg"
+  ],
+  "description": "Traditional brass tiffin with multiple compartments. Perfect for carrying and storing food.",
+  "features": [
+    "Dimensions: Height: 5.5 inch, Diameter: 5 inch",
+    "Multiple compartments",
+    "Secure locking system",
+    "Food-safe brass",
+    "Traditional design",
+    "Easy to carry",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

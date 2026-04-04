@@ -1,0 +1,29 @@
+{
+  "id": "wooden-candle-holder-set",
+  "title": "Wooden Candle Holder (Teak)",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,500",
+  "originalPrice": "₹2,500 each",
+  "discount": "22% off",
+  "rating": 4.6,
+  "reviews": 42,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-candle3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-candle2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-candle1.jpeg"
+  ],
+  "description": "Elegant turned wood candle holder made from pure teak. Available in three distinct natural wood shades. (each)",
+  "features": [
+    "Dimensions: Height 6 inch",
+    "Material: Pure Teak Wood",
+    "Available in 3 wood tones",
+    "Classic turned design",
+    "Fits standard taper candles",
+    "Please note that sizes may vary slightly"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

@@ -1,0 +1,355 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { supabase } from "../db/supabase";
+import logo from "../assets/shreeyam-logo.jpg";
+
+// Fetch videos from Supabase
+const { data: videos, error } = await supabase
+  .from('videos')
+  .select('*')
+  .eq('is_active', true)
+  .order('display_order', { ascending: true });
+
+if (error) {
+  console.error("Error fetching videos:", error);
+}
+
+const stories = videos || [];
+
+// Helper function to get YouTube embed URL
+const getYouTubeEmbedUrl = (url: string) => {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\s?]+)/);
+  if (match) {
+    return `https://www.youtube.com/embed/${match[1]}?rel=0&modestbranding=1`;
+  }
+  return null;
+};
+
+// Helper to detect source type
+const getSourceType = (url: string) => {
+  if (url.includes('youtube') || url.includes('youtu.be')) return 'youtube';
+  if (url.includes('instagram')) return 'instagram';
+  return 'direct';
+};
+
+
+
+// Get thumbnail
+const getThumbnail = (video: any) => {
+  if (video.thumbnail_url) return video.thumbnail_url;
+  if (getSourceType(video.video_url) === 'youtube') {
+    const match = video.video_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s?]+)/);
+    if (match) return `https://img.youtube.com/vi/${match[1]}/mqdefault.jpg`;
+  }
+  return null;
+};
+---
+
+<Layout title="Artisan Stories | Shreeyam Handicrafts">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        color: #1c1917;
+        background: radial-gradient(circle at 0% 0%, #FFFFFF 0%, #F2F0E9 100%);
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, .font-playfair {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .story-card {
+        transition: all 0.3s ease;
+    }
+
+    .story-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -15px rgba(0,0,0,0.15);
+    }
+
+    .video-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #1c1917;
+        overflow: hidden;
+    }
+
+    .video-wrapper iframe,
+    .video-wrapper video {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+  </style>
+
+  <div class="min-h-screen">
+    <!-- Header -->
+    <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+          <a href="/" class="flex items-center gap-3">
+            <div class="w-10 h-10 overflow-hidden rounded-lg bg-stone-100">
+              <img src={logo.src} alt="Shreeyam" class="w-full h-full object-cover mix-blend-multiply">
+            </div>
+            <div>
+              <h1 class="text-xl font-bold text-stone-900 tracking-wide leading-none font-playfair">SHREEYAM</h1>
+              <p class="text-[10px] uppercase tracking-[0.2em] text-stone-500 font-medium">Handicrafts</p>
+            </div>
+          </a>
+          
+          <a href="/" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">
+            ← Back to Home
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="inline-block py-1 mb-6 text-xs font-bold uppercase tracking-[0.2em] text-stone-500 border-b border-stone-300">
+          Behind the Craft
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-900 mb-6 font-playfair">
+          Artisan Stories
+        </h1>
+        <p class="text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+          Step into our world and witness the dedication, skill, and passion that goes into creating each masterpiece. 
+          Our artisans bring centuries of tradition to life.
+        </p>
+      </div>
+
+      {/* Stories Grid */}
+      {stories.length === 0 ? (
+        <div class="text-center py-20">
+          <div class="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-stone-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <h2 class="text-2xl font-semibold text-stone-900 mb-2">Stories Coming Soon</h2>
+          <p class="text-stone-500">Check back later to see our artisans at work.</p>
+        </div>
+      ) : (
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+          {stories.map((story: any, index: number) => {
+            const sourceType = getSourceType(story.video_url);
+            const youtubeEmbed = sourceType === 'youtube' ? getYouTubeEmbedUrl(story.video_url) : null;
+            const thumbnail = getThumbnail(story);
+            
+            return (
+              <div class="story-card bg-white rounded-2xl overflow-hidden shadow-sm border border-stone-100">
+                {/* Video Container */}
+                <div class="video-wrapper relative group">
+                  {/* Thumbnail / Play Overlay */}
+                  <div id={`thumb-${index}`} class="absolute inset-0 z-10 cursor-pointer" data-index={index}>
+                    {thumbnail ? (
+                      <img 
+                        src={thumbnail}
+                        alt={story.title}
+                        class="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div class="w-full h-full flex items-center justify-center bg-stone-800">
+                        <svg class="w-16 h-16 text-stone-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Play Button */}
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
+                      <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
+                        <svg class="w-8 h-8 text-stone-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Video Player */}
+                  <div id={`player-${index}`} class="absolute inset-0 z-20 hidden">
+                    {/* Player injected by JS */}
+                  </div>
+
+                  {/* Source Badge */}
+                  <div class={`absolute top-4 left-4 z-30 flex items-center gap-1 text-white text-xs px-3 py-1.5 rounded-full ${
+                    sourceType === 'youtube' ? 'bg-red-600' : 
+                    sourceType === 'instagram' ? 'bg-gradient-to-r from-purple-600 to-pink-600' : 
+                    'bg-stone-700'
+                  }`}>
+                    {sourceType === 'youtube' && (
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                    )}
+                    {sourceType === 'instagram' && (
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/></svg>
+                    )}
+                    {sourceType === 'direct' && (
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    )}
+                    <span class="font-medium capitalize">{sourceType}</span>
+                  </div>
+                </div>
+
+                {/* Story Info */}
+                <div class="p-6">
+                  <h2 class="text-xl font-bold text-stone-900 mb-3 font-playfair">{story.title}</h2>
+                  {story.description && (
+                    <p class="text-stone-600 leading-relaxed">{story.description}</p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+
+    {/* CTA Section */}
+    <section class="py-16 bg-white border-t border-stone-100">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-stone-900 mb-4 font-playfair">Want to Learn More?</h2>
+        <p class="text-stone-600 mb-8">Connect with us to see our artisans at work or visit our workshop.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="https://wa.me/919726983835" 
+            target="_blank"
+            class="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full font-semibold transition-all"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+            </svg>
+            Chat on WhatsApp
+          </a>
+          <a 
+            href="/"
+            class="inline-flex items-center justify-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-8 py-4 rounded-full font-semibold transition-all"
+          >
+            Browse Products
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer class="bg-[#1c1917] text-stone-400 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-stone-800 rounded-lg flex items-center justify-center">
+              <span class="text-white text-lg">🏺</span>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold font-playfair text-white">Shreeyam</h3>
+              <p class="text-[10px] text-stone-500 uppercase tracking-widest">Handicrafts</p>
+            </div>
+          </div>
+          <p class="text-sm">&copy; 2025 Shreeyam Handicrafts. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script is:inline define:vars={{ stories: stories.map(s => {
+    const source = getSourceType(s.video_url);
+    return {
+      ...s, 
+      sourceType: source, 
+      youtubeEmbed: source === 'youtube' ? getYouTubeEmbedUrl(s.video_url) : null
+    };
+  }) }}>
+    // Store story data globally
+    window.storyData = stories;
+    
+    // Add click handlers after DOM loads
+    document.addEventListener('DOMContentLoaded', function() {
+      stories.forEach(function(story, index) {
+        const thumb = document.getElementById('thumb-' + index);
+        if (thumb) {
+          thumb.addEventListener('click', function() {
+            playVideo(index);
+          });
+        }
+      });
+    });
+    
+    function playVideo(index) {
+      const story = window.storyData[index];
+      if (!story) return;
+      
+      const thumbEl = document.getElementById('thumb-' + index);
+      const playerEl = document.getElementById('player-' + index);
+      
+      if (!thumbEl || !playerEl) return;
+      
+      var source = story.sourceType;
+      var videoUrl = story.video_url;
+      var youtubeEmbed = story.youtubeEmbed;
+      
+      // Handle Instagram differently - show overlay with button
+      if (source === 'instagram') {
+        // Hide thumbnail
+        thumbEl.style.display = 'none';
+        // Show player container
+        playerEl.classList.remove('hidden');
+        // Show nice overlay with Instagram button
+        playerEl.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);color:white;flex-direction:column;gap:1.5rem;padding:2rem;text-align:center;">' +
+          '<svg width="64" height="64" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/></svg>' +
+          '<div>' +
+          '<p style="font-size:1.125rem;font-weight:600;margin-bottom:0.5rem;">Watch on Instagram</p>' +
+          '<p style="font-size:0.875rem;opacity:0.9;">Click below to view the video</p>' +
+          '</div>' +
+          '<a href="' + videoUrl + '" target="_blank" style="background:white;color:#E1306C;padding:0.75rem 2rem;border-radius:9999px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:transform 0.2s;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'">' +
+          '<span>Watch Video</span>' +
+          '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>' +
+          '</a>' +
+          '<button onclick="closePlayer(' + index + ')" style="background:rgba(255,255,255,0.2);color:white;padding:0.5rem 1rem;border-radius:9999px;font-size:0.875rem;border:none;cursor:pointer;margin-top:0.5rem;">Cancel</button>' +
+          '</div>';
+        return;
+      }
+      
+      // Hide thumbnail
+      thumbEl.style.display = 'none';
+      
+      // Show player
+      playerEl.classList.remove('hidden');
+      
+      // Create appropriate player
+      if (source === 'youtube' && youtubeEmbed) {
+        playerEl.innerHTML = '<iframe src="' + youtubeEmbed + '&autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;height:100%;border:none;"></iframe>';
+      } else {
+        // Direct video (ImageKit or other)
+        playerEl.innerHTML = '<video controls autoplay playsinline style="width:100%;height:100%;background:#000;">' +
+          '<source src="' + videoUrl + '" type="video/mp4">' +
+          'Your browser does not support the video tag.' +
+          '</video>';
+        
+        // Add error handling
+        var video = playerEl.querySelector('video');
+        if (video) {
+          video.onerror = function() {
+            playerEl.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1c1917;color:white;flex-direction:column;gap:1rem;padding:2rem;text-align:center;">' +
+              '<svg width="48" height="48" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>' +
+              '<p>Video unavailable</p>' +
+              '<a href="' + videoUrl + '" target="_blank" style="color:#fbbf24;text-decoration:underline;">Open video directly</a>' +
+              '</div>';
+          };
+        }
+      }
+    }
+    
+    function closePlayer(index) {
+      const thumbEl = document.getElementById('thumb-' + index);
+      const playerEl = document.getElementById('player-' + index);
+      if (thumbEl) thumbEl.style.display = '';
+      if (playerEl) {
+        playerEl.classList.add('hidden');
+        playerEl.innerHTML = '';
+      }
+    }
+  </script>
+</Layout>

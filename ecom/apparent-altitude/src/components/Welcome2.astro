@@ -1,0 +1,754 @@
+---
+// --- src/components/Welcome2.astro ---
+import { supabase } from "../db/supabase";
+import logo from "../assets/shreeyam-logo.jpg";
+import elephantDecor from "../assets/IMG_2696.JPG.jpeg"; 
+
+// 👇 1. FETCH DATA FROM SUPABASE
+// We select all products and join the 'categories' table to get the category name
+const { data: rawProducts, error } = await supabase
+  .from('products')
+  .select('*, categories(name)')
+  .order('title', { ascending: true });
+
+if (error) {
+  console.error("Error fetching products:", error);
+}
+
+// 👇 FETCH REVIEWS FROM SUPABASE
+const { data: dbReviews, error: reviewsError } = await supabase
+  .from('feedback')
+  .select('*')
+  .order('created_at', { ascending: false })
+  .limit(6);
+
+if (reviewsError) {
+  console.error("Error fetching reviews:", reviewsError);
+}
+
+// 👇 2. MAP DATA (Transform Supabase fields to match your UI)
+const products = rawProducts?.map(p => ({
+  ...p,
+  // Map 'image_url' (DB) to 'image' (Your UI)
+  image: p.image_url,
+  // Map category name from the join
+  categoryName: p.categories?.name || 'Handicraft',
+  // Store raw price in INR for currency conversion
+  priceInr: p.price,
+  originalPriceInr: p.original_price || null
+})) || [];
+
+// 👇 3. LOGIC (Kept exactly the same as before)
+// Hero Product: Antique Brass Box
+const heroProduct = products.find((p: { id: string; }) => p.id === 'antique-brass-box');
+const heroImageSrc = "landing_img.jpeg"
+
+// Curated Favorites (Top 8)
+const featuredProducts = products.slice(0, 8);
+
+const getWhatsAppLink = (productTitle: any) => {
+    const message = `Hi Shreeyam Handicrafts, I am interested in buying the ${productTitle}.`;
+    return `https://wa.me/919726983835?text=${encodeURIComponent(message)}`;
+};
+
+// 👇 FETCH VIDEOS FROM SUPABASE
+const { data: dbVideos, error: videosError } = await supabase
+  .from('videos')
+  .select('*')
+  .eq('is_active', true)
+  .order('display_order', { ascending: true })
+  .limit(6);
+
+if (videosError) {
+  console.error("Error fetching videos:", videosError);
+}
+
+const videos = dbVideos || [];
+
+// 👇 REVIEWS LOGIC - Use DB reviews if available, otherwise use hardcoded
+const hardcodedReviews = [
+    {
+        stars: 5,
+        title: "Beautiful Brass Vessel",
+        quote: "The brass vessel is even more beautiful in person. Heavy, authentic, and adds such a divine feel to my prayer room.",
+        image: null,
+        initials: "PS",
+        name: "Priya Sharma",
+        location: "Ahmedabad"
+    },
+    {
+        stars: 5,
+        title: "Perfect Diwali Lamps",
+        quote: "I was looking for traditional iron lamps for Diwali and these are perfect. The craftsmanship is visibly superior.",
+        image: null,
+        initials: "RP",
+        name: "Rajesh Patel",
+        location: "Vadodara"
+    },
+    {
+        stars: 5,
+        title: "Artistic Dhoopdani",
+        quote: "Excellent packaging and very responsive team. The Dhoopdani is a piece of art itself.",
+        image: null,
+        initials: "MJ",
+        name: "Meera Joshi",
+        location: "Surat"
+    }
+];
+
+// Map DB reviews to the same format with title, image, and location
+const dbReviewsFormatted = dbReviews?.map((review: any) => {
+    const nameParts = review.customer_name?.split(' ') || ['Customer'];
+    const initials = nameParts.map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
+    return {
+        stars: review.stars || 5,
+        title: review.title,
+        quote: review.description || review.title,
+        image: review.image_url,
+        initials: initials,
+        name: review.customer_name,
+        location: review.location || "India"
+    };
+}) || [];
+
+// Use DB reviews if available, otherwise fall back to hardcoded
+const reviews = dbReviewsFormatted.length > 0 ? dbReviewsFormatted : hardcodedReviews;
+
+// Helper function to render stars
+const renderStars = (count: number) => '★'.repeat(count);
+---
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+    body {
+        font-family: 'Outfit', sans-serif;
+        color: #1c1917; 
+        /* The D2C "Paper" Gradient */
+        background: radial-gradient(circle at 0% 0%, #FFFFFF 0%, #F2F0E9 100%);
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4, .font-playfair {
+        font-family: 'Playfair Display', serif;
+    }
+    
+    html { scroll-behavior: smooth; }
+
+    /* Custom Button Hover */
+    .btn-d2c {
+        transition: all 0.3s ease;
+    }
+    .btn-d2c:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(0,0,0,0.2);
+    }
+</style>
+
+<div class="min-h-screen">
+
+    <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 overflow-hidden rounded-lg bg-stone-100">
+                        <img src={logo.src} alt="Shreeyam" class="w-full h-full object-cover mix-blend-multiply">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-stone-900 tracking-wide leading-none font-playfair">SHREEYAM</h1>
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-stone-500 font-medium">Handicrafts</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Home</a>
+                    <a href="#categories" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Collections</a>
+                    <a href="#products" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Best Sellers</a>
+                    {videos.length > 0 && (
+                        <a href="#artisan-stories" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Artisan Stories</a>
+                    )}
+                    <a href="#contact" class="text-sm font-medium text-stone-600 hover:text-stone-900 transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <a href="https://wa.me/919726983835" target="_blank" class="hidden md:flex bg-stone-900 text-white px-5 py-2.5 rounded-full text-sm font-medium items-center gap-2 btn-d2c">
+                        <span>WhatsApp Us</span>
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-stone-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FDFBF7] border-t border-stone-100 absolute w-full shadow-xl">
+            <div class="flex flex-col p-4 space-y-2">
+                <a href="#home" class="p-3 text-base font-medium text-stone-800">Home</a>
+                <a href="#categories" class="p-3 text-base font-medium text-stone-800">Collections</a>
+                <a href="#products" class="p-3 text-base font-medium text-stone-800">Best Sellers</a>
+                {videos.length > 0 && (
+                    <a href="#artisan-stories" class="p-3 text-base font-medium text-stone-800">Artisan Stories</a>
+                )}
+                <a href="#contact" class="p-3 text-base font-medium text-stone-800">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-10 pb-16 md:pt-20 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            <div class="lg:col-span-5 text-center lg:text-left relative z-10">
+                <span class="inline-block py-1 mb-6 text-xs font-bold uppercase tracking-[0.2em] text-stone-500 border-b border-stone-300">
+                    Est. 2024 • Gujarat
+                </span>
+                
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-medium text-stone-900 mb-6 leading-[1.05] font-playfair">
+                    Timeless <br>
+                    <span class="italic text-stone-600">Brass</span> & <br class="hidden md:block">
+                    Heritage.
+                </h1>
+                
+                <p class="text-lg text-stone-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 font-light">
+                    Curating India's spiritual elegance for the modern home. Handcrafted brass boxes, vessels, and decor that tell a story.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#products" class="w-full sm:w-auto bg-stone-900 text-white px-8 py-4 rounded-full font-medium shadow-lg btn-d2c text-center">
+                        Shop Collection
+                    </a>
+                    <a href="https://wa.me/919726983835" target="_blank" class="w-full sm:w-auto bg-transparent border border-stone-300 text-stone-900 px-8 py-4 rounded-full font-medium hover:bg-white transition-all text-center">
+                        Custom Orders
+                    </a>
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-stone-200 flex items-center justify-center lg:justify-start gap-8">
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">1k+</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Homes</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">4.8</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Rating</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl font-serif text-stone-900">100%</p>
+                        <p class="text-xs uppercase tracking-wider text-stone-500">Antique</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 relative">
+                <div class="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/5] lg:aspect-[5/4] bg-[#F2F0E9]">
+                    <img 
+                        src={heroImageSrc}
+                        alt="Antique Brass Box" 
+                        class="object-cover w-full h-full hover:scale-105 transition-transform duration-[1.5s] ease-out"
+                    >
+                    
+                    <div class="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-auto bg-white/90 backdrop-blur-md p-4 md:p-5 rounded-2xl shadow-sm md:max-w-xs border border-white/50">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="flex text-amber-500 text-xs">★★★★★</div>
+                        </div>
+                        <p class="font-serif italic text-stone-900 text-sm">"The antique finish is even better in person. A true masterpiece."</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="categories" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <h2 class="text-3xl md:text-4xl font-playfair text-stone-900">Our Collections</h2>
+                <a href="products" class="text-sm font-medium border-b border-stone-900 pb-1 hover:text-stone-600 hover:border-stone-600 transition-colors">View All</a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                <a href="products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/big_lotta.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Vessels">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Brass Vessels</h3>
+                </a>
+                <a href="products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/brass_box_1.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Boxes">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Antique Boxes</h3>
+                </a>
+                <a href="products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src={elephantDecor.src} class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Wooden">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Wooden Decor</h3>
+                </a>
+                <a href="products" class="group">
+                    <div class="rounded-2xl overflow-hidden aspect-[4/5] mb-4 bg-stone-100 relative">
+                        <img src="https://ik.imagekit.io/pi9wuccc0i/peacock_dhoodhpani.jpeg" class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700" alt="Lamps">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
+                    </div>
+                    <h3 class="font-medium text-stone-900 text-lg">Iron Lamps</h3>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-playfair text-stone-900 mb-4">Curated Favorites</h2>
+            <p class="text-stone-500">Pieces loved by our customers</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12">
+            {featuredProducts.map((product) => (
+                <div class="group flex flex-col h-full">
+                    <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#F2F0E9] mb-5">
+                        <img 
+                            src={product.image} 
+                            alt={product.title} 
+                            class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                            loading="lazy"
+                            onclick={`window.location.href='/product/${product.id}'`}
+                        />
+                    </div>
+                    
+                    <div class="flex-grow flex flex-col">
+                        <h3 class="font-medium text-stone-900 text-base md:text-lg mb-1">{product.title}</h3>
+                        <p class="text-sm text-stone-500 mb-3">{product.categoryName}</p>
+                        
+                        <div class="mt-auto flex items-center justify-between">
+                            <div class="flex items-baseline gap-2 product-price" data-price-inr={product.priceInr}>
+                                <span class="text-lg font-serif text-stone-900">₹{product.priceInr}</span>
+                            </div>
+                        </div>
+                        
+                        <a 
+                            href={getWhatsAppLink(product.title)}
+                            target="_blank"
+                            class="mt-4 block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
+                        >
+                            Buy on WhatsApp
+                        </a>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <div class="mt-16 text-center">
+            <a href="products" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl btn-d2c">
+                View Full Collection
+            </a>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-20 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-playfair text-stone-900 mb-4">Stories from Home</h2>
+                {dbReviewsFormatted.length > 0 && (
+                    <p class="text-stone-500 text-sm">Real reviews from our customers</p>
+                )}
+            </div>
+
+            <div class="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-3 snap-x">
+                {reviews.map((review: any) => (
+                    <div class="min-w-[300px] md:min-w-0 bg-[#FDFBF7] rounded-2xl border border-stone-100 snap-center overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+                        {/* Review Image */}
+                        {review.image ? (
+                            <div class="relative h-48 w-full overflow-hidden bg-stone-100">
+                                <img 
+                                    src={review.image} 
+                                    alt={review.title}
+                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                />
+                                <div class="hidden h-full w-full bg-gradient-to-br from-stone-100 to-stone-200 items-center justify-center">
+                                    <span class="text-4xl">⭐</span>
+                                </div>
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full z-10">
+                                    <span class="text-amber-500 text-sm">{renderStars(review.stars)}</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <div class="relative h-32 bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center">
+                                <span class="text-4xl">⭐</span>
+                                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
+                                    <span class="text-amber-500 text-sm">{renderStars(review.stars)}</span>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {/* Review Content */}
+                        <div class="p-6">
+                            {/* Title */}
+                            <h3 class="font-bold text-stone-900 text-lg mb-2 line-clamp-1">{review.title}</h3>
+                            
+                            {/* Quote */}
+                            <p class="text-stone-600 font-serif leading-relaxed italic mb-4 text-sm line-clamp-3">
+                                "{review.quote}"
+                            </p>
+                            
+                            {/* Divider */}
+                            <div class="border-t border-stone-200 my-4"></div>
+                            
+                            {/* Customer Info */}
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-stone-900 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                                    {review.initials}
+                                </div>
+                                <div class="min-w-0">
+                                    <h4 class="text-sm font-bold text-stone-900 truncate">{review.name}</h4>
+                                    <div class="flex items-center gap-1 text-xs text-stone-500">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                                        </svg>
+                                        <span class="truncate">{review.location}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    {videos.length > 0 && (
+    <section id="artisan-stories" class="py-20 bg-[#F2F0E9] border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-playfair text-stone-900 mb-4">Artisan Stories</h2>
+                <p class="text-stone-500 max-w-2xl mx-auto">Watch our artisans at work, creating timeless pieces with traditional techniques passed down through generations.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {videos.slice(0, 3).map((video: any) => {
+                    const isYouTube = video.video_url.includes('youtube') || video.video_url.includes('youtu.be');
+                    const isInstagram = video.video_url.includes('instagram');
+                    const thumbnail = video.thumbnail_url || (isYouTube ?
+                        `https://img.youtube.com/vi/${video.video_url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s?]+)/)?.[1]}/mqdefault.jpg` :
+                        null);
+
+                    return (
+                        <a href="/artisan-stories" class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group block">
+                            {/* Video Thumbnail */}
+                            <div class="relative aspect-video bg-stone-900 overflow-hidden">
+                                {thumbnail ? (
+                                    <img
+                                        src={thumbnail}
+                                        alt={video.title}
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div class="w-full h-full flex items-center justify-center bg-stone-800">
+                                        <svg class="w-16 h-16 text-stone-600" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                )}
+
+                                {/* Play Button Overlay */}
+                                <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-100 group-hover:bg-black/40 transition-all">
+                                    <div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                                        <svg class="w-6 h-6 text-stone-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Platform Badge */}
+                                <div class="absolute top-3 left-3">
+                                    {isYouTube && (
+                                        <span class="bg-red-600 text-white text-xs px-2 py-1 rounded font-medium">YouTube</span>
+                                    )}
+                                    {isInstagram && (
+                                        <span class="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-xs px-2 py-1 rounded font-medium">Instagram</span>
+                                    )}
+                                    {!isYouTube && !isInstagram && (
+                                        <span class="bg-stone-800 text-white text-xs px-2 py-1 rounded font-medium">Video</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Video Info */}
+                            <div class="p-5">
+                                <h3 class="font-semibold text-stone-900 text-lg mb-2 line-clamp-1">{video.title}</h3>
+                                {video.description && (
+                                    <p class="text-stone-500 text-sm line-clamp-2">{video.description}</p>
+                                )}
+                            </div>
+                        </a>
+                    );
+                })}
+            </div>
+
+            {/* View All Button */}
+            <div class="mt-12 text-center">
+                <a href="/artisan-stories" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl">
+                    Watch All Stories
+                </a>
+            </div>
+        </div>
+    </section>
+    )}
+
+    <section id="contact" class="py-20 lg:py-32 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 px-4">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 font-playfair mb-6 sm:mb-8">
+                    Let's Create Something Beautiful
+                </h2>
+                <p class="text-lg sm:text-xl text-stone-600 max-w-2xl mx-auto font-light">
+                    Ready to bring authentic Indian craftsmanship to your home? Connect with us on your preferred platform.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8 lg:gap-16">
+                <div class="space-y-6 sm:space-y-8 px-4 lg:px-0">
+                    <div class="bg-[#F2F0E9] p-6 sm:p-8 rounded-[2rem] border border-stone-200">
+                        <h3 class="text-xl sm:text-2xl font-bold text-stone-900 mb-6 sm:mb-8 font-playfair">Get in Touch</h3>
+                        
+                        <div class="space-y-4 sm:space-y-6">
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">💬</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">WhatsApp</p>
+                                    <p class="text-stone-600 text-base sm:text-lg">+91 97269 83835</p>
+                                    <p class="text-stone-600 text-base sm:text-lg">+91 90334 47610</p>
+
+                                    <p class="text-xs sm:text-sm text-stone-500">Quick response guaranteed</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">📍</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">Locations</p>
+                                    <p class="text-stone-600 text-sm sm:text-base">Ahmedabad & Vadodara, India</p>
+                                    <p class="text-xs sm:text-sm text-stone-500">Serving across Gujarat</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                                <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-stone-100">
+                                    <span class="text-2xl">⏰</span>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <p class="font-bold text-base sm:text-lg text-stone-900">Business Hours</p>
+                                    <p class="text-stone-600 text-sm sm:text-base">Mon - Sat: 9:00 AM - 7:00 PM</p>
+                                    <p class="text-xs sm:text-sm text-stone-500">Sunday: By appointment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 sm:p-8 rounded-[2rem] border border-stone-200 px-4 lg:px-0 shadow-sm">
+                    <h3 class="text-xl sm:text-2xl font-bold text-stone-900 mb-4 sm:mb-6 text-center font-playfair">Connect With Us</h3>
+                    <p class="text-sm sm:text-base text-stone-600 mb-6 sm:mb-8 text-center">Choose your preferred platform to get in touch</p>
+                    
+                    <div class="space-y-3 sm:space-y-4">
+                        <button onclick="window.open('https://wa.me/919726983835', '_blank')" class="w-full bg-green-600 hover:bg-green-700 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+                            </svg>
+                            <span class="truncate">WhatsApp Us</span>
+                        </button>
+                        
+                        <button onclick="window.open('https://www.instagram.com/shreeyam_handicrafts/profilecard/', '_blank')" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                            <span class="truncate">Follow on Instagram</span>
+                        </button>
+                        
+                        <button class="w-full bg-blue-700 hover:bg-blue-800 text-white py-4 px-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-3 transform hover:scale-[1.01] shadow-md btn-d2c">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            <span class="truncate">Join our community on Facebook</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6 sm:mt-8 p-4 bg-[#F2F0E9] rounded-xl text-center border border-stone-100">
+                        <p class="text-xs sm:text-sm text-stone-600 mb-1 sm:mb-2">💬 <strong>Quick Response Guaranteed</strong></p>
+                        <p class="text-xs text-stone-500">We typically respond within 30 minutes during business hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#1c1917] text-stone-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-stone-800 rounded-lg flex items-center justify-center mr-3">
+                            <span class="text-white text-xl">🏺</span>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold font-playfair text-white">Shreeyam</h3>
+                            <p class="text-[10px] text-stone-500 uppercase tracking-widest">Handicrafts</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-500 text-sm leading-relaxed">Preserving India's heritage through authentic brass vessels, dhoopdani, traditional boxes, and iron lamps crafted with excellence.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Products</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition-colors">Reviews</a></li>
+                        {videos.length > 0 && (
+                            <li><a href="#artisan-stories" class="hover:text-white transition-colors">Artisan Stories</a></li>
+                        )}
+                        <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Collections</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Boxes</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Vessels</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Brass Dhoopdani</a></li>
+                        <li><a href="#products" class="hover:text-white transition-colors">Iron Lamps</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Connect</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-center gap-2">
+                            <span>💬</span>
+                            <span>+91 97269 83835</span>
+                            <span>+91 90334 47610</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span>📍</span>
+                            <span>Ahmedabad & Vadodara, India</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span>⏰</span>
+                            <span>Mon-Sat: 9AM-7PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-stone-800 mt-12 pt-8 text-center text-xs text-stone-600">
+                <p>&copy; 2025 Shreeyam Handicrafts. All rights reserved.</p>
+                <p class="mt-2 opacity-50">Made with ❤️ in India</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919726983835" target="_blank" class="fixed bottom-6 right-6 z-50 bg-stone-900 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+    </svg>
+    </a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        }
+        
+        // Currency conversion based on user location
+        async function convertCurrency() {
+            try {
+                // Try to get user's country from timezone or IP
+                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                
+                // Map common timezones to countries (simplified)
+                const usTimezones = ['America/New_York', 'America/Los_Angeles', 'America/Chicago', 'America/Denver', 'America/Phoenix', 'America/Anchorage', 'Pacific/Honolulu'];
+                const europeTimezones = ['Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome', 'Europe/Madrid', 'Europe/Amsterdam', 'Europe/Vienna', 'Europe/Brussels', 'Europe/Stockholm', 'Europe/Copenhagen', 'Europe/Oslo', 'Europe/Helsinki', 'Europe/Dublin', 'Europe/Lisbon', 'Europe/Zurich', 'Europe/Prague', 'Europe/Warsaw', 'Europe/Budapest'];
+                const canadaTimezones = ['America/Toronto', 'America/Vancouver', 'America/Montreal', 'America/Calgary', 'America/Edmonton', 'America/Winnipeg', 'America/Halifax'];
+                
+                let currency = 'INR';
+                let symbol = '₹';
+                let rate = 1;
+                
+                if (usTimezones.includes(timezone)) {
+                    currency = 'USD';
+                    symbol = '$';
+                    rate = 0.01; // 1 INR = 0.01 USD (100 INR = 1 USD)
+                } else if (europeTimezones.includes(timezone)) {
+                    currency = 'EUR';
+                    symbol = '€';
+                    rate = 0.0091; // 1 INR = 0.0091 EUR (110 INR = 1 EUR)
+                } else if (canadaTimezones.includes(timezone)) {
+                    currency = 'CAD';
+                    symbol = 'C$';
+                    rate = 0.0143; // 1 INR = 0.0143 CAD (70 INR = 1 CAD)
+                }
+                
+                // Fallback: Use fetch to get location from IP if needed
+                if (currency === 'INR') {
+                    try {
+                        const response = await fetch('https://ipapi.co/json/');
+                        const data = await response.json();
+                        const countryCode = data.country_code;
+                        
+                        if (countryCode === 'US') {
+                            currency = 'USD';
+                            symbol = '$';
+                            rate = 0.01;
+                        } else if (['GB', 'FR', 'DE', 'IT', 'ES', 'NL', 'BE', 'AT', 'SE', 'DK', 'NO', 'FI', 'IE', 'PT', 'CH', 'CZ', 'PL', 'HU', 'GR'].includes(countryCode)) {
+                            currency = 'EUR';
+                            symbol = '€';
+                            rate = 0.0091;
+                        } else if (countryCode === 'CA') {
+                            currency = 'CAD';
+                            symbol = 'C$';
+                            rate = 0.0143;
+                        }
+                    } catch (e) {
+                        console.log('Could not detect location');
+                    }
+                }
+                
+                // Update prices
+                if (currency !== 'INR') {
+                    const priceElements = document.querySelectorAll('.product-price');
+                    priceElements.forEach(function(el) {
+                        const htmlEl = el as HTMLElement;
+                        const priceInr = parseInt(htmlEl.dataset.priceInr || '0') || 0;
+                        const convertedPrice = Math.round(priceInr * rate);
+                        const span = htmlEl.querySelector('span');
+                        if (span) span.textContent = symbol + convertedPrice;
+                    });
+                    
+                    // Show currency indicator
+                    const nav = document.querySelector('nav');
+                    if (nav) {
+                        const currencyBadge = document.createElement('div');
+                        currencyBadge.className = 'hidden md:flex items-center gap-2 text-sm font-medium text-stone-600';
+                        currencyBadge.innerHTML = '<span>Prices in ' + currency + '</span>';
+                        const navContainer = nav.querySelector('.flex.items-center.gap-8');
+                        if (navContainer) navContainer.appendChild(currencyBadge);
+                    }
+                }
+            } catch (error) {
+                console.log('Currency conversion skipped');
+            }
+        }
+        
+        convertCurrency();
+    });
+</script>

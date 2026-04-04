@@ -1,0 +1,30 @@
+{
+  "id": "medium-bird-box",
+  "title": "Medium Bird Box",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹3,200",
+  "originalPrice": "₹1,850",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 92,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/medium_bird_box.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/medium_bird_box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/medium_bird_box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/medium_bird_box3.jpeg"
+  ],
+  "description": "Medium-sized bird brass box with beautiful craftsmanship. Great for storage and decoration.",
+  "features": [
+    "Dimensions: Height: 2.5 inch, Diameter: 3.5 inch",
+    "Medium size",
+    "Bird motif design",
+    "Quality brass material",
+    "Functional storage",
+    "Artistic appeal",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

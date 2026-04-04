@@ -1,0 +1,29 @@
+{
+  "id": "Square-Wooden-Candle",
+  "title": "Square Wooden Candle Holder",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹1,500",
+  "originalPrice": "₹3,050",
+  "discount": "21% off",
+  "rating": 4.6,
+  "reviews": 76,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/square-wood.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/square-wood.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/square-wood2.jpeg"
+  ],
+  "description": "Stylish square wooden candle holder, handcrafted for an elegant rustic look. Perfect for creating a warm, cozy ambiance.",
+  "features": [
+    "Dimensions: Height 6.5 inch, Length 9.5 inch",
+    "Crafted from solid wood",
+    "Smooth finish with natural wooden texture",
+    "Holds candles securely",
+    "Ideal for living rooms, bedrooms, and special occasions",
+    "Pure teakwood(Sagwan)",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

@@ -1,0 +1,30 @@
+{
+  "id": "antique-chapati-box-stand",
+  "title": "Antique Chappati Box with Stand",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹6,800",
+  "originalPrice": "₹3,990",
+  "discount": "15% off",
+  "rating": 4.8,
+  "reviews": 43,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/chapati-box2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/chapati_box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/chapati_box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/chapati_box3.jpeg"
+  ],
+  "description": "Traditional antique chapati box with stand. Authentic piece for storing and serving Indian bread.",
+  "features": [
+    "Dimensions: Height: 5 inch, Diameter: 8 inch",
+    "Comes with stand",
+    "Antique brass finish",
+    "Traditional design",
+    "Food-safe material",
+    "Cultural heritage piece",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": false
+}

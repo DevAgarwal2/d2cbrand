@@ -1,0 +1,29 @@
+{
+  "id": "gungru-small-box",
+  "title": "Gungru  Box",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹1,800",
+  "originalPrice": "₹750",
+  "discount": "18% off",
+  "rating": 4.7,
+  "reviews": 89,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/gungru_small_box.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/gungru_small_box.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/gungru_small_box2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/gungru_small_box3.jpeg"
+  ],
+  "description": "Traditional Gungru  brass box with authentic craftsmanship. Ideal for storing small items.",
+  "features": [
+    "Dimensions: Height: 1.5 inch, Diameter: 2 inch",
+    "Traditional design",
+    "Compact size",
+    "Handcrafted details",
+    "Durable construction",
+    "Easy to maintain"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

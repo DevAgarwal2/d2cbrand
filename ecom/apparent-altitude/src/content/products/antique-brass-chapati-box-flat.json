@@ -1,0 +1,28 @@
+{
+  "discount": "15% off",
+  "categoryName": "Brass Products",
+  "price": "₹3,250",
+  "shipping": "Shipping charges included",
+  "fastDelivery": true,
+  "inStock": true,
+  "originalPrice": "₹3,250",
+  "title": "Antique Brass Chappati Box",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-chapati1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-chapati3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-chapati2.jpeg"
+  ],
+  "reviews": 18,
+  "id": "antique-brass-chapati-box-flat",
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-chapati1.jpeg",
+  "description": "Classic flat antique brass box traditionally used for keeping chapatis warm. Features heavy-duty brass work.",
+  "features": [
+    "Dimensions: Height 3 inch, Diameter 8.5 inch, Depth 2 inch",
+    "Food safe brass",
+    "Heavy lid for insulation",
+    "Traditional circular design",
+    "Please note that this is an antique piece and slightly different from product "
+  ],
+  "rating": 4.8,
+  "category": "brass-products"
+}

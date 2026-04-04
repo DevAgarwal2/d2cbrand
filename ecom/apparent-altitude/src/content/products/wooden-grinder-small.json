@@ -1,0 +1,28 @@
+{
+  "id": "wooden-grinder-small",
+  "title": "Small Wooden Grinder",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,100",
+  "originalPrice": "₹2,500",
+  "discount": "16% off",
+  "rating": 4.7,
+  "reviews": 45,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/grinder1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/grinder1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder3.jpeg"
+  ],
+  "description": "Traditional small wooden grinder (Chakki). A perfect handcrafted piece for ethnic home decor.",
+  "features": [
+    "Dimensions: Height 6 inch, Diameter 12 inch, Depth 2 inch",
+    "Solid wood construction",
+    "Antique rustic finish",
+    "Traditional design",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

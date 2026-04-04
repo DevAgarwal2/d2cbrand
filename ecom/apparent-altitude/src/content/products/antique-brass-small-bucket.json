@@ -1,0 +1,29 @@
+{
+  "id": "antique-brass-small-bucket",
+  "title": "Antique Brass Small Bucket",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹3,500",
+  "originalPrice": "₹3,550",
+  "discount": "Deal",
+  "rating": 4.8,
+  "reviews": 32,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-small-buck1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-small-buck1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-small-buck3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-small-buck2.jpeg"
+  ],
+  "description": "Beautifully aged antique brass bucket. Versatile utility - perfect for use as an ice bucket or wine bottle cooler. Can also be used as a planter or a standalone accent piece.",
+  "features": [
+    "Dimensions: Height: 7.1 inch, Diameter: 7.1 inch, Depth: 6.2 inch",
+    "Solid antique brass",
+    "Heavy duty handle",
+    "Ideal for cooling wine or storing ice",
+    "Traditional bucket design",
+    "Please note that this is an antique piece and slightly different from product"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

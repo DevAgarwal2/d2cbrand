@@ -1,0 +1,27 @@
+{
+  "id": "antique-brass-mug",
+  "title": "Antique Brass Mug",
+  "category": "brass-products",
+  "categoryName": "Brass Products",
+  "price": "₹2,150",
+  "originalPrice": "₹2,550",
+  "discount": "16% off",
+  "rating": 4.5,
+  "reviews": 28,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/brass-mug1.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/brass-mug1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/brass-mug2.jpeg"
+  ],
+  "description": "Vintage brass mug with a sturdy handle. Can be used as a desk organizer or a retro drinking cup.",
+  "features": [
+    "Dimensions: Height 4.9 inch",
+    "Sturdy handle",
+    "Solid base",
+    "Retro aesthetic",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

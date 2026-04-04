@@ -1,0 +1,29 @@
+{
+  "id": "handi-lamp",
+  "title": "Handi Lamp",
+  "category": "iron-lamps",
+  "categoryName": "Iron Lamps",
+  "price": "₹2,800",
+  "originalPrice": "₹1,600",
+  "discount": "18% off",
+  "rating": 4.9,
+  "reviews": 98,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/handi_lamp.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/handi_lamp.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/handi_lamp2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/handi_lamp3.jpeg"
+  ],
+  "description": "Traditional handi-style iron lamp with authentic design. Creates beautiful ambient lighting.",
+  "features": [
+    "Dimensions: Height: 10 inch",
+    "Handi-style design",
+    "Authentic iron work",
+    "Ambient lighting",
+    "Traditional appeal",
+    "Handcrafted quality"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

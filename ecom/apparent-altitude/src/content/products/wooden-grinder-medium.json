@@ -1,0 +1,28 @@
+{
+  "id": "wooden-grinder-medium",
+  "title": "Medium Wooden Grinder",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,950",
+  "originalPrice": "₹3,500",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 38,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/grinder2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/grinder2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder1.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/grinder3.jpeg"
+  ],
+  "description": "Medium-sized traditional wooden grinder. Adds a vintage touch to your living room or kitchen decor.",
+  "features": [
+    "Dimensions: Height 7 inch, Diameter 15 inch, Depth 15 inch",
+    "Handcrafted wood",
+    "Heavy and durable",
+    "Vintage appeal",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}

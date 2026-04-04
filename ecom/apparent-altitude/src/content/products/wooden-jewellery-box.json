@@ -1,0 +1,29 @@
+{
+  "id": "wooden-jewellery-box",
+  "title": "Wooden Jewellery Box",
+  "category": "Wooden-Products",
+  "categoryName": "Wooden Products",
+  "price": "₹2,100",
+  "originalPrice": "₹2,500",
+  "discount": "16% off",
+  "rating": 4.8,
+  "reviews": 88,
+  "image": "https://ik.imagekit.io/pi9wuccc0i/wooden-jewel2.jpeg",
+  "images": [
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-jewel2.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-jewel3.jpeg",
+    "https://ik.imagekit.io/pi9wuccc0i/wooden-jewel1.jpeg"
+  ],
+  "description": "Elegant wooden jewellery box with ample storage. Keeps your precious items safe and organized.",
+  "features": [
+    "Dimensions: Height 4.2 inch, Length 10.1 inch, Width 5.6 inch",
+    "Fine wood craftsmanship",
+    "Secure latch",
+    "Protective interior",
+    "Classic design",
+    "Please note that this is an antique piece"
+  ],
+  "shipping": "Shipping charges included",
+  "inStock": true,
+  "fastDelivery": true
+}
