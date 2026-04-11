@@ -449,57 +449,6 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                 if (sizeFeaturesContainer) {
                     sizeFeaturesContainer.classList.remove('hidden');
                 }
-                updateFeatures(selectedFeatures);
-
-                // Hide error
-                if (sizeError) {
-                    sizeError.classList.add('hidden');
-                }
-            });
-        });
-    }
-    }
-
-    if (sizeButtons.length > 0) {
-        // Select first size by default
-        const firstSize = sizeButtons[0];
-        selectedSize = firstSize.getAttribute('data-size');
-        selectedPrice = firstSize.getAttribute('data-price');
-        selectedFeatures = JSON.parse(firstSize.getAttribute('data-features') || '[]');
-        updateFeatures(selectedFeatures);
-
-        sizeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all
-                sizeButtons.forEach(b => {
-                    b.classList.remove('border-stone-900', 'bg-stone-900', 'text-white');
-                    b.classList.add('border-stone-200', 'text-stone-700');
-                });
-
-                // Add active class to clicked
-                button.classList.remove('border-stone-200', 'text-stone-700');
-                button.classList.add('border-stone-900', 'bg-stone-900', 'text-white');
-
-                // Update selected size, price and features
-                selectedSize = button.getAttribute('data-size');
-                selectedPrice = button.getAttribute('data-price');
-                selectedFeatures = JSON.parse(button.getAttribute('data-features') || '[]');
-
-                // Update price display
-                if (priceDisplay) {
-                    priceDisplay.textContent = '₹' + selectedPrice;
-                }
-
-                // Update mobile price display
-                if (mobilePriceDisplay) {
-                    mobilePriceDisplay.textContent = '₹' + selectedPrice;
-                }
-
-                // Update size name
-                const sizeNameDisplay = document.getElementById('selected-size-name');
-                if (sizeNameDisplay) {
-                    sizeNameDisplay.textContent = selectedSize;
-                }
 
                 // Update features
                 updateFeatures(selectedFeatures);
@@ -510,6 +459,9 @@ const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.t
                 }
             });
         });
+
+        // Select first size by default
+        sizeButtons[0].click();
     }
 
     // 3. WhatsApp Button Logic

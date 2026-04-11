@@ -86,13 +86,14 @@ const hardcodedReviews = [
 const dbReviewsFormatted = dbReviews?.map((review: any) => {
     const nameParts = review.customer_name?.split(' ') || ['Customer'];
     const initials = nameParts.map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
+    const image = typeof review.image_url === 'string' && review.image_url.trim() ? review.image_url.trim() : null;
     return {
         stars: review.stars || 5,
-        title: review.title,
-        quote: review.description || review.title,
-        image: review.image_url,
+        title: review.title || 'Customer Review',
+        quote: review.description || review.title || 'Loved this handcrafted piece.',
+        image,
         initials: initials,
-        name: review.customer_name,
+        name: review.customer_name || 'Customer',
         location: review.location || "India"
     };
 }) || [];
@@ -338,14 +339,14 @@ const renderStars = (count: number) => '★'.repeat(count);
 
             <div class="flex overflow-x-auto pb-8 gap-6 md:grid md:grid-cols-3 snap-x">
                 {reviews.map((review: any) => (
-                    <div class="min-w-[300px] md:min-w-0 bg-[#FDFBF7] rounded-2xl border border-stone-100 snap-center overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
+                    <article class="min-w-[300px] md:min-w-0 bg-[#FDFBF7] rounded-2xl border border-stone-100 snap-center overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
                         {/* Review Image */}
                         {review.image ? (
-                            <div class="relative h-48 w-full overflow-hidden">
+                            <div class="relative aspect-[4/3] w-full overflow-hidden bg-stone-100 border-b border-stone-100 p-3">
                                 <img 
                                     src={review.image} 
                                     alt={review.title}
-                                    class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                                    class="w-full h-full object-contain rounded-xl bg-white hover:scale-[1.02] transition-transform duration-500"
                                     loading="lazy"
                                 />
                                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
@@ -353,7 +354,7 @@ const renderStars = (count: number) => '★'.repeat(count);
                                 </div>
                             </div>
                         ) : (
-                            <div class="h-32 bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center">
+                            <div class="relative h-40 bg-gradient-to-br from-stone-100 to-stone-200 flex items-center justify-center border-b border-stone-100">
                                 <span class="text-4xl">⭐</span>
                                 <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full">
                                     <span class="text-amber-500 text-sm">{renderStars(review.stars)}</span>
@@ -362,12 +363,12 @@ const renderStars = (count: number) => '★'.repeat(count);
                         )}
                         
                         {/* Review Content */}
-                        <div class="p-6">
+                        <div class="p-6 flex flex-1 flex-col">
                             {/* Title */}
                             <h3 class="font-bold text-stone-900 text-lg mb-2 line-clamp-1">{review.title}</h3>
                             
                             {/* Quote */}
-                            <p class="text-stone-600 font-serif leading-relaxed italic mb-4 text-sm line-clamp-3">
+                            <p class="text-stone-600 font-serif leading-relaxed italic mb-4 text-sm line-clamp-4 flex-1">
                                 "{review.quote}"
                             </p>
                             
@@ -390,7 +391,7 @@ const renderStars = (count: number) => '★'.repeat(count);
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </div>
         </div>
