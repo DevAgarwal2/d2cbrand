@@ -1,3 +1,20 @@
 User-agent: *
 Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
 Sitemap: https://www.shreeyamhandicraft.com/sitemap-index.xml
+Sitemap: https://www.shreeyamhandicraft.com/sitemap-products.xml

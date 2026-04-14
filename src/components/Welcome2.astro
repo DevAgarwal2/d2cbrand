@@ -3,6 +3,7 @@
 import { supabase } from "../db/supabase";
 import logo from "../assets/shreeyam-logo.jpg";
 import elephantDecor from "../assets/IMG_2696.JPG.jpeg"; 
+import { getEmbedData } from "../lib/videos";
 
 // 👇 1. FETCH DATA FROM SUPABASE
 // We select all products and join the 'categories' table to get the category name
@@ -26,6 +27,16 @@ if (reviewsError) {
   console.error("Error fetching reviews:", reviewsError);
 }
 
+const { data: rawVideos, error: videosError } = await supabase
+  .from('videos')
+  .select('*')
+  .eq('is_active', true)
+  .order('display_order', { ascending: true });
+
+if (videosError) {
+  console.error("Error fetching videos:", videosError);
+}
+
 // 👇 2. MAP DATA (Transform Supabase fields to match your UI)
 const products = rawProducts?.map(p => ({
   ...p,
@@ -45,6 +56,12 @@ const heroImageSrc = "landing_img.jpeg"
 
 // Curated Favorites (Top 8)
 const featuredProducts = products.slice(0, 8);
+const videos = (rawVideos || []).map((video: any) => ({
+    ...video,
+    embed: getEmbedData(video)
+}));
+
+const landingVideos = videos.slice(0, 3);
 
 const getWhatsAppLink = (productTitle: any) => {
     const message = `Hi Shreeyam Handicrafts, I am interested in buying the ${productTitle}.`;
@@ -325,6 +342,68 @@ const renderStars = (count: number) => '★'.repeat(count);
             <a href="products" class="inline-block bg-stone-900 text-white px-12 py-4 rounded-full font-medium tracking-wide hover:bg-stone-800 transition-all shadow-xl btn-d2c">
                 View Full Collection
             </a>
+        </div>
+    </section>
+
+    <section id="showcase" class="py-20 border-t border-stone-100 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col gap-4 mb-10 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                    <span class="inline-flex items-center rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-stone-500">Instagram Reels</span>
+                    <h2 class="mt-4 text-3xl md:text-4xl font-playfair text-stone-900">Craft Stories in Motion</h2>
+                    <p class="mt-3 max-w-2xl text-sm sm:text-base text-stone-600">A mobile-first showcase inspired by Instagram browsing so customers can quickly feel the texture, finish, and scale of each piece.</p>
+                </div>
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <a href="/videos" class="inline-flex items-center justify-center rounded-full bg-stone-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-stone-800">Show All Videos</a>
+                    <a href="https://www.instagram.com/shreeyam_handicrafts/profilecard/" target="_blank" class="inline-flex items-center justify-center rounded-full border border-stone-300 px-5 py-3 text-sm font-medium text-stone-900 transition hover:bg-stone-900 hover:text-white">Open Instagram</a>
+                </div>
+            </div>
+
+            <div class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-6 sm:overflow-visible sm:px-0">
+                {landingVideos.map((video: any) => (
+                    <div class="min-w-[78vw] max-w-[78vw] snap-center overflow-hidden rounded-[2rem] border border-stone-200 bg-[#FDFBF7] shadow-sm sm:min-w-0 sm:max-w-none">
+                        {video.embed.isInstagram ? (
+                            <a href={video.embed.instagramPermalink || video.video_url} target="_blank" rel="noopener noreferrer" class="group block aspect-[9/16] overflow-hidden bg-stone-900 relative">
+                                <img src={video.embed.thumbnail} alt={video.title} class="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/10"></div>
+                                <div class="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/15 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur">
+                                    <span class="inline-flex h-2 w-2 rounded-full bg-pink-500"></span>
+                                    Instagram Reel
+                                </div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-stone-900 shadow-lg transition group-hover:scale-110">
+                                        <svg class="ml-1 h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                                    </div>
+                                </div>
+                                <div class="absolute inset-x-0 bottom-0 p-5 text-white">
+                                    <div class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-900">
+                                        Watch on Instagram
+                                    </div>
+                                </div>
+                            </a>
+                        ) : video.embed.isDirect ? (
+                            <div class="aspect-[9/16] overflow-hidden bg-stone-900">
+                                <video src={video.video_url} poster={video.embed.thumbnail} class="h-full w-full object-cover" controls playsinline preload="metadata"></video>
+                            </div>
+                        ) : (
+                            <a href={video.video_url} target="_blank" rel="noopener noreferrer" class="flex aspect-[9/16] items-center justify-center bg-stone-900 text-white">
+                                <span>Open in {video.embed.sourceLabel}</span>
+                            </a>
+                        )}
+
+                        <div class="p-5 sm:p-6">
+                            <div class="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-stone-500">
+                                <span class="inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+                                {video.embed.sourceLabel}
+                            </div>
+                            <h3 class="mt-3 text-xl font-semibold leading-tight text-stone-900">{video.title}</h3>
+                            <p class="mt-2 text-sm leading-relaxed text-stone-600">{video.description || 'A craft story from our latest collection.'}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <p class="mt-5 text-center text-xs sm:text-sm text-stone-500">Best experienced on mobile. Tap any video to play it directly on the site.</p>
         </div>
     </section>
 

@@ -1,0 +1,21 @@
+Shreeyam Handicrafts
+
+Shreeyam Handicrafts is an Indian handicrafts brand focused on brass decor, wooden decor, lamps, devotional pieces, and heritage-inspired home products.
+
+Primary site:
+- https://www.shreeyamhandicraft.com/
+
+Key pages:
+- Homepage: https://www.shreeyamhandicraft.com/
+- Products listing: https://www.shreeyamhandicraft.com/products
+
+Machine-readable discovery:
+- Product catalog JSON: https://www.shreeyamhandicraft.com/product-catalog.json
+- Product sitemap XML: https://www.shreeyamhandicraft.com/sitemap-products.xml
+- Main sitemap index: https://www.shreeyamhandicraft.com/sitemap-index.xml
+- AI guide: https://www.shreeyamhandicraft.com/skills.md
+
+Content notes:
+- Product pages include title, description, category, image, pricing, features, and size options when available.
+- Product catalog JSON is the easiest endpoint for AI systems and crawlers to ingest the product list.
+- Sitemap files are available for search engines and indexing systems.
