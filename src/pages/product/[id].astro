@@ -28,8 +28,14 @@ const product = {
   ...rawProduct,
   // Map DB 'image_url' to UI 'image'
   image: rawProduct.image_url,
-  // Map DB 'price' directly to UI 'originalPrice' (as requested)
-  originalPrice: rawProduct.price.toString().startsWith('₹') ? rawProduct.price : `₹${rawProduct.price}`,
+  // Original / MRP (strikethrough next to display price)
+  originalPrice: rawProduct.original_price ? `₹${rawProduct.original_price}` : null,
+  // Price the customer actually pays (discount_price if on_discount, else price)
+  displayPrice: rawProduct.on_discount && Number(rawProduct.discount_price) > 0
+    ? `₹${rawProduct.discount_price}`
+    : `₹${rawProduct.price}`,
+  // Legacy field (still used by JS for the base WhatsApp message)
+  basePrice: `₹${rawProduct.price}`,
   // Map category name from join
   categoryName: rawProduct.categories?.name || 'Handicraft',
   // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
@@ -37,7 +43,11 @@ const product = {
   images: rawProduct.images || [],
   // Size variants
   has_sizes: rawProduct.has_sizes || false,
-  size_variants: rawProduct.size_variants || []
+  size_variants: rawProduct.size_variants || [],
+  // Stock & discount
+  inStock: rawProduct.in_stock !== false,
+  discountBadge: rawProduct.on_discount && rawProduct.discount_percent > 0 ? `${Math.round(rawProduct.discount_percent)}% OFF` : null,
+  deliveryChargesApply: rawProduct.delivery_charges_apply === true,
 };
 
 // 👇 5. Fetch Related Products (Same category, different ID)
@@ -52,12 +62,16 @@ const relatedProducts = relatedRaw?.map(p => ({
   id: p.id,
   title: p.title,
   image: p.image_url,
-  originalPrice: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`
+  originalPrice: p.original_price ? `₹${p.original_price}` : null,
+  displayPrice: p.on_discount && Number(p.discount_price) > 0 ? `₹${p.discount_price}` : `₹${p.price}`,
+  inStock: p.in_stock !== false,
+  discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
 })) || [];
 
 // Base message for WhatsApp
 const baseMessage = `Hi Shreeyam Handicrafts, I am interested in the ${product.title}.`;
-const numericPrice = Number.parseFloat(String(rawProduct.price).replace(/[^0-9.]/g, ''));
+const effectivePrice = product.discountBadge ? product.displayPrice : product.basePrice;
+const numericPrice = Number.parseFloat(String(effectivePrice).replace(/[^0-9.]/g, ''));
 const productSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -166,18 +180,30 @@ const productSchema = JSON.stringify({
                 <div class="lg:col-span-7 space-y-6">
                     <div class="bg-white p-2 rounded-[2rem] shadow-sm border border-stone-100">
                         <div class="relative aspect-[4/5] lg:aspect-auto lg:h-[650px] overflow-hidden rounded-[1.5rem] bg-[#F2F0E9] group">
-                            <img 
+                            <img
                                 id="main-image"
-                                src={product.image} 
+                                src={product.image}
                                 alt={product.title}
-                                class="w-full h-full transition-transform duration-1000 group-hover:scale-105 ease-out"
+                                class={`w-full h-full transition-transform duration-1000 group-hover:scale-105 ease-out ${!product.inStock ? 'opacity-60' : ''}`}
                                 style={`object-fit: ${product.id === 'antique-chapati-box-stand' ? 'contain' : 'cover'}`}
                             />
                             <div class="absolute top-6 left-6 flex flex-col gap-2">
                                 <span class="bg-white/90 backdrop-blur text-stone-900 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-stone-200">
                                     {product.categoryName}
                                 </span>
+                                {product.discountBadge && (
+                                    <span class="bg-emerald-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm w-fit">
+                                        {product.discountBadge}
+                                    </span>
+                                )}
                             </div>
+                            {!product.inStock && (
+                                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                    <span class="bg-stone-900/85 text-white px-6 py-3 rounded-full text-base lg:text-lg font-bold uppercase tracking-widest">
+                                        Out of Stock
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -210,14 +236,30 @@ const productSchema = JSON.stringify({
                             )}
                             
                             <div class="flex items-center justify-between gap-4">
-                                <span id="price-display" class={`text-3xl font-light text-stone-900 font-sans tracking-tight ${product.has_sizes ? 'hidden' : ''}`}>
-                                    {product.has_sizes ? 'Select size' : product.originalPrice}
-                                </span>
+                                <div class="flex items-baseline gap-3 flex-wrap">
+                                    <span id="price-display" class={`text-3xl font-light text-stone-900 font-sans tracking-tight ${product.has_sizes ? 'hidden' : ''}`}>
+                                        {product.has_sizes ? 'Select size' : product.displayPrice}
+                                    </span>
+                                    {product.discountBadge && product.originalPrice && (
+                                        <span class="text-xl text-stone-400 line-through font-serif">{product.originalPrice}</span>
+                                    )}
+                                </div>
                                 <div class="flex items-center gap-1.5 bg-stone-100 px-3 py-1 rounded-full">
                                     <span class="text-amber-500 text-sm">★★★★★</span>
                                     <span class="text-xs font-bold text-stone-600 uppercase tracking-wider">{product.rating} Rating</span>
                                 </div>
                             </div>
+
+                            {/* Delivery info */}
+                            {product.deliveryChargesApply ? (
+                                <p class="mt-3 text-xs text-stone-500">
+                                    + <span class="font-semibold text-stone-700">Delivery charges apply</span>
+                                </p>
+                            ) : (
+                                <p class="mt-3 text-xs text-stone-500">
+                                    <span class="font-semibold text-emerald-700">Free Delivery</span>
+                                </p>
+                            )}
 
                             {/* Size Selector */}
                             {product.has_sizes && product.size_variants && product.size_variants.length > 0 && (
@@ -231,7 +273,8 @@ const productSchema = JSON.stringify({
                                                 data-price={variant.price}
                                                 data-in-stock={variant.in_stock}
                                                 data-features={JSON.stringify(variant.features || [])}
-                                                class={`size-option px-6 py-3 rounded-lg border-2 text-sm font-medium transition-all ${index === 0 ? 'border-stone-900 bg-stone-900 text-white' : 'border-stone-200 text-stone-700 hover:border-stone-400'}`}
+                                                disabled={variant.in_stock === false}
+                                                class={`size-option px-6 py-3 rounded-lg border-2 text-sm font-medium transition-all ${variant.in_stock === false ? 'opacity-40 cursor-not-allowed line-through' : index === 0 ? 'border-stone-900 bg-stone-900 text-white' : 'border-stone-200 text-stone-700 hover:border-stone-400'}`}
                                             >
                                                 {variant.size}
                                             </button>
@@ -268,13 +311,15 @@ const productSchema = JSON.stringify({
                         </div>
 
                         <div class="hidden lg:block space-y-4">
-                            <button 
+                            <button
                                 data-message={baseMessage}
-                                data-base-price={product.originalPrice}
-                                class="whatsapp-btn btn-d2c w-full bg-stone-900 text-white text-lg font-medium py-5 rounded-full flex items-center justify-center gap-3"
+                                data-base-price={product.displayPrice}
+                                data-delivery-charges-apply={String(product.deliveryChargesApply)}
+                                disabled={!product.inStock}
+                                class={`whatsapp-btn btn-d2c w-full text-white text-lg font-medium py-5 rounded-full flex items-center justify-center gap-3 ${product.inStock ? 'bg-stone-900 hover:bg-stone-800' : 'bg-stone-400 cursor-not-allowed'}`}
                             >
                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/></svg>
-                                <span>Order via WhatsApp</span>
+                                <span>{product.inStock ? 'Order via WhatsApp' : 'Currently Unavailable'}</span>
                             </button>
                         </div>
 
@@ -304,22 +349,39 @@ const productSchema = JSON.stringify({
                         {relatedProducts.map((relatedProduct) => (
                             <div class="group flex flex-col h-full">
                                 <a href={`/product/${relatedProduct.id}`} class="block relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#F2F0E9] mb-4">
-                                    <img 
-                                        src={relatedProduct.image} 
+                                    <img
+                                        src={relatedProduct.image}
                                         alt={relatedProduct.title}
-                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        class={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${!relatedProduct.inStock ? 'opacity-60' : ''}`}
                                         loading="lazy"
                                     />
+                                    {relatedProduct.discountBadge && (
+                                        <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-emerald-600 text-white px-2 py-1 md:px-3 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-sm">
+                                            {relatedProduct.discountBadge}
+                                        </div>
+                                    )}
+                                    {!relatedProduct.inStock && (
+                                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                            <span class="bg-stone-900/85 text-white px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest">
+                                                Out of Stock
+                                            </span>
+                                        </div>
+                                    )}
                                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
                                 </a>
-                                
+
                                 <div class="flex-grow flex flex-col">
                                     <h3 class="font-medium text-stone-900 text-lg mb-1 group-hover:text-stone-600 transition-colors">
                                         {relatedProduct.title}
                                     </h3>
-                                    <div class="text-stone-500 font-serif mb-4">{relatedProduct.originalPrice}</div>
-                                    
-                                    <a 
+                                    <div class="flex items-baseline gap-2 mb-4 flex-wrap">
+                                        <span class={`font-serif ${relatedProduct.inStock ? 'text-stone-500' : 'text-stone-400 line-through'}`}>{relatedProduct.displayPrice}</span>
+                                        {relatedProduct.discountBadge && relatedProduct.originalPrice && (
+                                            <span class="text-sm text-stone-400 line-through font-serif">{relatedProduct.originalPrice}</span>
+                                        )}
+                                    </div>
+
+                                    <a
                                         href={`/product/${relatedProduct.id}`}
                                         class="mt-auto block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
                                     >
@@ -369,15 +431,24 @@ const productSchema = JSON.stringify({
         <div class="flex items-center gap-4 max-w-7xl mx-auto">
             <div class="flex-1">
                 <p class="text-xs text-stone-500 uppercase tracking-wider mb-0.5">Price</p>
-                <p class="text-xl font-serif text-stone-900">{product.originalPrice}</p>
-                {/* Shipping info in Mobile Footer */}
+                <div class="flex items-baseline gap-2">
+                    <p class="text-xl font-serif text-stone-900">{product.displayPrice}</p>
+                    {product.discountBadge && product.originalPrice && (
+                        <p class="text-sm text-stone-400 line-through font-serif">{product.originalPrice}</p>
+                    )}
+                </div>
+                {product.deliveryChargesApply && (
+                    <p class="text-[10px] text-stone-500 mt-0.5">+ Delivery charges apply</p>
+                )}
             </div>
-            <button 
+            <button
                 data-message={baseMessage}
-                data-base-price={product.originalPrice}
-                class="whatsapp-btn flex-1 bg-stone-900 text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform"
+                data-base-price={product.displayPrice}
+                data-delivery-charges-apply={String(product.deliveryChargesApply)}
+                disabled={!product.inStock}
+                class={`whatsapp-btn flex-1 text-white py-3 px-4 rounded-full font-medium flex items-center justify-center gap-2 shadow-lg transition-transform ${product.inStock ? 'bg-stone-900 active:scale-95' : 'bg-stone-400 cursor-not-allowed'}`}
             >
-                <span>Buy Now</span>
+                <span>{product.inStock ? 'Buy Now' : 'Unavailable'}</span>
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/></svg>
             </button>
         </div>
@@ -437,6 +508,11 @@ const productSchema = JSON.stringify({
     if (sizeButtons.length > 0) {
         sizeButtons.forEach(button => {
             button.addEventListener('click', () => {
+                // Skip disabled (out-of-stock) variants
+                if (button.disabled) {
+                    return;
+                }
+
                 // Remove active class from all
                 sizeButtons.forEach(b => {
                     b.classList.remove('border-stone-900', 'bg-stone-900', 'text-white');
@@ -484,16 +560,22 @@ const productSchema = JSON.stringify({
             });
         });
 
-        // Select first size by default
-        sizeButtons[0].click();
+        // Select first in-stock size by default
+        const firstAvailable = Array.from(sizeButtons).find(b => !b.disabled);
+        if (firstAvailable) {
+            firstAvailable.click();
+        }
     }
 
     // 3. WhatsApp Button Logic
     const whatsappBtns = document.querySelectorAll('.whatsapp-btn');
     whatsappBtns.forEach(button => {
         button.addEventListener('click', () => {
+            if (button.disabled) return;
+
             const baseMessage = button.getAttribute('data-message');
             const basePrice = button.getAttribute('data-base-price') || '';
+            const deliveryChargesApply = button.getAttribute('data-delivery-charges-apply') === 'true';
             const currentUrl = window.location.href;
 
             // Check if sizes exist but none selected
@@ -518,6 +600,9 @@ const productSchema = JSON.stringify({
                 const priceText = basePrice || document.getElementById('price-display')?.textContent || '';
                 fullMessage += `\nPrice: ${priceText}`;
             }
+            fullMessage += deliveryChargesApply
+                ? `\nDelivery: Additional charges apply`
+                : `\nDelivery: Free`;
             fullMessage += `\n\nProduct Link: ${currentUrl}`;
 
             const whatsappUrl = `https://wa.me/919726983835?text=${encodeURIComponent(fullMessage)}`;

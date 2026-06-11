@@ -9,8 +9,11 @@ export interface Props {
 const { 
     title = "Shreeyam HandiCrafts - Traditional Brass Vessels, Dhoopdani & Iron Lamps | Gujarat",
     description = "Authentic handcrafted brass vessels, traditional dhoopdani, decorative boxes & iron lamps from Gujarat. Premium quality Indian handicrafts for home & temple. Fast delivery across India.",
-    image = "/landing_img.jpeg"
+    image = "https://ik.imagekit.io/pi9wuccc0i/logo.jpeg"
 } = Astro.props;
+
+// Ensure image is always an absolute URL for proper link sharing
+const absoluteImage = image.startsWith('http') ? image : `${siteBase}${image.startsWith('/') ? image : `/${image}`}`;
 
 // If Astro.site is undefined (dev mode), fall back to the current request origin
 const siteBase = Astro.site ? Astro.site.href : Astro.url.origin;
@@ -73,7 +76,9 @@ const schema = JSON.stringify({
         <meta property="og:url" content={Astro.url} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+        <meta property="og:image" content={absoluteImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="en_IN" />
         <meta property="og:site_name" content="Shreeyam HandiCrafts" />
 

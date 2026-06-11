@@ -5,7 +5,7 @@ export async function GET() {
 
   const { data: products, error } = await supabase
     .from('products')
-    .select('id, title, description, image_url, price, has_sizes, size_variants, features, categories(name)')
+    .select('id, title, description, image_url, price, original_price, in_stock, has_sizes, size_variants, features, on_discount, discount_price, discount_percent, delivery_charges_apply, categories(name)')
     .order('title', { ascending: true });
 
   if (error) {
@@ -25,9 +25,15 @@ export async function GET() {
     category: product.categories?.name || 'Handicraft',
     image: product.image_url,
     price: product.price,
+    originalPrice: product.original_price || null,
+    inStock: product.in_stock !== false,
     hasSizes: Boolean(product.has_sizes),
     sizeVariants: product.size_variants || [],
     features: product.features || [],
+    onDiscount: Boolean(product.on_discount),
+    discountPrice: Number(product.discount_price) || 0,
+    discountPercent: Number(product.discount_percent) || 0,
+    deliveryChargesApply: Boolean(product.delivery_charges_apply),
     url: `${siteBase}/product/${product.id}`
   }));
 

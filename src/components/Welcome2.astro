@@ -41,12 +41,19 @@ if (videosError) {
 const products = rawProducts?.map(p => ({
   ...p,
   // Map 'image_url' (DB) to 'image' (Your UI)
-  image: p.image_url, 
+  image: p.image_url,
   // Map category name from the join
-  categoryName: p.categories?.name || 'Handicraft', 
-  // Add Currency Symbol if missing
+  categoryName: p.categories?.name || 'Handicraft',
+  // Current price (with ₹ prefix)
   price: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`,
-  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null
+  // Original / MRP (strikethrough) — only meaningful when on_discount
+  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null,
+  // The price shown prominently: discount_price if on_discount, else price
+  displayPrice: p.on_discount && Number(p.discount_price) > 0
+    ? (p.discount_price.toString().startsWith('₹') ? p.discount_price : `₹${p.discount_price}`)
+    : (p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`),
+  inStock: p.in_stock !== false,
+  discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
 })) || [];
 
 // 👇 3. LOGIC (Kept exactly the same as before)
@@ -305,33 +312,46 @@ const renderStars = (count: number) => '★'.repeat(count);
             {featuredProducts.map((product) => (
                 <div class="group flex flex-col h-full">
                     <div class="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#F2F0E9] mb-5">
-                        <img 
-                            src={product.image} 
-                            alt={product.title} 
-                            class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                        <img
+                            src={product.image}
+                            alt={product.title}
+                            class={`object-cover w-full h-full group-hover:scale-105 transition-transform duration-500 cursor-pointer ${!product.inStock ? 'opacity-60' : ''}`}
                             loading="lazy"
                             onclick={`window.location.href='/product/${product.id}'`}
                         />
+                        {product.discountBadge && (
+                            <div class="absolute top-2 left-2 md:top-3 md:left-3 bg-emerald-600 text-white px-2 py-1 md:px-3 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider shadow-sm">
+                                {product.discountBadge}
+                            </div>
+                        )}
+                        {!product.inStock && (
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <span class="bg-stone-900/85 text-white px-4 py-2 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest">
+                                    Out of Stock
+                                </span>
+                            </div>
+                        )}
                     </div>
-                    
+
                     <div class="flex-grow flex flex-col">
                         <h3 class="font-medium text-stone-900 text-base md:text-lg mb-1">{product.title}</h3>
                         <p class="text-sm text-stone-500 mb-3">{product.categoryName}</p>
-                        
+
                         <div class="mt-auto flex items-center justify-between">
-                            <div class="flex items-baseline gap-2">
-                                
-                                    <span class="text-lg font-serif text-stone-900">{product.originalPrice}</span>
-                                
+                            <div class="flex items-baseline gap-2 flex-wrap">
+                                <span class={`text-lg font-serif ${product.inStock ? 'text-stone-900' : 'text-stone-400 line-through'}`}>{product.displayPrice}</span>
+                                {product.discountBadge && product.originalPrice && (
+                                    <span class="text-sm text-stone-400 line-through font-serif">{product.originalPrice}</span>
+                                )}
                             </div>
                         </div>
-                        
-                        <a 
-                            href={getWhatsAppLink(product.title)}
-                            target="_blank"
-                            class="mt-4 block w-full text-center text-xs font-bold uppercase tracking-widest border border-stone-300 text-stone-900 py-3 rounded-lg hover:bg-stone-900 hover:text-white transition-colors"
+
+                        <a
+                            href={product.inStock ? getWhatsAppLink(product.title) : `/product/${product.id}`}
+                            target={product.inStock ? '_blank' : undefined}
+                            class={`mt-4 block w-full text-center text-xs font-bold uppercase tracking-widest border py-3 rounded-lg transition-colors ${product.inStock ? 'border-stone-300 text-stone-900 hover:bg-stone-900 hover:text-white' : 'border-stone-200 text-stone-400 bg-stone-50 cursor-not-allowed'}`}
                         >
-                            Buy on WhatsApp
+                            {product.inStock ? 'Buy on WhatsApp' : 'Notify When Available'}
                         </a>
                     </div>
                 </div>
