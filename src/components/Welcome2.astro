@@ -61,8 +61,30 @@ const products = rawProducts?.map(p => ({
 const heroProduct = products.find((p: { id: string; }) => p.id === 'antique-brass-box');
 const heroImageSrc = "landing_img.jpeg"
 
-// Curated Favorites (Top 8)
-const featuredProducts = products.slice(0, 8);
+// Curated Favorites: 1 from each of 5 categories + 1 brass + 2 wooden = 8
+const curatedCategories = [
+    'Brass-dhoopdani and diya',
+    'Antique Brass Products',
+    'Home decor',
+    'Paintings',
+    'Wooden Products',
+];
+
+const featuredProducts: any[] = [];
+const matchCat = (p: any, cat: string) => (p.categoryName || '').trim() === cat.trim();
+
+curatedCategories.forEach((cat) => {
+    let pick = products.find((p: any) => matchCat(p, cat) && p.inStock);
+    if (!pick) pick = products.find((p: any) => matchCat(p, cat));
+    if (pick) featuredProducts.push(pick);
+});
+
+const brassPick = products.find((p: any) => matchCat(p, 'Antique Brass Products') && p.inStock && !featuredProducts.includes(p));
+if (brassPick) featuredProducts.push(brassPick);
+
+const woodenExtras = products.filter((p: any) => matchCat(p, 'Wooden Products') && p.inStock && !featuredProducts.includes(p));
+if (woodenExtras[0]) featuredProducts.push(woodenExtras[0]);
+if (woodenExtras[1]) featuredProducts.push(woodenExtras[1]);
 const videos = (rawVideos || []).map((video: any) => ({
     ...video,
     embed: getEmbedData(video)
