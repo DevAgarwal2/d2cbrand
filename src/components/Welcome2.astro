@@ -54,6 +54,8 @@ const products = rawProducts?.map(p => ({
     : (p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`),
   inStock: p.in_stock !== false,
   discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
+  isFeatured: p.is_featured === true,
+  featuredOrder: p.featured_order ?? 0,
 })) || [];
 
 // 👇 3. LOGIC (Kept exactly the same as before)
@@ -61,7 +63,13 @@ const products = rawProducts?.map(p => ({
 const heroProduct = products.find((p: { id: string; }) => p.id === 'antique-brass-box');
 const heroImageSrc = "landing_img.jpeg"
 
-// Curated Favorites: 1 from each of 5 categories + 1 brass + 2 wooden = 8
+// Curated Favorites: pull products flagged is_featured in the admin CMS,
+// ordered by featured_order. Falls back to the old category-based picks
+// if no products have been featured yet (so the section never goes empty).
+const adminFeatured = products
+  .filter((p: any) => p.isFeatured)
+  .sort((a: any, b: any) => (a.featuredOrder ?? 0) - (b.featuredOrder ?? 0));
+
 const curatedCategories = [
     'Brass-dhoopdani and diya',
     'Antique Brass Products',
@@ -70,21 +78,23 @@ const curatedCategories = [
     'Wooden Products',
 ];
 
-const featuredProducts: any[] = [];
 const matchCat = (p: any, cat: string) => (p.categoryName || '').trim() === cat.trim();
 
+const fallbackFeatured: any[] = [];
 curatedCategories.forEach((cat) => {
     let pick = products.find((p: any) => matchCat(p, cat) && p.inStock);
     if (!pick) pick = products.find((p: any) => matchCat(p, cat));
-    if (pick) featuredProducts.push(pick);
+    if (pick) fallbackFeatured.push(pick);
 });
 
-const brassPick = products.find((p: any) => matchCat(p, 'Antique Brass Products') && p.inStock && !featuredProducts.includes(p));
-if (brassPick) featuredProducts.push(brassPick);
+const brassPick = products.find((p: any) => matchCat(p, 'Antique Brass Products') && p.inStock && !fallbackFeatured.includes(p));
+if (brassPick) fallbackFeatured.push(brassPick);
 
-const woodenExtras = products.filter((p: any) => matchCat(p, 'Wooden Products') && p.inStock && !featuredProducts.includes(p));
-if (woodenExtras[0]) featuredProducts.push(woodenExtras[0]);
-if (woodenExtras[1]) featuredProducts.push(woodenExtras[1]);
+const woodenExtras = products.filter((p: any) => matchCat(p, 'Wooden Products') && p.inStock && !fallbackFeatured.includes(p));
+if (woodenExtras[0]) fallbackFeatured.push(woodenExtras[0]);
+if (woodenExtras[1]) fallbackFeatured.push(woodenExtras[1]);
+
+const featuredProducts: any[] = adminFeatured.length > 0 ? adminFeatured : fallbackFeatured;
 const videos = (rawVideos || []).map((video: any) => ({
     ...video,
     embed: getEmbedData(video)
