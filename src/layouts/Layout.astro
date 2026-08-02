@@ -1,22 +1,24 @@
 ---
 // src/layouts/Layout.astro
+import logo from "../assets/shreeyam-logo.jpg";
+
 export interface Props {
     title?: string;
     description?: string;
     image?: string;
 }
 
+// If Astro.site is undefined (dev mode), fall back to the current request origin
+const siteBase = Astro.site ? Astro.site.href : Astro.url.origin;
+
 const { 
     title = "Shreeyam HandiCrafts - Traditional Brass Vessels, Dhoopdani & Iron Lamps | Gujarat",
     description = "Authentic handcrafted brass vessels, traditional dhoopdani, decorative boxes & iron lamps from Gujarat. Premium quality Indian handicrafts for home & temple. Fast delivery across India.",
-    image = "https://ik.imagekit.io/pi9wuccc0i/logo.jpeg"
+    image = logo.src
 } = Astro.props;
 
 // Ensure image is always an absolute URL for proper link sharing
 const absoluteImage = image.startsWith('http') ? image : `${siteBase}${image.startsWith('/') ? image : `/${image}`}`;
-
-// If Astro.site is undefined (dev mode), fall back to the current request origin
-const siteBase = Astro.site ? Astro.site.href : Astro.url.origin;
 const canonicalURL = new URL(Astro.url.pathname, siteBase);
 
 // JSON-LD Structured Data for Local Business
@@ -24,7 +26,7 @@ const schema = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Shreeyam HandiCrafts",
-  "image": "https://ik.imagekit.io/pi9wuccc0i/logo.jpeg",
+  "image": absoluteImage,
   "description": description,
   "telephone": "+919726983835",
   "address": {
@@ -68,8 +70,8 @@ const schema = JSON.stringify({
         <link rel="alternate" type="text/plain" title="LLMs" href={`${siteBase}llms.txt`} />
         <link rel="alternate" type="text/markdown" title="AI Guide" href={`${siteBase}skills.md`} />
 
-        <link rel="icon" type="image/jpeg" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
-        <link rel="apple-touch-icon" href="https://ik.imagekit.io/pi9wuccc0i/logo.jpeg" />
+        <link rel="icon" type="image/jpeg" href={logo.src} />
+        <link rel="apple-touch-icon" href={logo.src} />
         <meta name="theme-color" content="#1c1917" />
 
         <meta property="og:type" content="website" />
@@ -86,7 +88,7 @@ const schema = JSON.stringify({
         <meta name="twitter:url" content={Astro.url} />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
+        <meta name="twitter:image" content={absoluteImage} />
 
         <meta name="geo.region" content="IN-GJ" />
         <meta name="geo.placename" content="Ahmedabad" />
