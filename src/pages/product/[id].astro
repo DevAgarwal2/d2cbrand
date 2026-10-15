@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import logo from "../../assets/shreeyam-logo.jpg"; 
 // 👇 1. Import Supabase
 import { supabase } from "../../db/supabase";
+import { getCardPricing } from "../../lib/pricing";
 
 // 👇 2. Get the ID from the URL (Live, no build needed)
 const { id } = Astro.params;
@@ -41,9 +42,28 @@ const product = {
   // Ensure features/images are arrays (Supabase JSONB comes as array automatically)
   features: rawProduct.features || [],
   images: rawProduct.images || [],
-  // Size variants
+  // Size variants (per-size pricing: price, original_price/MRP, discount_price)
   has_sizes: rawProduct.has_sizes || false,
-  size_variants: rawProduct.size_variants || [],
+  size_variants: (rawProduct.size_variants || []).map(v => {
+    const price = Number(v.price) || 0;
+    const originalPrice = Number(v.original_price) || 0;
+    const discountPrice = Number(v.discount_price) || 0;
+    // Price the customer actually pays for this size (discount_price if set, else price)
+    const effectivePrice = discountPrice > 0 ? discountPrice : price;
+    const hasVariantDiscount = discountPrice > 0 && originalPrice > effectivePrice;
+    return {
+      ...v,
+      price,
+      original_price: originalPrice,
+      discount_price: discountPrice,
+      effectivePrice,
+      // Crossed-out MRP shown next to this size's price
+      originalPriceDisplay: hasVariantDiscount ? `₹${originalPrice}` : null,
+      discountBadge: hasVariantDiscount
+        ? `${Math.round(((originalPrice - effectivePrice) / originalPrice) * 100)}% OFF`
+        : null,
+    };
+  }),
   // Stock & discount
   inStock: rawProduct.in_stock !== false,
   discountBadge: rawProduct.on_discount && rawProduct.discount_percent > 0 ? `${Math.round(rawProduct.discount_percent)}% OFF` : null,
@@ -62,10 +82,9 @@ const relatedProducts = relatedRaw?.map(p => ({
   id: p.id,
   title: p.title,
   image: p.image_url,
-  originalPrice: p.original_price ? `₹${p.original_price}` : null,
-  displayPrice: p.on_discount && Number(p.discount_price) > 0 ? `₹${p.discount_price}` : `₹${p.price}`,
   inStock: p.in_stock !== false,
-  discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
+  // Card pricing — size products derive these from size_variants
+  ...getCardPricing(p),
 })) || [];
 
 // Base message for WhatsApp
@@ -240,8 +259,13 @@ const productSchema = JSON.stringify({
                                     <span id="price-display" class={`text-3xl font-light text-stone-900 font-sans tracking-tight ${product.has_sizes ? 'hidden' : ''}`}>
                                         {product.has_sizes ? 'Select size' : product.displayPrice}
                                     </span>
-                                    {product.discountBadge && product.originalPrice && (
-                                        <span class="text-xl text-stone-400 line-through font-serif">{product.originalPrice}</span>
+                                    {(product.discountBadge && product.originalPrice) || product.has_sizes ? (
+                                        <span id="original-price-display" class={`text-xl text-stone-400 line-through font-serif ${product.has_sizes ? 'hidden' : ''}`}>
+                                            {product.originalPrice || ''}
+                                        </span>
+                                    ) : null}
+                                    {product.has_sizes && (
+                                        <span id="size-discount-badge" class="hidden bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"></span>
                                     )}
                                 </div>
                                 <div class="flex items-center gap-1.5 bg-stone-100 px-3 py-1 rounded-full">
@@ -270,7 +294,8 @@ const productSchema = JSON.stringify({
                                             <button
                                                 type="button"
                                                 data-size={variant.size}
-                                                data-price={variant.price}
+                                                data-price={variant.effectivePrice}
+                                                data-original-price={variant.original_price || ''}
                                                 data-in-stock={variant.in_stock}
                                                 data-features={JSON.stringify(variant.features || [])}
                                                 disabled={variant.in_stock === false}
@@ -433,9 +458,11 @@ const productSchema = JSON.stringify({
                 <p class="text-xs text-stone-500 uppercase tracking-wider mb-0.5">Price</p>
                 <div class="flex items-baseline gap-2">
                     <p class="text-xl font-serif text-stone-900">{product.displayPrice}</p>
-                    {product.discountBadge && product.originalPrice && (
-                        <p class="text-sm text-stone-400 line-through font-serif">{product.originalPrice}</p>
-                    )}
+                    {(product.discountBadge && product.originalPrice) || product.has_sizes ? (
+                        <p id="mobile-original-price-display" class={`text-sm text-stone-400 line-through font-serif ${product.has_sizes ? 'hidden' : ''}`}>
+                            {product.originalPrice || ''}
+                        </p>
+                    ) : null}
                 </div>
                 {product.deliveryChargesApply && (
                     <p class="text-[10px] text-stone-500 mt-0.5">+ Delivery charges apply</p>
@@ -485,6 +512,7 @@ const productSchema = JSON.stringify({
     // 2. Size Selector Logic
     let selectedSize = null;
     let selectedPrice = null;
+    let selectedOriginalPrice = null;
     let selectedFeatures = [];
     const sizeButtons = document.querySelectorAll('.size-option');
     const priceDisplay = document.getElementById('price-display');
@@ -493,6 +521,43 @@ const productSchema = JSON.stringify({
     const featuresList = document.getElementById('size-features-list');
     const sizeNameDisplay = document.getElementById('selected-size-name');
     const sizeFeaturesContainer = document.getElementById('size-features-container');
+    const originalPriceDisplay = document.getElementById('original-price-display');
+    const sizeDiscountBadge = document.getElementById('size-discount-badge');
+    const mobileOriginalPriceDisplay = document.getElementById('mobile-original-price-display');
+
+    // Show/hide the crossed-out MRP and "% OFF" badge for the selected size
+    function updateVariantPricingDisplays() {
+        const original = Number(selectedOriginalPrice);
+        const effective = Number(selectedPrice);
+
+        if (originalPriceDisplay) {
+            if (original > 0 && effective > 0 && original > effective) {
+                originalPriceDisplay.textContent = '₹' + selectedOriginalPrice;
+                originalPriceDisplay.classList.remove('hidden');
+            } else {
+                originalPriceDisplay.classList.add('hidden');
+            }
+        }
+
+        if (mobileOriginalPriceDisplay) {
+            if (original > 0 && effective > 0 && original > effective) {
+                mobileOriginalPriceDisplay.textContent = '₹' + selectedOriginalPrice;
+                mobileOriginalPriceDisplay.classList.remove('hidden');
+            } else {
+                mobileOriginalPriceDisplay.classList.add('hidden');
+            }
+        }
+
+        if (sizeDiscountBadge) {
+            if (original > 0 && effective > 0 && original > effective) {
+                const percent = Math.round(((original - effective) / original) * 100);
+                sizeDiscountBadge.textContent = percent + '% OFF';
+                sizeDiscountBadge.classList.remove('hidden');
+            } else {
+                sizeDiscountBadge.classList.add('hidden');
+            }
+        }
+    }
 
     function updateFeatures(features) {
         if (featuresList && features) {
@@ -526,6 +591,7 @@ const productSchema = JSON.stringify({
                 // Update selected size, price and features
                 selectedSize = button.getAttribute('data-size');
                 selectedPrice = button.getAttribute('data-price');
+                selectedOriginalPrice = button.getAttribute('data-original-price');
                 selectedFeatures = JSON.parse(button.getAttribute('data-features') || '[]');
 
                 // Update and show price display
@@ -533,6 +599,9 @@ const productSchema = JSON.stringify({
                     priceDisplay.textContent = '₹' + selectedPrice;
                     priceDisplay.classList.remove('hidden');
                 }
+
+                // Update crossed-out MRP + "% OFF" badge for this size
+                updateVariantPricingDisplays();
 
                 // Update mobile price display
                 if (mobilePriceDisplay) {
@@ -590,6 +659,13 @@ const productSchema = JSON.stringify({
             let fullMessage = baseMessage;
             if (selectedSize && selectedPrice) {
                 fullMessage += `\nSize: ${selectedSize}\nPrice: ₹${selectedPrice}`;
+                // Include MRP / discount info for this size when a discount applies
+                const original = Number(selectedOriginalPrice);
+                const effective = Number(selectedPrice);
+                if (original > 0 && effective > 0 && original > effective) {
+                    const percent = Math.round(((original - effective) / original) * 100);
+                    fullMessage += ` (MRP ₹${original} — ${percent}% off)`;
+                }
                 if (selectedFeatures && selectedFeatures.length > 0) {
                     fullMessage += '\nFeatures:';
                     selectedFeatures.forEach(feature => {

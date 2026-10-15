@@ -4,6 +4,7 @@ import logo from "../assets/shreeyam-logo.jpg";
 // 👇 1. Import Supabase
 import { supabase } from "../db/supabase";
 import SaleTopBar from "../components/SaleTopBar.astro";
+import { getCardPricing } from "../lib/pricing";
 
 // 👇 2. Fetch Data from Supabase
 const { data: rawProducts, error } = await supabase
@@ -26,9 +27,9 @@ const products = rawProducts?.map(p => ({
   rating: p.rating,
   reviews: p.reviews,
   inStock: p.in_stock !== false,
-  discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
-  originalPrice: p.original_price ? `₹${p.original_price}` : null,
-  displayPrice: p.on_discount && Number(p.discount_price) > 0 ? `₹${p.discount_price}` : `₹${p.price}`,
+  // Card pricing (price / crossed-out MRP / discount badge).
+  // Size products derive these from size_variants; non-size products use product-level fields.
+  ...getCardPricing(p),
 })) || [];
 products.sort((a, b) => {
   // If 'a' is brass-products, move it to the front (-1)

@@ -4,6 +4,7 @@ import { supabase } from "../db/supabase";
 import logo from "../assets/shreeyam-logo.jpg";
 import elephantDecor from "../assets/IMG_2696.JPG.jpeg"; 
 import { getEmbedData } from "../lib/videos";
+import { getCardPricing } from "../lib/pricing";
 import SaleTopBar from "./SaleTopBar.astro";
 import SaleBanner from "./SaleBanner.astro";
 
@@ -48,14 +49,10 @@ const products = rawProducts?.map(p => ({
   categoryName: p.categories?.name || 'Handicraft',
   // Current price (with ₹ prefix)
   price: p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`,
-  // Original / MRP (strikethrough) — only meaningful when on_discount
-  originalPrice: p.original_price ? (p.original_price.toString().startsWith('₹') ? p.original_price : `₹${p.original_price}`) : null,
-  // The price shown prominently: discount_price if on_discount, else price
-  displayPrice: p.on_discount && Number(p.discount_price) > 0
-    ? (p.discount_price.toString().startsWith('₹') ? p.discount_price : `₹${p.discount_price}`)
-    : (p.price.toString().startsWith('₹') ? p.price : `₹${p.price}`),
+  // Card pricing (price / crossed-out MRP / discount badge).
+  // Size products derive these from size_variants; non-size products use product-level fields.
+  ...getCardPricing(p),
   inStock: p.in_stock !== false,
-  discountBadge: p.on_discount && p.discount_percent > 0 ? `${Math.round(p.discount_percent)}% OFF` : null,
   isFeatured: p.is_featured === true,
   featuredOrder: p.featured_order ?? 0,
 })) || [];
