@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import logo from "../assets/shreeyam-logo.jpg";
 // 👇 1. Import Supabase
 import { supabase } from "../db/supabase";
+import SaleTopBar from "../components/SaleTopBar.astro";
 
 // 👇 2. Fetch Data from Supabase
 const { data: rawProducts, error } = await supabase
@@ -78,7 +79,9 @@ const categories = Array.from(categoryMap.values());
     </style>
 
     <div class="page-bg min-h-screen">
-        
+
+        <SaleTopBar />
+
         <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-20">

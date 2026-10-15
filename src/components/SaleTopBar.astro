@@ -1,0 +1,73 @@
+---
+// Festive sale announcement bar — sits directly above the sticky nav on the landing page.
+// Automatically flips from "starts 16th October" to "live now" once the sale begins.
+// Clicking the bar scrolls down to the full sale banner (#sale).
+const SALE_START = '2026-10-16T00:00:00+05:30';
+---
+
+<a
+    id="sale-topbar"
+    href="#sale"
+    data-sale-start={SALE_START}
+    class="group relative block overflow-hidden bg-gradient-to-r from-red-700 via-orange-600 to-amber-500 text-white"
+    aria-label="Festive season sale — up to 15% off, starts 16th October. Jump to sale banner."
+>
+    <div class="sale-marquee flex whitespace-nowrap will-change-transform">
+        {[0, 1, 2, 3].map(() => (
+            <span class="flex shrink-0 items-center py-2.5 pr-10 text-[11px] font-bold uppercase tracking-[0.25em]">
+                <span>Festive Season Sale</span>
+                <span class="px-3 opacity-60" aria-hidden="true">✦</span>
+                <span class="sale-glow">Up to 15% Off Sitewide</span>
+                <span class="px-3 opacity-60" aria-hidden="true">✦</span>
+                <span class="sale-pre">Starts 16th October</span>
+                <span class="sale-live hidden">Live Now — Shop Before Stocks End</span>
+                <span class="px-3 opacity-60" aria-hidden="true">✦</span>
+                <span>Brass • Wood • Decor</span>
+                <span class="px-3 opacity-60" aria-hidden="true">✦</span>
+            </span>
+        ))}
+    </div>
+</a>
+
+<style is:global>
+    @keyframes sale-marquee-scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .sale-marquee { animation: none !important; }
+    }
+</style>
+
+<style>
+    .sale-marquee {
+        animation: sale-marquee-scroll 28s linear infinite;
+    }
+    a:hover .sale-marquee,
+    a:focus-visible .sale-marquee {
+        animation-play-state: paused;
+    }
+    .sale-glow {
+        color: #fde047;
+    }
+    .sale-live {
+        color: #fef3c7;
+    }
+</style>
+
+<script>
+    // Flip "Starts 16th October" -> "Live now" the moment the sale begins.
+    // The sale start time is passed via the data-sale-start attribute on the
+    // bar itself — variables are NOT interpolated inside bundled <script> tags.
+    const startAttr = document.getElementById('sale-topbar')?.dataset.saleStart;
+    const saleStart = startAttr ? new Date(startAttr).getTime() : Number.NaN;
+
+    function updateSaleTopBar() {
+        if (!Number.isFinite(saleStart) || Date.now() < saleStart) return;
+        document.querySelectorAll('.sale-pre').forEach((el) => el.classList.add('hidden'));
+        document.querySelectorAll('.sale-live').forEach((el) => el.classList.remove('hidden'));
+    }
+
+    updateSaleTopBar();
+    if (Number.isFinite(saleStart)) setInterval(updateSaleTopBar, 60_000);
+</script>

@@ -1,0 +1,169 @@
+---
+// Festive sale popup — greets first-time visitors on any page.
+// Shows once per visitor (localStorage), auto-flips to a "live" state after the sale starts.
+const SALE_START = '2026-10-16T00:00:00+05:30';
+---
+
+<dialog id="sale-popup" data-sale-start={SALE_START} class="sale-popup" aria-labelledby="sale-popup-title">
+    <div class="sale-card relative overflow-hidden rounded-[2rem] text-center p-7 sm:p-10">
+        <!-- Subtle gold dot texture -->
+        <div class="sale-dots absolute inset-0" aria-hidden="true"></div>
+
+        <!-- Close -->
+        <form method="dialog" class="absolute top-3 right-3 z-10">
+            <button
+                type="submit"
+                value="dismiss"
+                aria-label="Close sale announcement"
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white/80 transition hover:bg-white/20 hover:text-white"
+            >
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </form>
+
+        <div class="relative">
+            <span class="inline-flex items-center rounded-full border border-amber-200/40 bg-white/10 px-3.5 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-amber-100 backdrop-blur-sm">
+                Festive Season Sale
+            </span>
+
+            <h2 id="sale-popup-title" class="sale-title mt-5 text-4xl sm:text-5xl font-bold italic leading-tight tracking-tight">
+                Up to 15% OFF
+            </h2>
+
+            <p class="mt-2 text-sm sm:text-base text-amber-50/90 font-light">
+                Sitewide on handcrafted brass, wood &amp; decor
+            </p>
+
+            <p class="mt-5 text-xs font-bold uppercase tracking-[0.3em] text-amber-100/80">
+                <span class="sale-pre">From 16th October</span>
+                <span class="sale-live hidden">Live Now — Limited Stocks</span>
+            </p>
+
+            <a
+                href="/products"
+                class="mt-7 block rounded-full bg-amber-400 px-8 py-3.5 text-sm font-bold uppercase tracking-widest text-stone-900 shadow-xl shadow-black/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber-300"
+            >
+                Shop the Sale
+            </a>
+
+            <form method="dialog" class="mt-4">
+                <button
+                    type="submit"
+                    value="later"
+                    class="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 underline-offset-4 transition hover:text-white hover:underline"
+                >
+                    Maybe Later
+                </button>
+            </form>
+
+            <p class="mt-6 border-t border-white/15 pt-4 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] text-white/60">
+                Handcrafted by Gujarat's Master Artisans — No Middlemen
+            </p>
+        </div>
+    </div>
+</dialog>
+
+<style is:global>
+    @keyframes sale-popup-in {
+        from { opacity: 0; transform: scale(0.92) translateY(14px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #sale-popup[open] { animation: none !important; }
+    }
+</style>
+
+<style>
+    #sale-popup {
+        padding: 0;
+        border: none;
+        background: transparent;
+        width: min(92vw, 26rem);
+        max-width: none;
+    }
+
+    #sale-popup::backdrop {
+        background: rgba(28, 25, 23, 0.6);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+    }
+
+    #sale-popup[open] {
+        animation: sale-popup-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Same festive gradient family as the sale banner */
+    .sale-card {
+        background:
+            radial-gradient(circle at 50% -20%, rgba(255, 224, 130, 0.55), transparent 55%),
+            linear-gradient(115deg, #7f1d1d 0%, #b91c1c 28%, #ea580c 62%, #f59e0b 100%);
+        box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .sale-dots {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.13) 1px, transparent 1.6px);
+        background-size: 22px 22px;
+    }
+
+    .sale-title {
+        font-family: 'Playfair Display', serif;
+        background: linear-gradient(90deg, #fde68a, #fbbf24, #fffbeb, #f59e0b, #fde68a);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .sale-live {
+        color: #fde047;
+    }
+</style>
+
+<script>
+    // Show the festive sale popup once per browsing session on the landing page.
+    // Add ?sale-popup to the URL to force-show it (handy for previewing).
+    function initSalePopup() {
+        const dialog = document.getElementById('sale-popup');
+        if (!(dialog instanceof HTMLDialogElement)) return;
+
+        const SEEN_KEY = 'shreeyam-festive-sale-2026-session';
+        const forceShow = new URLSearchParams(window.location.search).has('sale-popup');
+
+        // Respect visitors who have already seen it this session (and browsers without storage).
+        let alreadySeen = false;
+        try {
+            alreadySeen = sessionStorage.getItem(SEEN_KEY) === '1';
+        } catch {
+            alreadySeen = false;
+        }
+
+        // Flip "From 16th October" -> "Live now" once the sale has begun.
+        const startAttr = dialog.dataset.saleStart;
+        const saleStart = startAttr ? new Date(startAttr).getTime() : Number.NaN;
+        if (Number.isFinite(saleStart) && Date.now() >= saleStart) {
+            dialog.querySelectorAll('.sale-pre').forEach((el) => el.classList.add('hidden'));
+            dialog.querySelectorAll('.sale-live').forEach((el) => el.classList.remove('hidden'));
+        }
+
+        if ((!forceShow && alreadySeen) || typeof dialog.showModal !== 'function') return;
+
+        // Small delay so the page paints first; marking seen on open means a
+        // visitor who dismisses it is not nagged again this session.
+        window.setTimeout(() => {
+            try {
+                dialog.showModal();
+                if (!forceShow) sessionStorage.setItem(SEEN_KEY, '1');
+            } catch {
+                /* storage blocked — the popup still shows, just may re-show later */
+            }
+        }, 1200);
+
+        // Click on the dark backdrop (outside the card) dismisses the popup.
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) dialog.close();
+        });
+    }
+
+    initSalePopup();
+</script>
