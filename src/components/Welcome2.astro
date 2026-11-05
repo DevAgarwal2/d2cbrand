@@ -5,8 +5,6 @@ import logo from "../assets/shreeyam-logo.jpg";
 import elephantDecor from "../assets/IMG_2696.JPG.jpeg"; 
 import { getEmbedData } from "../lib/videos";
 import { getCardPricing } from "../lib/pricing";
-import SaleTopBar from "./SaleTopBar.astro";
-import SaleBanner from "./SaleBanner.astro";
 
 // 👇 1. FETCH DATA FROM SUPABASE
 // We select all products and join the 'categories' table to get the category name
@@ -189,8 +187,6 @@ const renderStars = (count: number) => '★'.repeat(count);
 
 <div class="min-h-screen">
 
-    <SaleTopBar />
-
     <nav class="sticky top-0 z-50 bg-[#FDFBF7]/80 backdrop-blur-md border-b border-stone-200/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 md:h-20">
@@ -294,8 +290,6 @@ const renderStars = (count: number) => '★'.repeat(count);
 
         </div>
     </section>
-
-    <SaleBanner />
 
     <section id="categories" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
